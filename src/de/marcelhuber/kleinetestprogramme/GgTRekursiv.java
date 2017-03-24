@@ -82,6 +82,8 @@ public class GgTRekursiv {
                 y[k] = x[k + 1];
             }
             ggTFeld = ggT(x[0], ggT(y));
+//            alternativ wäre auch folgender Befehl korrekt
+//            ggTFeld = ggT(ggTFeld[2], ggT(y));
         } else if (x.length == 2) {
             ggTFeld = ggT(x[0], x[1]);
         } else if (x.length == 1) {
