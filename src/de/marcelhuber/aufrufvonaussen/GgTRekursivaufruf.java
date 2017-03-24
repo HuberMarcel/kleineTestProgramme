@@ -10,9 +10,10 @@ import java.util.*;
  */
 public class GgTRekursivaufruf {
 
-    static int counter;
     static int[] argsInt, argsIntDurchGgT;
     static int ggT;
+    static int firstIndexOfDelimiter;
+    static List<String> liste = new ArrayList<>();
 
     public static void main(String[] args) {
         argsInt = new int[args.length];
@@ -40,12 +41,16 @@ public class GgTRekursivaufruf {
         readStr = readString();
 //        TODO: den gelesenen String readStr in die Form des args[] bringen
 //        hier wollen wir den obigen String in ein Feld von Strings umwandeln
-        List<String> liste = new ArrayList<>();
+        makeArrayListFromString(readStr, " ");
 //        hier werden wir später mit der ArrayList-liste ein entsprechendes Array
 //        anlegen
-        String[] str = new String[1];
+        String[] strListe = new String[liste.size()];
+        liste.toArray(strListe);
+        marker();
+        System.out.println(Arrays.toString(strListe));
+        marker();
         try {
-            parseArgsToArgsInt(str);
+            parseArgsToArgsInt(strListe);
         } catch (NumberFormatException nFex) {
             System.out.println("Geben Sie vernünftige Zahlen ein!");
             System.out.println("Fehlermeldung:");
@@ -83,7 +88,6 @@ public class GgTRekursivaufruf {
     }
 
     private static String toStringWerte(int[] x) {
-        System.out.println("counter:" + counter++);
         String str = "";
         for (int i = 0; i < x.length; i++) {
             str += "" + x[i];
@@ -118,12 +122,41 @@ public class GgTRekursivaufruf {
     }
 
     static int[] parseArgsToArgsInt(String... args) throws NumberFormatException {
-        System.out.println("parseArgsAufruf mit args.length" + args.length);
+//        System.out.println("parseArgsAufruf mit args.length" + args.length);
         argsInt = new int[args.length];
         for (int i = 0; i < args.length; i++) {
-            System.out.println(args[i]);
+//            System.out.println(args[i]);
             argsInt[i] = Integer.parseInt(args[i]);
         }
         return argsInt;
+    }
+
+    static void makeArrayListFromString(String readStr, String delimiter) {
+//        System.out.println("Ich bin die makeArrayListFromString-Methode!");
+//        System.out.println(""+readStr.indexOf(delimiter));
+//        System.out.println(""+readStr.length());
+        firstIndexOfDelimiter = readStr.indexOf(delimiter);
+        String subStr;
+        while (firstIndexOfDelimiter == 0){
+            readStr = readStr.substring(1);
+             firstIndexOfDelimiter = readStr.indexOf(delimiter);
+        }
+        if (firstIndexOfDelimiter > 0) {
+            if (firstIndexOfDelimiter < readStr.length()) {
+                subStr = readStr.substring(0, firstIndexOfDelimiter);
+                liste.add(subStr);
+//                System.out.println("Ab :" + firstIndexOfDelimiter + " kommt der Rest:" + readStr.substring(firstIndexOfDelimiter + 1));
+                makeArrayListFromString(readStr.substring(firstIndexOfDelimiter + 1),
+                        delimiter);
+            }
+        } else if (readStr.length() > 0){
+            subStr = readStr;
+            liste.add(subStr);
+        }
+        System.out.println("");
+    }
+
+    static void marker() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 }
