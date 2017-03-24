@@ -1,20 +1,22 @@
 package de.marcelhuber.kleinetestprogramme;
 
-import java.util.Arrays;
-
 /**
  *
  * @author Marcel Huber
  */
 public class GgTRekursiv {
 
-    static int summenWert;
+    static int summenWertUmstaendlich;
 //    static int counter;
+    static int ggTUmstaendlich;
     static int ggT;
+    static int summenWert;
     static int[] ggTFeld = {0, 0, 0};
+    static int[] ggTFeld2 = {0, 0, 0};
+    static int[] argsInt;
 
     public static void main(String[] args) {
-        int[] argsInt = new int[args.length];
+        argsInt = new int[args.length];
         int[] argsIntDurchGgT = new int[argsInt.length];
 
         for (int i = 0; i < argsInt.length; i++) {
@@ -25,21 +27,21 @@ public class GgTRekursiv {
 //        }
         GgTRekursiv hilfsObjekt = new GgTRekursiv();
         if (args.length > 0) {
-            hilfsObjekt.summiereDasFeld(argsInt);
+            hilfsObjekt.summiereDasFeldUmstaendlich(argsInt);
         }
         System.out.println("\nWerte des Eingabefeldes x: \n"
                 + GgTRekursiv.toString(argsInt));
         System.out.println("Die Summe aller über alle diese Zahlen ergibt: "
-                + summenWert);
+                + summenWertUmstaendlich);
 //        Testausgabe für'n Array als String
 //        System.out.println(Arrays.toString(hilfsObjekt.ggT(2, 3)));
 //        System.out.println(GgTRekursiv.toString(hilfsObjekt.ggT(36, 14)));
         System.out.println("Der ggT über alle diese Zahlen ist: "
-                + hilfsObjekt.ggT(argsInt));
-        System.out.println("ggT statisch: " + ggT + "\n");
-        if (ggT > 0) {
+                + hilfsObjekt.ggTUmstaendlich(argsInt));
+        System.out.println("ggT statisch: " + ggTUmstaendlich + "\n");
+        if (ggTUmstaendlich > 0) {
             for (int m = 0; m < argsInt.length; m++) {
-                argsIntDurchGgT[m] = argsInt[m] / ggT;
+                argsIntDurchGgT[m] = argsInt[m] / ggTUmstaendlich;
             }
         }
         System.out.println("Alle Zahlen durch den ggT!=0 dividiert ergibt das neue "
@@ -50,11 +52,17 @@ public class GgTRekursiv {
         System.out.println("\nNur nochmal kurz die Werte des Feldes nach der oben "
                 + "genannten Division:");
         System.out.println(GgTRekursiv.toStringWerte(argsIntDurchGgT));
+        System.out.println("\n\n\n");
+        System.out.println("Jetzt berechnen wir den ggT mal effizienter!\nggT "
+                + "effizient berechnet: ");
+        hilfsObjekt.ggT(argsInt.length);
+        System.out.println(ggT + "\n" + ggTUmstaendlich + " (zum Vergleich hier auch "
+                + "nochmal der statische Wert von oben!)");
     }
 
-    int summiereDasFeld(int... x) {
+    int summiereDasFeldUmstaendlich(int... x) {
 //        ++counter;
-        summenWert = sum(summenWert, x[0]);
+        summenWertUmstaendlich = sum(summenWertUmstaendlich, x[0]);
         int[] y = new int[x.length - 1];
 //        System.out.println("y.length: " + y.length);
         for (int k = 0; k < y.length;) {
@@ -64,7 +72,7 @@ public class GgTRekursiv {
         int s = x[0];
         if (y.length > 0) {
 //            summiereDasFeld(y);
-            s = sum(s, summiereDasFeld(y));
+            s = sum(s, summiereDasFeldUmstaendlich(y));
         }
         System.out.println("Aktueller Summenwert: " + s);
         return s;
@@ -75,13 +83,13 @@ public class GgTRekursiv {
         return a + b;
     }
 
-    int ggT(int... x) {
+    int ggTUmstaendlich(int... x) {
         if (x.length > 2) {
             int[] y = new int[x.length - 1];
             for (int k = 0; k < y.length; k++) {
                 y[k] = x[k + 1];
             }
-            ggTFeld = ggT(x[0], ggT(y));
+            ggTFeld = ggT(x[0], ggTUmstaendlich(y));
 //            alternativ wäre auch folgender Befehl korrekt
 //            ggTFeld = ggT(ggTFeld[2], ggT(y));
         } else if (x.length == 2) {
@@ -91,8 +99,22 @@ public class GgTRekursiv {
             ggTFeld[1] = 1;
             ggTFeld[2] = x[0];
         }
-        ggT = ggTFeld[2];
+        ggTUmstaendlich = ggTFeld[2];
         return ggTFeld[2];
+    }
+
+    void ggT(int argsIntLength) {
+        if ((argsIntLength > 0) & (argsInt.length == argsIntLength)) {
+            ggT = argsInt[argsIntLength - 1];
+        }
+        if (argsIntLength > 1) {
+            ggT = argsInt[argsIntLength - 1];
+//            System.out.println("ggt: " + ggT + " zweiter Wert: "
+//                    + argsInt[argsIntLength - 2]);
+            ggTFeld2 = ggT(ggT, argsInt[argsIntLength - 2]);
+            ggT = ggTFeld2[2];
+            ggT(argsIntLength - 1);
+        }
     }
 
     int[] ggT(int a, int b) {
