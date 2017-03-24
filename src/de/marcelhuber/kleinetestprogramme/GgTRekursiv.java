@@ -60,7 +60,7 @@ public class GgTRekursiv {
                 + "nochmal der statische Wert von oben!)");
     }
 
-    int summiereDasFeldUmstaendlich(int... x) {
+    private int summiereDasFeldUmstaendlich(int... x) {
 //        ++counter;
         summenWertUmstaendlich = sum(summenWertUmstaendlich, x[0]);
         int[] y = new int[x.length - 1];
@@ -83,7 +83,7 @@ public class GgTRekursiv {
         return a + b;
     }
 
-    int ggTUmstaendlich(int... x) {
+    private int ggTUmstaendlich(int... x) {
         if (x.length > 2) {
             int[] y = new int[x.length - 1];
             for (int k = 0; k < y.length; k++) {
@@ -103,12 +103,21 @@ public class GgTRekursiv {
         return ggTFeld[2];
     }
 
-    void ggT(int argsIntLength) {
+    public void ggT(int[] args) {
+        argsInt = new int[args.length];
+        for (int m = 0; m < argsInt.length; m++) {
+            argsInt[m] = args[m];
+        }
+        ggT(argsInt.length);
+        System.out.println("Der ggT ist: " + ggT);
+    }
+
+    private void ggT(int argsIntLength) {
         if ((argsIntLength > 0) & (argsInt.length == argsIntLength)) {
             ggT = argsInt[argsIntLength - 1];
         }
+        System.out.println("Aktueller ggT: " + ggT);
         if (argsIntLength > 1) {
-            ggT = argsInt[argsIntLength - 1];
 //            System.out.println("ggt: " + ggT + " zweiter Wert: "
 //                    + argsInt[argsIntLength - 2]);
             ggTFeld2 = ggT(ggT, argsInt[argsIntLength - 2]);
@@ -117,7 +126,7 @@ public class GgTRekursiv {
         }
     }
 
-    int[] ggT(int a, int b) {
+    private int[] ggT(int a, int b) {
         int tauschHelfer;
         int[] rueckgabefeld = new int[3];
         int[] xVorf = new int[2];
@@ -156,7 +165,7 @@ public class GgTRekursiv {
         return rueckgabefeld;
     }
 
-    static String toString(int[] x) {
+    private static String toString(int[] x) {
         String str = "";
         for (int i = 0; i < x.length; i++) {
             str += "x[" + i + "]=" + x[i];
@@ -169,7 +178,7 @@ public class GgTRekursiv {
         return str;
     }
 
-    static String toStringWerte(int[] x) {
+    private static String toStringWerte(int[] x) {
         String str = "";
         for (int i = 0; i < x.length; i++) {
             str += "" + x[i];
