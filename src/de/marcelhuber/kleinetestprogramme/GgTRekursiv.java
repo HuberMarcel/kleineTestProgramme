@@ -103,13 +103,14 @@ public class GgTRekursiv {
         return ggTFeld[2];
     }
 
-    public void ggT(int[] args) {
+    public int ggT(int[] args) {
         argsInt = new int[args.length];
         for (int m = 0; m < argsInt.length; m++) {
             argsInt[m] = args[m];
         }
         ggT(argsInt.length);
         System.out.println("Der ggT ist: " + ggT);
+        return ggT;
     }
 
     private void ggT(int argsIntLength) {
