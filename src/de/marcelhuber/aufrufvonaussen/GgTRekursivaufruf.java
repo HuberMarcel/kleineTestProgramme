@@ -93,6 +93,12 @@ public class GgTRekursivaufruf {
             System.out.println("");
             repeater = repeaterSetzer();
         }
+        System.out.println("\n");
+        marker();
+        marker();
+        System.out.println("Das Programm wurde von Ihnen beendet");
+        marker();
+        marker();
     }
 
 //    in der folgenden Methode wollen wir das MakeArrayToString mal mit einem
@@ -230,7 +236,7 @@ public class GgTRekursivaufruf {
     }
 
     static void marker() {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     static boolean repeaterSetzer() {
