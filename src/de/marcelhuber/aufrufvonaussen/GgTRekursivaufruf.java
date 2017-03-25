@@ -14,6 +14,8 @@ public class GgTRekursivaufruf {
     static int ggT;
     static int firstIndexOfDelimiter;
     static List<String> liste = new ArrayList<>();
+    List<String> newListe;
+    static boolean repeater;
 
     public static void main(String[] args) {
         argsInt = new int[args.length];
@@ -22,48 +24,90 @@ public class GgTRekursivaufruf {
             argsInt = parseArgsToArgsInt(args);
         } catch (NumberFormatException ex) {
             System.out.println("PROGRAMM-ABBRUCH!!");
-            return;
         }
         GgTRekursivaufruf hilfsObjekt = new GgTRekursivaufruf();
-        ggT = hilfsObjekt.go(argsInt);
+        ggT = hilfsObjekt.goGgT(argsInt);
         if (ggT != 0) {
+//            System.out.println(argsIntDurchGgT.length);
             for (int k = 0; k < argsIntDurchGgT.length; k++) {
                 argsIntDurchGgT[k] = argsInt[k] / ggT;
-                System.out.print(argsIntDurchGgT[k] + " ;");
+//                System.out.print(argsIntDurchGgT[k] + " ;");
             }
         }
-        System.out.println("Die Ausgabe des Feldes nach Division durch den ggT!\n"
+        System.out.println("Die Ausgabe des Feldes nach Division durch den ggT! "
+                + "(Nur, sofern Übergabeparameter vorhanden waren!)\n"
                 + toStringWerte(argsIntDurchGgT));
         String readStr;
         int strVonInts;
-        System.out.println("Ihre Eingabe neuer Werte zur Berechnung des ggT's "
-                + "eben dieser: ");
-        readStr = readString();
-//        TODO: den gelesenen String readStr in die Form des args[] bringen
-//        hier wollen wir den obigen String in ein Feld von Strings umwandeln
-        makeArrayListFromString(readStr, " ");
+//        in der repeaterSetzer()-Methode wollen wir abfragen, wie der Wert
+//        der Variablen repeater zu setzen ist - dies ist für/in der folgenden
+//        while()-Schleife wichtig
+        repeater = repeaterSetzer();
+        while (!repeater) {
+            liste = new ArrayList<>();
+            readStr = "";
+            System.out.println("\nIhre Eingabe neuer Werte zur Berechnung des ggT's "
+                    + "eben dieser (Leerzeichen als Delimiter): ");
+            readStr = readString();
+//
+            marker();
+            marker();
+            hilfsObjekt.goTesteMakeArrayListFromString(readStr);
+            marker();
+            marker();
+
+            makeArrayListFromString(readStr, " ");
 //        hier werden wir später mit der ArrayList-liste ein entsprechendes Array
 //        anlegen
-        String[] strListe = new String[liste.size()];
-        liste.toArray(strListe);
-        marker();
-        System.out.println(Arrays.toString(strListe));
-        marker();
-        try {
-            parseArgsToArgsInt(strListe);
-        } catch (NumberFormatException nFex) {
-            System.out.println("Geben Sie vernünftige Zahlen ein!");
-            System.out.println("Fehlermeldung:");
-            System.out.println(nFex);
-            return;
-        };
-        hilfsObjekt.go(argsInt);
+            String[] strListe = new String[liste.size()];
+            liste.toArray(strListe);
+            marker();
+            System.out.println(Arrays.toString(strListe));
+            marker();
+            try {
+                parseArgsToArgsInt(strListe);
+                repeater = true;
+            } catch (NumberFormatException nFex) {
+                System.out.println("Geben Sie vernünftige Zahlen ein!");
+                System.out.println("Fehlermeldung:");
+                System.out.println(nFex);
+                repeater = false;
+            };
+            ggT = hilfsObjekt.goGgT(argsInt);
+            argsIntDurchGgT = new int[argsInt.length];
 //        System.out.println("Ihre Eingabe einer Zahl: ");
 //        strVonInts = readInt();
 //        System.out.println(strVonInts);
+            System.out.println("");
+//            marker();
+//            System.out.println("GGT " + ggT);
+//            marker();
+            if (ggT != 0) {
+                for (int k = 0; k < argsIntDurchGgT.length; k++) {
+                    argsIntDurchGgT[k] = argsInt[k] / ggT;
+//                    System.out.print(argsIntDurchGgT[k] + " ;");
+                }
+            }
+            System.out.println("Die Ausgabe des Feldes nach Division durch den ggT!\n"
+                    + toStringWerte(argsIntDurchGgT));
+            System.out.println("");
+            repeater = repeaterSetzer();
+        }
     }
 
-    private int go(int... argsInt) {
+//    in der folgenden Methode wollen wir das MakeArrayToString mal mit einem
+//    Objekt realisieren, anstatt einer statischen Methode und (Klassen-)"globalen"
+//    Variablen
+    private void goTesteMakeArrayListFromString(String readStr) {
+//        rein aus didaktischen Gründen das this. ergänzt
+        this.newListe = new ArrayList<>();
+        this.newListe = makeArrayListFromString(this.newListe, readStr, " ");
+        String[] strListe = new String[this.newListe.size()];
+        this.newListe.toArray(strListe);
+        System.out.println(Arrays.toString(strListe));
+    }
+
+    private int goGgT(int... argsInt) {
         GgTRekursiv hilfsRechenObjekt = new GgTRekursiv();
         int[] y;
         if (argsInt.length > 0) {
@@ -137,26 +181,68 @@ public class GgTRekursivaufruf {
 //        System.out.println(""+readStr.length());
         firstIndexOfDelimiter = readStr.indexOf(delimiter);
         String subStr;
-        while (firstIndexOfDelimiter == 0){
+        while (firstIndexOfDelimiter == 0) {
             readStr = readStr.substring(1);
-             firstIndexOfDelimiter = readStr.indexOf(delimiter);
+            firstIndexOfDelimiter = readStr.indexOf(delimiter);
         }
         if (firstIndexOfDelimiter > 0) {
             if (firstIndexOfDelimiter < readStr.length()) {
                 subStr = readStr.substring(0, firstIndexOfDelimiter);
                 liste.add(subStr);
-//                System.out.println("Ab :" + firstIndexOfDelimiter + " kommt der Rest:" + readStr.substring(firstIndexOfDelimiter + 1));
+//                System.out.println("Ab :" + firstIndexOfDelimiter + " kommt der "
+//                        + "Rest:" + readStr.substring(firstIndexOfDelimiter + 1));
                 makeArrayListFromString(readStr.substring(firstIndexOfDelimiter + 1),
                         delimiter);
             }
-        } else if (readStr.length() > 0){
+        } else if (readStr.length() > 0) {
             subStr = readStr;
             liste.add(subStr);
+//            System.out.println("");
         }
-        System.out.println("");
+    }
+
+    private List<String> makeArrayListFromString(List<String> newListe, String readStr,
+            String delimiter) {
+//        System.out.println("Ich bin die makeArrayListFromString-Methode!");
+//        System.out.println(""+readStr.indexOf(delimiter));
+//        System.out.println(""+readStr.length());
+        firstIndexOfDelimiter = readStr.indexOf(delimiter);
+        String subStr;
+        while (firstIndexOfDelimiter == 0) {
+            readStr = readStr.substring(1);
+            firstIndexOfDelimiter = readStr.indexOf(delimiter);
+        }
+        if (firstIndexOfDelimiter > 0) {
+            if (firstIndexOfDelimiter < readStr.length()) {
+                subStr = readStr.substring(0, firstIndexOfDelimiter);
+                newListe.add(subStr);
+//                System.out.println("Ab :" + firstIndexOfDelimiter + " kommt der Rest:"
+//                        + readStr.substring(firstIndexOfDelimiter + 1));
+                makeArrayListFromString(newListe, readStr.substring(firstIndexOfDelimiter + 1),
+                        delimiter);
+            }
+        } else if (readStr.length() > 0) {
+            subStr = readStr;
+            newListe.add(subStr);
+//            System.out.println("");
+        }
+        return newListe;
     }
 
     static void marker() {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+
+    static boolean repeaterSetzer() {
+        marker();
+        marker();
+        System.out.println("Erneute Berechnung? Abbruch mit Eingabe der 1:");
+        int eingeleseneZahl = readInt();
+        if (eingeleseneZahl == 1) {
+            repeater = true;
+        } else {
+            repeater = false;
+        }
+        return repeater;
     }
 }
