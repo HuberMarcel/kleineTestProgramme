@@ -7,6 +7,8 @@ import java.util.*;
 /**
  *
  * @author Marcel
+ * Stand: 27.03.2017, 08:05 Uhr
+ * 
  */
 public class GgTRekursivaufruf {
 
