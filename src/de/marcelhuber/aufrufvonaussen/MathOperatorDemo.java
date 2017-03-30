@@ -10,7 +10,7 @@ import jdk.nashorn.internal.objects.*;
 /**
  *
  * @author Marcel 
- * Stand: 30.03.2017, 20:30 Uhr
+ * Stand: 30.03.2017, 20:25 Uhr
  */
 public class MathOperatorDemo {
 
