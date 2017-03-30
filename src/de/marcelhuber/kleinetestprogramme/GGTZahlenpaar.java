@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.marcelhuber.ggtZahlenpaar;
+package de.marcelhuber.kleinetestprogramme;
 
 import java.util.ArrayList;
 
@@ -20,22 +20,22 @@ public class GGTZahlenpaar {
     // diese anzuwerfen, um die anderen 3 Attribute sinnvoll zu füllen
     int z1, z2;      // die zwei Zahlen, von denen der ggT berechnet werden soll
     int x1, y1, ggT; // Ergebnisse der Berechnung: Es ist ggT = ggT(z1,z2);
-                     // x1 und y1 sind nach dem Euklidischen Algorithmus
-                     // so, dass x1 * z1 + y1 * z2 = ggT.
+    // x1 und y1 sind nach dem Euklidischen Algorithmus
+    // so, dass x1 * z1 + y1 * z2 = ggT.
     boolean euclidCalculated = false;
 
-    GGTZahlenpaar() {
+    public GGTZahlenpaar() {
         this(0);
         System.out.println("Für ein zahlenfreies Objekt benutzen wir "
                 + "automatisch Initialisierung mit den Zahlen " + z1
                 + " und " + z2);
     }
 
-    GGTZahlenpaar(int a) {
+    public GGTZahlenpaar(int a) {
         this(a, a);
     }
 
-    GGTZahlenpaar(int a, int b) {
+    public GGTZahlenpaar(int a, int b) {
         z1 = a;
         z2 = b;
         x1 = 1;
@@ -50,26 +50,28 @@ public class GGTZahlenpaar {
                     + "euklidischen Algorithmus behandelt!!!\n");
         }
         zahlenPaar.goCreateGGTObject(zahlenPaar);
-          if (zahlenPaar.getValueOfeuclidCalculated()) 
+        if (zahlenPaar.getValueOfeuclidCalculated()) {
             System.out.println("\nDas Objekt wurde nun mit dem euklidischen"
                     + "Algorithmus behandelt!!");
+        }
     }
 
     void goCreateGGTObject(GGTZahlenpaar zahlenPaar) {
         int[] ausgabefeld = new int[3];
         ausgabefeld = zahlenPaar.calculatorErweiterterEuklidischerAlgorithmus();
-        /* bei dieser Implementierung des Erweiterten Euklidischen Algorithmus
-           kann der ggT auch negativ sein - der ggT zweier ganzer Zahlen a und b 
-           ist definiert als eine Zahl g so, dass sowohl a | g als auch b | g 
-           gilt, und wenn t eine Zahl ist mit t | a und t | b, so muss schon
-           t | g folgen. Ist nun g so wie oben beschrieben und wir nehmen an,
-           dass auch g' so wäre, dass für alle ganzen Zahlen t mit t | a und 
-           t | b schon t | g' folgte. Insbesondere gilt g | a und g | b, also
-           folgte dann g | g'. Andererseits gilt auch g' | a und g' | b, und 
-           weil g ja auch die ggT-Eigenschaft bzgl. a und b hat, folgt dann
-           g' | g. Also nur |g| = |g'|. Der ggT zweier ganzer Zahlen ist im 
-           Ring der ganzen Zahlen nur eindeutig bis auf eine Einheit (EInheiten
-           sind dort die Elemente aus {-1, 1}).
+        /* 
+         bei dieser Implementierung des Erweiterten Euklidischen Algorithmus
+         kann der ggT auch negativ sein - der ggT zweier ganzer Zahlen a und b 
+         ist definiert als eine Zahl g so, dass sowohl a | g als auch b | g 
+         gilt, und wenn t eine Zahl ist mit t | a und t | b, so muss schon
+         t | g folgen. Ist nun g so wie oben beschrieben und wir nehmen an,
+         dass auch g' so wäre, dass für alle ganzen Zahlen t mit t | a und 
+         t | b schon t | g' folgte. Insbesondere gilt g | a und g | b, also
+         folgte dann g | g'. Andererseits gilt auch g' | a und g' | b, und 
+         weil g ja auch die ggT-Eigenschaft bzgl. a und b hat, folgt dann
+         g' | g. Also nur |g| = |g'|. Der ggT zweier ganzer Zahlen ist im 
+         Ring der ganzen Zahlen nur eindeutig bis auf eine Einheit (EInheiten
+         sind dort die Elemente aus {-1, 1}).
          */
         System.out.println("Hinweis: Falls der ggT eigentlich < 0 wäre, so "
                 + "multiplizieren wir die ganze Gleichung mit -1 und ersetzen\n"
