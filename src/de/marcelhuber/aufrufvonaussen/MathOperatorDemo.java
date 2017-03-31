@@ -10,15 +10,19 @@ import jdk.nashorn.internal.objects.*;
 /**
  *
  * @author Marcel 
- * Stand: 30.03.2017, 20:25 Uhr
+ * Stand: 31.03.2017, 08:25 Uhr
  */
 public class MathOperatorDemo {
 
-    static List<Double> rechenZahlen = new ArrayList<>(5);
-    static Double[] rechenZahlenWerte;
     static String ausrufeZeichen = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
     static StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
     static StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
+    
+//    static List<Double> rechenZahlen = new ArrayList<>(5);
+//    static Double[] rechenZahlenWerte;
+    
+    List<Double> rechenZahlen = new ArrayList<>(5);
+    Double[] rechenZahlenWerte;
 
     public static void main(String[] args) {
         String[] operation = {"plus", "mINUS", "mAL", "DuRcH", "gGT", "mOd"};
