@@ -6,9 +6,8 @@ import java.util.*;
 
 /**
  *
- * @author Marcel
- * Stand: 30.03.2017, 18:00 Uhr
- * 
+ * @author Marcel Stand: 30.03.2017, 18:00 Uhr
+ *
  */
 public class GgTRekursivaufruf {
 
@@ -45,6 +44,7 @@ public class GgTRekursivaufruf {
 //        der Variablen repeater zu setzen ist - dies ist für/in der folgenden
 //        while()-Schleife wichtig
         repeater = repeaterSetzer();
+
         while (!repeater) {
             liste = new ArrayList<>();
             readStr = "";
@@ -72,8 +72,9 @@ public class GgTRekursivaufruf {
             } catch (NumberFormatException nFex) {
                 System.out.println("Geben Sie vernünftige Zahlen ein!");
                 System.out.println("Fehlermeldung:");
-                System.out.println(nFex);
+                System.out.println(nFex+"\n");
                 repeater = false;
+                continue;
             };
             ggT = hilfsObjekt.goGgT(argsInt);
             argsIntDurchGgT = new int[argsInt.length];
@@ -95,6 +96,7 @@ public class GgTRekursivaufruf {
             System.out.println("");
             repeater = repeaterSetzer();
         }
+
         System.out.println("\n");
         marker();
         marker();

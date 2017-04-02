@@ -33,6 +33,14 @@ public class ReadInput {
             return 0;
         }
     }
+    
+    public static long readLong() {
+        try {
+            return Long.parseLong(readString());
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
+    }
 
     public static String readString() {
         // Mit Kanonen auf Spatzen schiessen

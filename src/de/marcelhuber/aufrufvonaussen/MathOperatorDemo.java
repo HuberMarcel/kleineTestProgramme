@@ -15,8 +15,8 @@ import jdk.nashorn.internal.objects.*;
 public class MathOperatorDemo {
 
     static String ausrufeZeichen = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-    static StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
-    static StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
+    static final StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
+    static final StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
     
 //    static List<Double> rechenZahlen = new ArrayList<>(5);
 //    static Double[] rechenZahlenWerte;
@@ -190,7 +190,6 @@ public class MathOperatorDemo {
             programmEnde.insert(0, " ");
             programmEnde.insert(programmEnde.length(), " ");
         }
-
     }
 
     void ergebnisAnzeige(double rechenErgebnis, String information) {

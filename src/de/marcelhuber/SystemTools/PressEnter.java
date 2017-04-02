@@ -8,7 +8,7 @@ import java.io.*;
  */
 public class PressEnter {
 
-    static boolean boolFlag;
+//    static public boolean boolFlag;
 
     static public void ToContinue() {
         System.out.print("Press Enter to continue! ");
