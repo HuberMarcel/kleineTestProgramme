@@ -9,10 +9,9 @@ import jdk.nashorn.internal.objects.Global;
 
 /**
  *
- * @author Marcel Huber
- * Stand: 02.04.2017, 02:10 Uhr
+ * @author Marcel Huber Stand: 02.04.2017, 02:10 Uhr
  */
-public class GgTNaiv {
+public class GgT {
 
     static final StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
     static final StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
@@ -36,7 +35,7 @@ public class GgTNaiv {
         System.out.println(programmStart);
         marker();
         System.out.println("\n");
-        new GgTNaiv().go(args);
+        new GgT().go(args);
     }
 
     void go(String[] args) {
@@ -96,7 +95,7 @@ public class GgTNaiv {
             }
             konsolenparameter = false;
             if (argsLong.length > 0) {
-                ggT = this.goGgTArray(argsLong);
+                ggT = this.goGgTNaivArray(argsLong);
             } else {
                 ggT = 0;
                 System.out.println("Sie haben keine Zahlen eingegeben, dann "
@@ -137,7 +136,22 @@ public class GgTNaiv {
 
     }
 
-    private long goGgTArray(long[] argsLong) {
+    public long ggTEuclid(long a, long b) {
+        if (a == 0 || b == 0) {
+            return Math.max(Math.abs(a), Math.abs(a));
+        }
+        long q; // q=[a/b]
+        long r = b; // Rest, also a=q*b+r mit 0 <= r < b 
+        while (a % b != 0) {
+            q = a / b;
+            r = a - q * b;
+            a = b;
+            b = r;
+        }
+        return b;
+    }
+
+    private long goGgTNaivArray(long[] argsLong) {
         for (int i = 0; i < argsLong.length; i++) {
             if (i == 0) {
                 ggT = argsLong[0];
@@ -156,7 +170,10 @@ public class GgTNaiv {
         return ggT;
     }
 
-    private long ggTNaiv(long a, long b) {
+    public long ggTNaiv(long a, long b) {
+        if (a == 0 || b == 0) {
+            return Math.max(Math.abs(a), Math.abs(a));
+        }
         long x = Math.max(Math.abs(a), Math.abs(b));
         long y = Math.min(Math.abs(a), Math.abs(b));
         a = x;
@@ -233,7 +250,7 @@ public class GgTNaiv {
         return newListe;
     }
 
-    boolean repeaterSetzer() {
+    private boolean repeaterSetzer() {
         marker();
         marker();
         System.out.println("Erneute Berechnung? Abbruch mit Eingabe der 1:");
