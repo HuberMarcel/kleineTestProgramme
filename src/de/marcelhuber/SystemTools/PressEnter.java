@@ -10,7 +10,7 @@ public class PressEnter {
 
 //    static public boolean boolFlag;
 
-    static public void ToContinue() {
+    static public void toContinue() {
         System.out.print("Press Enter to continue! ");
         try {
             System.in.read();

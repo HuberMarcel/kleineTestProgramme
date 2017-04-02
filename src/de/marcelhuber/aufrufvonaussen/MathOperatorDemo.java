@@ -133,7 +133,7 @@ public class MathOperatorDemo {
                     default:
                         System.out.println("Geben Sie eine bekannte Operation ein!");
                 }
-                //PressEnter.ToContinue();
+                //PressEnter.toContinue();
 //            this.ergebnisAnzeige(rechenErgebnis, information);
                 ergebnisAnzeige(rechenErgebnis, information);
             }
@@ -169,7 +169,7 @@ public class MathOperatorDemo {
                     + outputHelper(modAlt, dummy)
                     + ";");
             if (counter < rechenZahlenWerte.length - 1) {
-                PressEnter.ToContinue();
+                PressEnter.toContinue();
             } else {
                 System.out.println("");
                 marker();
@@ -177,7 +177,7 @@ public class MathOperatorDemo {
                 marker();
             }
 //            System.out.println("Größe der rechenZahlenArrayList:"+ rechenZahlen.size());
-//            PressEnter.ToContinue();
+//            PressEnter.toContinue();
         }
     }
 
