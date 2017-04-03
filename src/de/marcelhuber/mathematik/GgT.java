@@ -1,11 +1,11 @@
 package de.marcelhuber.mathematik;
 
-import de.marcelhuber.systemtools.ReadInput; 
+import de.marcelhuber.systemtools.ReadInput;
 import static de.marcelhuber.systemtools.PressEnter.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import jdk.nashorn.internal.objects.Global;
+//import jdk.nashorn.internal.objects.Global;
 
 /**
  *

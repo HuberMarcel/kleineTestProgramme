@@ -6,22 +6,20 @@ import de.marcelhuber.enumBeispiele.MathOperator;
 import de.marcelhuber.kleinetestprogramme.*;
 //import de.marcelhuber.kleinetestprogramme.MathOperator;
 import java.util.*;
-import jdk.nashorn.internal.objects.*;
+//import jdk.nashorn.internal.objects.*;
 
 /**
  *
- * @author Marcel 
- * Stand: 31.03.2017, 08:25 Uhr
+ * @author Marcel Stand: 31.03.2017, 08:25 Uhr
  */
 public class MathOperatorDemo {
 
     static String ausrufeZeichen = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
     static final StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
     static final StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
-    
+
 //    static List<Double> rechenZahlen = new ArrayList<>(5);
 //    static Double[] rechenZahlenWerte;
-    
     List<Double> rechenZahlen = new ArrayList<>(5);
     Double[] rechenZahlenWerte;
 
@@ -69,7 +67,8 @@ public class MathOperatorDemo {
         double dummy;
         while (counter < rechenZahlenWerte.length - 1) {
             z2 = rechenZahlenWerte[++counter];
-            double rechenErgebnis = Global.Infinity;
+//            double rechenErgebnis = Global.Infinity;
+            double rechenErgebnis = Double.POSITIVE_INFINITY;
             String information = "";
             for (String operation1 : operation) {
                 switch (operation1.toLowerCase()) {
@@ -195,7 +194,8 @@ public class MathOperatorDemo {
 
     void ergebnisAnzeige(double rechenErgebnis, String information) {
         System.out.print(information);
-        if (!(rechenErgebnis == Global.Infinity)) {
+//        if (!(rechenErgebnis == Global.Infinity)) {
+        if (!(rechenErgebnis == Double.POSITIVE_INFINITY)) {
             System.out.println("\n" + rechenErgebnis + "\n");
         } else {
             System.out.println("Die Operation ist fehlgeschlagen: Sie haben keine "

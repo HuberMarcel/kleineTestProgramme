@@ -12,6 +12,17 @@ public class KgV {
     long kgV;
 
     public static void main(String[] args) {
+        boolean assertionDisabled;
+        assert assertionDisabled = false : "Assertions Enabled!";
+
+        boolean assertionEnabled = false;
+        assert assertionEnabled = true;
+        if (assertionEnabled) {
+            System.out.println("Assertions Enabled");
+        } else {
+            System.out.println("Assertions Disabled");
+        }
+
         new KgV().go();
     }
 
