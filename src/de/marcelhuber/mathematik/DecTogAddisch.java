@@ -1,6 +1,6 @@
 package de.marcelhuber.mathematik;
 
-import de.marcelhuber.SystemTools.*;
+import de.marcelhuber.systemtools.ReadInput;
 import de.marcelhuber.mathematischeHilfsprogramme.LongArray;
 import java.util.ArrayList;
 import java.util.Arrays;

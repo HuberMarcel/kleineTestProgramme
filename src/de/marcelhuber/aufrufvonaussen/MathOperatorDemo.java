@@ -1,9 +1,10 @@
 package de.marcelhuber.aufrufvonaussen;
 
+import de.marcelhuber.systemtools.PressEnter;
+import de.marcelhuber.systemtools.ReadInput;
 import de.marcelhuber.enumBeispiele.MathOperator;
 import de.marcelhuber.kleinetestprogramme.*;
 //import de.marcelhuber.kleinetestprogramme.MathOperator;
-import de.marcelhuber.SystemTools.*;
 import java.util.*;
 import jdk.nashorn.internal.objects.*;
 

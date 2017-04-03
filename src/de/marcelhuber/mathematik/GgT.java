@@ -1,7 +1,7 @@
 package de.marcelhuber.mathematik;
 
-//import static de.marcelhuber.SystemTools.PressEnter; // warum geht das nicht???
-import de.marcelhuber.SystemTools.*;
+import de.marcelhuber.systemtools.ReadInput; 
+import static de.marcelhuber.systemtools.PressEnter.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

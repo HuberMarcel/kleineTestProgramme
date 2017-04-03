@@ -1,7 +1,7 @@
 package de.marcelhuber.mathematik;
 
-import de.marcelhuber.SystemTools.PressEnter;
-import de.marcelhuber.SystemTools.ReadInput;
+import de.marcelhuber.systemtools.PressEnter;
+import de.marcelhuber.systemtools.ReadInput;
 
 /**
  *
