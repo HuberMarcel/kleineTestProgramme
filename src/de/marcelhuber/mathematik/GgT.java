@@ -35,10 +35,34 @@ public class GgT {
         System.out.println(programmStart);
         marker();
         System.out.println("\n");
+//        Die folgende Zeile einkommentieren, wenn Demonstration bei 
+//        Programmstart erwünscht
         new GgT().go(args);
+        long x, y, ggT;
+        long[] ggTEuclid;
+        long a = 4342, b = 238;
+        System.out.println("\n\n");
+        marker();
+        marker();
+        System.out.println("Weitere Demo mit a=" + a + " und b="+ b );
+        marker();
+        marker();
+        System.out.println("\n\n");
+        String[] argsAB = {"" + a, "" + b};
+        new GgT().go(argsAB);
+        ggTEuclid = new GgT().ggTEuclidExtended(a, b);
+        x = ggTEuclid[0];
+        y = ggTEuclid[1];
+        ggT = ggTEuclid[2];
+        long kontrolle = x * a + y * b;
+        System.out.println(x + " * (" + a + ") + (" + y + ") * (" + b + ") "
+                + "ist " + kontrolle + "\n"
+                + "          und der ggT ist " + ggT);
     }
 
     void go(String[] args) {
+        repeater = false; // damit die while-Schleife auch angesprochen wird,
+        // wenn die Methode erneut aufgerufen wird
         // Einlesen von Eingabewerten mittels des Funktionsaufrufes inklusive
         // eines parsen auf long-Werte
         if (args.length > 0) {
@@ -133,7 +157,40 @@ public class GgT {
         System.out.println("Das Programm wurde von Ihnen beendet");
         marker();
         marker();
+    }
 
+    public long[] ggTEuclidExtended(long a, long b) {
+        long[] rueckgabeFeld = {0, 0, 0};
+        // an Stelle [0]: Vorfaktor von a
+        // an Stelle [1]: Vorfaktor von b
+        // an Stelle [2]: ggT(a,b,)
+        long x0 = 1, x1 = 0, y0 = 0, y1 = 1;
+        if (a == 0 || b == 0) {
+            if ((a == 0) & (b != 0)) {
+                rueckgabeFeld[1] = 1;
+                rueckgabeFeld[2] = b;
+            } else if ((a != 0) && (b == 0)) {
+                rueckgabeFeld[0] = 1;
+                rueckgabeFeld[2] = a;
+            }
+            return rueckgabeFeld;
+        }
+        long q; // q=[a/b]
+        long r = b; // Rest, also a=q*b+r mit 0 <= r < b 
+        while (a % b != 0) {
+            q = a / b;
+            r = a - q * b;
+            a = b;
+            b = r;
+            rueckgabeFeld[0] = x0 - q * x1;
+            rueckgabeFeld[1] = y0 - q * y1;
+            x0 = x1;
+            y0 = y1;
+            x1 = rueckgabeFeld[0];
+            y1 = rueckgabeFeld[1];
+        }
+        rueckgabeFeld[2] = b;
+        return rueckgabeFeld;
     }
 
     public long ggTEuclid(long a, long b) {
