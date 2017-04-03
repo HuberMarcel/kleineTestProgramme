@@ -80,6 +80,7 @@ public class KgV {
         System.out.println("Interessant ist das Verhältnis der schnellen kgV-"
                 + "Berechnung zur ggT-Euklid-Berechnung:");
         System.out.println(((double) timeKgVFaster / timeggTEuclid));
+        System.out.println("kgV mit ggT berechnet: " + new KgV().kgVWithGgT(a, b));
     }
 
     public long kgVNaiv(long a, long b) {
@@ -116,5 +117,15 @@ public class KgV {
 //            PressEnter.toContinue();
         }
         return Math.max(x, y);
+    }
+
+    public long kgVWithGgT(long a, long b) {
+        if (a == 0 || b == 0) {
+            return 0;
+        }
+        long ggT = new GgT().ggTEuclid(a, b);
+        assert (ggT != 0) : "Fehler: ggT=0 ist doch passiert!";
+        System.out.println("ggT:" + ggT);
+        return a * b / ggT;
     }
 }
