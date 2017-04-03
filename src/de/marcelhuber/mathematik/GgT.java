@@ -40,11 +40,11 @@ public class GgT {
         new GgT().go(args);
         long x, y, ggT;
         long[] ggTEuclid;
-        long a = 4342, b = 238;
+        long a = 24, b = 72;
         System.out.println("\n\n");
         marker();
         marker();
-        System.out.println("Weitere Demo mit a=" + a + " und b="+ b );
+        System.out.println("Weitere Demo mit a=" + a + " und b=" + b);
         marker();
         marker();
         System.out.println("\n\n");
@@ -58,6 +58,8 @@ public class GgT {
         System.out.println(x + " * (" + a + ") + (" + y + ") * (" + b + ") "
                 + "ist " + kontrolle + "\n"
                 + "          und der ggT ist " + ggT);
+        System.out.println(new GgT().ggTEuclid(a, b));
+        System.out.println(new GgT().ggTNaiv(a, b));
     }
 
     void go(String[] args) {
@@ -175,6 +177,11 @@ public class GgT {
             }
             return rueckgabeFeld;
         }
+        if (a % b == 0) {
+            rueckgabeFeld[1] = 1;
+            rueckgabeFeld[2] = b;
+            return rueckgabeFeld;
+        }
         long q; // q=[a/b]
         long r = b; // Rest, also a=q*b+r mit 0 <= r < b 
         while (a % b != 0) {
@@ -195,7 +202,7 @@ public class GgT {
 
     public long ggTEuclid(long a, long b) {
         if (a == 0 || b == 0) {
-            return Math.max(Math.abs(a), Math.abs(a));
+            return Math.max(Math.abs(a), Math.abs(b));
         }
         long q; // q=[a/b]
         long r = b; // Rest, also a=q*b+r mit 0 <= r < b 
@@ -229,7 +236,7 @@ public class GgT {
 
     public long ggTNaiv(long a, long b) {
         if (a == 0 || b == 0) {
-            return Math.max(Math.abs(a), Math.abs(a));
+            return Math.max(Math.abs(a), Math.abs(b));
         }
         long x = Math.max(Math.abs(a), Math.abs(b));
         long y = Math.min(Math.abs(a), Math.abs(b));
