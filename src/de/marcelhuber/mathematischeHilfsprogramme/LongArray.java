@@ -6,7 +6,7 @@ package de.marcelhuber.mathematischeHilfsprogramme;
  */
 public class LongArray {
 
-    static Long tauschHelfer;
+    static private Long tauschHelfer;
 
     static public void MirrorTheArray(long[] longArray) {
         int arrayLaenge = longArray.length;

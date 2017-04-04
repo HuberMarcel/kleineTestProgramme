@@ -1,6 +1,6 @@
 package de.marcelhuber.mathematik;
 
-import de.marcelhuber.systemtools.ReadInput;
+import de.marcelhuber.systemtools.*;
 import static de.marcelhuber.systemtools.PressEnter.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,24 +13,26 @@ import java.util.List;
  */
 public class GgT {
 
-    static final StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
-    static final StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
-    static String ausrufeZeichen = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-    static boolean repeater;
+    static private final StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
+    static private final StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
+    static private String ausrufeZeichen = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    static private boolean repeater;
 
     static {
         programmStartUndEndeAnpasser();
     }
 
-    long ggT;         // variable für den ggT
-    long tauscher;
-    long[] argsLong;  // long-Feld für Eingabewerte über Konsolenaufruf
-    long[] argsLongDurchGgT;  // long-Feld für Eingabewerte über Konsolenaufruf
+    private long ggT;         // variable für den ggT
+    private long x, y;         // x*a+y*b=ggT soll später gelten
+    private long tauscher;
+    private long[] argsLong;  // long-Feld für Eingabewerte über Konsolenaufruf
+    private long[] argsLongDurchGgT;  // long-Feld für Eingabewerte über Konsolenaufruf
 
-    boolean konsolenparameter;
+    private boolean konsolenparameter;
 //                    boolsche Variable, die anzeigt, ob Konsolenparameter sinnvoll waren 
 
     public static void main(String[] args) {
+//        new GgT().ggTEuclidExtended(455, -12);
         marker();
         System.out.println(programmStart);
         marker();
@@ -64,6 +66,8 @@ public class GgT {
 
     void go(String[] args) {
         repeater = false; // damit die while-Schleife auch angesprochen wird,
+        List<String> liste = new ArrayList<>();
+        String readStr = "";
         // wenn die Methode erneut aufgerufen wird
         // Einlesen von Eingabewerten mittels des Funktionsaufrufes inklusive
         // eines parsen auf long-Werte
@@ -83,8 +87,6 @@ public class GgT {
 //        }
         // Ende des Lesen der Eingabewerte über die Konsole per Aufruf
 
-        List<String> liste = new ArrayList<>();
-        String readStr = "";
         while (!repeater) {
 // falls keine sinnvollen Werte übergeben wurden, wollen wir dem Nutzer dies nun ermöglichen
             if (!konsolenparameter) {
@@ -169,17 +171,30 @@ public class GgT {
         long x0 = 1, x1 = 0, y0 = 0, y1 = 1;
         if (a == 0 || b == 0) {
             if ((a == 0) & (b != 0)) {
+                x = 0;
                 rueckgabeFeld[1] = 1;
+                y = 1;
                 rueckgabeFeld[2] = b;
+                ggT = b;
             } else if ((a != 0) && (b == 0)) {
                 rueckgabeFeld[0] = 1;
+                x = 1;
+                y = 0;
                 rueckgabeFeld[2] = a;
+                ggT = a;
             }
+//            System.out.println("x: " + x);
+//            System.out.println("y: " + y);
             return rueckgabeFeld;
         }
         if (a % b == 0) {
+            x = 0;
             rueckgabeFeld[1] = 1;
+            y = 1;
             rueckgabeFeld[2] = b;
+            ggT = b;
+//            System.out.println("x: " + x);
+//            System.out.println("y: " + y);
             return rueckgabeFeld;
         }
         long q; // q=[a/b]
@@ -197,6 +212,11 @@ public class GgT {
             y1 = rueckgabeFeld[1];
         }
         rueckgabeFeld[2] = b;
+        x = rueckgabeFeld[0];
+//        System.out.println("x: " + x);
+        y = rueckgabeFeld[1];
+//        System.out.println("y: " + y);
+        ggT = rueckgabeFeld[2];
         return rueckgabeFeld;
     }
 
@@ -327,7 +347,7 @@ public class GgT {
         return repeater;
     }
 
-    static void marker() {
+    private static void marker() {
         System.out.println(ausrufeZeichen);
     }
 
@@ -353,5 +373,17 @@ public class GgT {
             programmEnde.insert(0, " ");
             programmEnde.insert(programmEnde.length(), " ");
         }
+    }
+
+    public long getX() {
+        return x;
+    }
+
+    public long getY() {
+        return y;
+    }
+
+    public long getGgT() {
+        return ggT;
     }
 }

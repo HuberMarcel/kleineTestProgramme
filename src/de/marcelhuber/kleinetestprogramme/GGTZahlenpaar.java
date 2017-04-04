@@ -18,11 +18,11 @@ public class GGTZahlenpaar {
     // z1 und z2 sind (in dem Sinn ist das Wort "Paar" oben zu verstehen), um 
     // dann auf diesen Objekten den Erweiterten Euklidischen Algorithmus für 
     // diese anzuwerfen, um die anderen 3 Attribute sinnvoll zu füllen
-    int z1, z2;      // die zwei Zahlen, von denen der ggT berechnet werden soll
-    int x1, y1, ggT; // Ergebnisse der Berechnung: Es ist ggT = ggT(z1,z2);
+    private int z1, z2;      // die zwei Zahlen, von denen der ggT berechnet werden soll
+    private int x1, y1, ggT; // Ergebnisse der Berechnung: Es ist ggT = ggT(z1,z2);
     // x1 und y1 sind nach dem Euklidischen Algorithmus
     // so, dass x1 * z1 + y1 * z2 = ggT.
-    boolean euclidCalculated = false;
+    private boolean euclidCalculated = false;
 
     public GGTZahlenpaar() {
         this(0);

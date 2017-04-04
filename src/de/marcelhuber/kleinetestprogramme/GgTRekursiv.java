@@ -6,14 +6,14 @@ package de.marcelhuber.kleinetestprogramme;
  */
 public class GgTRekursiv {
 
-    static int summenWertUmstaendlich;
-//    static int counter;
-    static int ggTUmstaendlich;
-    static int ggT;
-    static int summenWert;
-    static int[] ggTFeld = {0, 0, 0};
-    static int[] ggTFeld2 = {0, 0, 0};
-    static int[] argsInt;
+    static private int summenWertUmstaendlich;
+//    static private int counter;
+    static private int ggTUmstaendlich;
+    static private int ggT;
+    static private int summenWert;
+    static private int[] ggTFeld = {0, 0, 0};
+    static private int[] ggTFeld2 = {0, 0, 0};
+    static private int[] argsInt;
 
     public static void main(String[] args) {
         argsInt = new int[args.length];

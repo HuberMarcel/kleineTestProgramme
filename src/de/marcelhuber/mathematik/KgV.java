@@ -9,7 +9,7 @@ import de.marcelhuber.systemtools.ReadInput;
  */
 public class KgV {
 
-    long kgV;
+    private long kgV;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -19,8 +19,10 @@ public class KgV {
         } else {
             System.out.println("Assertions Disabled");
         }
-
         new KgV().go();
+        int testZahl = -10;
+        System.out.println("Vorzeichen von " + testZahl + ": "
+                + Math.signum(testZahl));
     }
 
     void go() {
@@ -125,7 +127,7 @@ public class KgV {
         }
         long ggT = new GgT().ggTEuclid(a, b);
         assert (ggT != 0) : "Fehler: ggT=0 ist doch passiert!";
-        System.out.println("ggT:" + ggT);
+        System.out.println("ggT: " + ggT);
         return a * b / ggT;
     }
 }

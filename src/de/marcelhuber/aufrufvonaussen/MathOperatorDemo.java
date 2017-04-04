@@ -14,14 +14,14 @@ import java.util.*;
  */
 public class MathOperatorDemo {
 
-    static String ausrufeZeichen = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-    static final StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
-    static final StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
+    static private String ausrufeZeichen = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    static private final StringBuilder programmStart = new StringBuilder("PROGRAMM-START");
+    static private final StringBuilder programmEnde = new StringBuilder("PROGRAMM-ENDE");
 
 //    static List<Double> rechenZahlen = new ArrayList<>(5);
 //    static Double[] rechenZahlenWerte;
-    List<Double> rechenZahlen = new ArrayList<>(5);
-    Double[] rechenZahlenWerte;
+    private List<Double> rechenZahlen = new ArrayList<>(5);
+    private Double[] rechenZahlenWerte;
 
     public static void main(String[] args) {
         String[] operation = {"plus", "mINUS", "mAL", "DuRcH", "gGT", "mOd"};

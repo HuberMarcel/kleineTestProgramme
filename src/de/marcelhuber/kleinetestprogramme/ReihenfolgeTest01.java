@@ -6,7 +6,7 @@ package de.marcelhuber.kleinetestprogramme;
  */
 public class ReihenfolgeTest01 {
 
-    static String s = " - ";
+    static private String s = " - ";
 
     public static void main(String[] args) {
         System.out.println("pre ");

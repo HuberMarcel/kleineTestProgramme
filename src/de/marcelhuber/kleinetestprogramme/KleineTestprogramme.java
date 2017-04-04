@@ -8,12 +8,12 @@ import java.io.IOException;
  */
 public class KleineTestprogramme {
 
-    static int fallSchalter;
+    static private int fallSchalter;
 // bei 0 wird durch kleineIntVariable=0 geteilt
 // und wir erhalten eine entsprechende Exception
-    static Integer kleineIntegerVariable;
-    static int kleineIntVariable = 0;
-    static Object o;
+    static private Integer kleineIntegerVariable;
+    static private int kleineIntVariable = 0;
+    static private Object o;
 
     static {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

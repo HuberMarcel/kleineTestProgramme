@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class DecTogAddisch {
 
-    long decNumber;
-    long gBase;
+    private long decNumber;
+    private long gBase;
 
     public static void main(String[] args) {
         new DecTogAddisch().go();

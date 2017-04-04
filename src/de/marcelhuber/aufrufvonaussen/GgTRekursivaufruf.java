@@ -11,12 +11,12 @@ import java.util.*;
  */
 public class GgTRekursivaufruf {
 
-    static int[] argsInt, argsIntDurchGgT;
-    static int ggT;
-    static int firstIndexOfDelimiter;
-    static List<String> liste = new ArrayList<>();
-    List<String> newListe;
-    static boolean repeater;
+    static private int[] argsInt, argsIntDurchGgT;
+    static private int ggT;
+    static private int firstIndexOfDelimiter;
+    static private List<String> liste = new ArrayList<>();
+    static private boolean repeater;
+    private List<String> newListe;
 
     public static void main(String[] args) {
         argsInt = new int[args.length];
