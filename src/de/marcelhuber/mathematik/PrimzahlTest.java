@@ -5,12 +5,13 @@
  */
 package de.marcelhuber.mathematik;
 
+import de.marcelhuber.mathematischeHilfsprogramme.*;
 import de.marcelhuber.systemtools.*;
 import java.util.*;
 
 /**
  *
- * @author viona25
+ * @author Marcel Huber
  */
 public class PrimzahlTest {
 
@@ -33,6 +34,8 @@ public class PrimzahlTest {
     }
 
     private void go() {
+        System.out.println(primAusscheidungsverfahren(37));
+        PressEnter.toContinue();
         System.out.print("Geben Sie die Zahl ein, von der Sie wissen wollen, "
                 + "ob es eine Primzahl ist: ");
         pruefZahl = ReadInput.readLong();
@@ -61,6 +64,31 @@ public class PrimzahlTest {
         Long[] primzahlArray = new Long[primzahlListe.size()];
         primzahlListe.toArray(primzahlArray);
         System.out.println(Arrays.toString(primzahlArray));
+    }
+
+    public boolean primAusscheidungsverfahren(long pruefzahl) {
+        long z = pruefzahl;
+        long gegenKontrolle = pruefzahl - 1;
+        long bHalbe;
+        long counter = 0;
+        isPrim = true;
+        z -= 1;
+        if (pruefzahl % 2 == 0) {
+            System.out.println("Die Zahl " + pruefzahl + " ist als "
+                    + "gerade Zahl sicher nicht prim!");
+            isPrim = false;
+        } else {
+            while (z % 2 == 0) {
+                counter++;
+                z /= 2;
+            }
+            System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+                    + counter);
+            if (!hilfsmethoden.getResultCheckIs2erPotenz(counter)) {
+                isPrim = false;
+            }
+        }
+        return isPrim;
     }
 
     public long naivElementareWurzel(long z) {
@@ -100,20 +128,20 @@ public class PrimzahlTest {
         }
         return ergebnis;
     }
-    
-    public long getPruefZahl(){
+
+    public long getPruefZahl() {
         return pruefZahl;
     }
-    
-    public boolean isPrim(){
+
+    public boolean getIsPrim() {
         return isPrim;
     }
-    
-    public boolean isHilfsAnzeige(){
+
+    public boolean isHilfsAnzeige() {
         return hilfsAnzeige;
     }
-    
-    public void setHilfsAnzeige(boolean bool){
+
+    public void setHilfsAnzeige(boolean bool) {
         hilfsAnzeige = bool;
     }
 }

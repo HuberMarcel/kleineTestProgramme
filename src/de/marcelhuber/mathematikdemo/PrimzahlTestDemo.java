@@ -31,7 +31,7 @@ public class PrimzahlTestDemo {
         System.out.println("\nKontrolle: ");
         System.out.println("Die zu untersuchende Zahl war: " + primRechenObjekt.getPruefZahl());
         System.out.println("Der zugehörige Primzahlstatus (ist prim=true/ ist nicht prim=false): "
-                + primRechenObjekt.isPrim());
+                + primRechenObjekt.getIsPrim());
         System.out.println("Die letzte Zahl, die als Teiler zu prüfen gewesen wäre, war: "
                 + primRechenObjekt.naivElementareWurzel(pruefZahl));
 //        for (int i = 0; i < Math.pow(10, 1); i++) {
