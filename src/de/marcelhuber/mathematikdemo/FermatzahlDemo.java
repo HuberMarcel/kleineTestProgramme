@@ -12,7 +12,8 @@ public class FermatzahlDemo {
 
     private long zahl;
     private String rechenwegJaNein;
-    boolean fermatJaNein;
+    private boolean fermatJaNein;
+    private boolean goWithMethodeFaster;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -22,41 +23,69 @@ public class FermatzahlDemo {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new FermatzahlDemo().go();
+        long schleifenEnde = 5_000_000;
+        new FermatzahlDemo().go(schleifenEnde, false);
+        System.out.println("");
+        new FermatzahlDemo().go(schleifenEnde, true);
+
     }
 
-    private void go() {
+    private void go(long schleifenEnde, boolean goWithMethodeFaster) {
+        this.goWithMethodeFaster = goWithMethodeFaster;
+        long time = System.currentTimeMillis();
         Fermatzahl fermatzahlRechenObjekt = new Fermatzahl();
-        fermatzahlRechenObjekt.setShowCalculation(false);
+        fermatzahlRechenObjekt.setShowInternCalculation(false);
         StringBuilder ausgabeFermatJaNein;
         int indexOfKeine = 0;
         rechenwegJaNein = "Der Rechenweg wird mit angezeigt (ja=true, "
-                + "nein=false): " + fermatzahlRechenObjekt.getShowCalculation();
+                + "nein=false): " + fermatzahlRechenObjekt.getShowInternCalculation();
         rechenwegJaNein = "Der Rechenweg wird mit angezeigt (ja=true, "
-                + "nein=false): " + fermatzahlRechenObjekt.getShowCalculation();
+                + "nein=false): " + fermatzahlRechenObjekt.getShowInternCalculation();
         System.out.println(rechenwegJaNein);
         ausgabeFermatJaNein = new StringBuilder("Die Zahl ist keine Fermatzahl!");
-        for (long zahl = -10; zahl < Math.pow(10, 10); zahl++) {
+        System.out.println("Schnellere Methode an? " + isGoWithMethodeFaster());
+        for (long zahl = fermatzahlRechenObjekt.fermatZahl(4); zahl < schleifenEnde; zahl++) {
 //        System.out.print("Geben Sie eine Zahl ein: ");
 //        zahl = ReadInput.readLong();
             ausgabeFermatJaNein.insert(9, "" + zahl + " ");
-            fermatJaNein = fermatzahlRechenObjekt.calculateStatusAsFermatNumber(zahl);
+            if (goWithMethodeFaster) {
+                fermatJaNein = fermatzahlRechenObjekt.calculateStatusAsFermatNumberFaster(zahl);
+            } else {
+                fermatJaNein = fermatzahlRechenObjekt.calculateStatusAsFermatNumber(zahl);
+            }
             if (fermatJaNein) {
                 indexOfKeine = ausgabeFermatJaNein.indexOf("keine");
                 ausgabeFermatJaNein.delete(indexOfKeine, indexOfKeine + 1);
                 System.out.print(fermatJaNein + "  |  ");
                 System.out.println(ausgabeFermatJaNein);
 //                PressEnter.toContinue();
-            }
-
-            if (fermatJaNein) {
-                ausgabeFermatJaNein.insert(indexOfKeine, "k");
+                time = System.currentTimeMillis() - time;
+                anzeigeZeitInSekunden(time);
                 PressEnter.toContinue();
-            } else if (zahl % 100_000_000 == 0) {
+                time = System.currentTimeMillis();
+                ausgabeFermatJaNein.insert(indexOfKeine, "k");
+            } else if (zahl % 1000_000_000 == 0) {
+                System.out.println("Kontrollausgabe: ");
                 System.out.print(fermatJaNein + "  |  ");
-                System.out.println(ausgabeFermatJaNein);
+                System.out.println(ausgabeFermatJaNein + "\n");
             }
+//            System.out.println(ausgabeFermatJaNein);
             ausgabeFermatJaNein.delete(9, 9 + ((zahl + "").length()) + 1);
         }
+        time = System.currentTimeMillis() - time;
+        anzeigeZeitInSekunden(time);
+    }
+
+    private void anzeigeZeitInSekunden(long time) {
+        System.out.println("Zeit [s] seit letztem Enter: "
+                + (long) ((double) time / 1000));
+    }
+
+    public boolean isGoWithMethodeFaster() {
+        return goWithMethodeFaster;
+    }
+
+    public void setGoWithMethodeFaster(boolean goWithMethodeFaster) {
+        this.goWithMethodeFaster = goWithMethodeFaster;
     }
 }

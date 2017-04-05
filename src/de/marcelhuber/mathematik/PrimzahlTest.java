@@ -19,6 +19,7 @@ public class PrimzahlTest {
 // einschalten (auf true setzen), um 
 // Zwischenergebnisse anzuzeigen
     private long pruefZahl;
+    private boolean isPossiblePrim;
     private boolean isPrim;
     private List<Long> primzahlListe = new ArrayList<>();
 
@@ -34,8 +35,17 @@ public class PrimzahlTest {
     }
 
     private void go() {
-        System.out.println(primAusscheidungsverfahren(37));
-        PressEnter.toContinue();
+        boolean primPossible;
+        for (long j = 100_001; j < 1000_001; j += 2) {
+            System.out.println("\nZahl " + j + ":");
+            primPossible = primAusscheidungsverfahren(j);
+            System.out.println("Status als mögliche Primzahl: " + primPossible
+                    + " für " + getPruefZahl() + "!");
+            if (!primPossible) {
+                PressEnter.toContinue();
+            }
+        }
+        System.out.println("");
         System.out.print("Geben Sie die Zahl ein, von der Sie wissen wollen, "
                 + "ob es eine Primzahl ist: ");
         pruefZahl = ReadInput.readLong();
@@ -66,29 +76,82 @@ public class PrimzahlTest {
         System.out.println(Arrays.toString(primzahlArray));
     }
 
-    public boolean primAusscheidungsverfahren(long pruefzahl) {
-        long z = pruefzahl;
-        long gegenKontrolle = pruefzahl - 1;
-        long bHalbe;
-        long counter = 0;
-        isPrim = true;
-        z -= 1;
-        if (pruefzahl % 2 == 0) {
-            System.out.println("Die Zahl " + pruefzahl + " ist als "
-                    + "gerade Zahl sicher nicht prim!");
-            isPrim = false;
-        } else {
-            while (z % 2 == 0) {
-                counter++;
-                z /= 2;
-            }
-            System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
-                    + counter);
-            if (!hilfsmethoden.getResultCheckIs2erPotenz(counter)) {
-                isPrim = false;
+    public boolean primAusscheidungsverfahren(long checkNumber) {
+        pruefZahl = checkNumber;
+        if (checkNumber < 3) {
+            switch ((int) checkNumber) {
+                case 0:
+                case 1:
+                    isPossiblePrim = false;
+                case 2:
+                default:
+                    System.out.println("Wir untersuchen hier nur "
+                            + "positive Zahlen > 2, Sie haben " + checkNumber + " "
+                            + "eingegeben!");
+                    return isPossiblePrim;
             }
         }
-        return isPrim;
+        long gegenKontrolle = checkNumber - 1;
+        long z = gegenKontrolle;
+        double bHalbe;
+        long m = 0;
+        long p, q;
+        isPossiblePrim = true;
+        if (checkNumber % 2 == 0) {
+            System.out.println("Die Zahl " + checkNumber + " ist als "
+                    + "gerade Zahl sicher nicht prim!");
+            isPossiblePrim = false;
+        } else {
+            while (z % 2 == 0) {
+                m++;
+                z /= 2;
+            }
+//            System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+//                    + "m: " + m);
+            // Nun Test, ob pruefzahl-1 die Form b^m hatte
+//            System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+//                    + "Prüfzahl: " + pruefzahl);
+//            System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+//                    + m + "-e Wurzel aus z=" + z);
+            bHalbe = Math.pow(z, (double) 1 / m);
+//            System.out.println("bHalbe=" + bHalbe);
+//            System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+//                    + Math.abs(Math.pow((long) bHalbe, m) - gegenKontrolle / Math.pow(2, m)));
+            if (Math.abs(Math.pow((long) bHalbe, m) - gegenKontrolle / Math.pow(2, m)) > 0.1) {
+                System.out.println("(PrimzahlTest|primAusscheidungsverfahren): Die "
+                        + m + "-e Wurzel aus " + z + " ist " + bHalbe + " und damit "
+                        + "sicher keine positive ganze Zahl\n(PrimzahlTest|primAusscheidungsverfahren): "
+                        + "Voraussetzungen zur Verneinung des Primzahlstatus sind nicht erfüllt!");
+                isPossiblePrim = true;
+            } else {
+                System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+                        + "Gewünschte Form ist vorhanden:");
+                System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+                        + gegenKontrolle + "=(2*" + (long) bHalbe + ")^{" + m + "}");
+                if (!hilfsmethoden.getResultCheckIs2erPotenz(m)) {
+                    System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+                            + "Das kann keine Primzahl sein, da die Frage, ob "
+                            + "\n(PrimzahlTest|primAusscheidungsverfahren): "
+                            + m + " eine 2er-Potenz ist, beantwortet werden muss "
+                            + "mit " + hilfsmethoden.getResultCheckIs2erPotenz(m));
+                    p = m;
+                    q = 1;
+                    while (p % 2 == 0) {
+                        p /= 2;
+                        q *= 2;
+                    }
+                    System.out.println("(PrimzahlTest|primAusscheidungsverfahren): "
+                            + m + "=(p*q) mit p=" + p + ", q=" + q + " liefert, dass "
+                            + (long) (1 + Math.pow(2 * bHalbe, q)) + "=(" + (long) (2 * bHalbe)
+                            + "^{" + q + "}+1) ein Teiler von " + checkNumber + " ist!");
+                    System.out.println("(PrimzahlTest|primAusscheidungsverfahren): Kontrolle: "
+                            + checkNumber + "/" + (long) (1 + Math.pow(2 * bHalbe, q)) + "="
+                            + (double) checkNumber / (long) (1 + Math.pow(2 * bHalbe, q)));
+                    isPossiblePrim = false;
+                }
+            }
+        }
+        return isPossiblePrim;
     }
 
     public long naivElementareWurzel(long z) {
@@ -131,6 +194,10 @@ public class PrimzahlTest {
 
     public long getPruefZahl() {
         return pruefZahl;
+    }
+
+    public boolean getIsPossiblePrim() {
+        return isPossiblePrim;
     }
 
     public boolean getIsPrim() {

@@ -3,6 +3,7 @@
 package de.marcelhuber.mathematik;
 
 import de.marcelhuber.mathematischeHilfsprogramme.*;
+import de.marcelhuber.systemtools.PressEnter;
 
 /**
  *
@@ -11,7 +12,8 @@ import de.marcelhuber.mathematischeHilfsprogramme.*;
 public class Fermatzahl {
 
     private boolean statusAsFermatNumber;
-    private boolean showCalculation;
+    private boolean showInternCalculation;
+    private long m = 0;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -25,13 +27,59 @@ public class Fermatzahl {
     }
 
     private void go() {
+        System.out.println("0. Fermat-Zahl: " + fermatZahl(0));
+        System.out.println("1. Fermat-Zahl: " + fermatZahl(1));
+        System.out.println("2. Fermat-Zahl: " + fermatZahl(2));
+        System.out.println("3. Fermat-Zahl: " + fermatZahl(3));
+        System.out.println("4. Fermat-Zahl: " + fermatZahl(4));
+        System.out.println("5. Fermat-Zahl: " + fermatZahl(5));
+//        System.out.println("6. Fermat-Zahl: " + fermatZahl(6));
 
+        for (int i = 0; i < 100_000; i++) {
+            if (calculateStatusAsFermatNumberFaster(i)) {
+                PressEnter.toContinue();
+            }
+        }
+    }
+
+    public long fermatZahl(long m) {
+        if (m < 0) {
+            return 0;
+        }
+        return 1 + (long) Math.pow(2, Math.pow(2, m));
+    }
+
+    public boolean calculateStatusAsFermatNumberFaster(long z) {
+        statusAsFermatNumber = false;
+        if (z < fermatZahl(0)) {
+            statusAsFermatNumber = false;
+            m = 1;
+        } else {
+            if (z < fermatZahl(m)) {
+                while (z < fermatZahl(m)) {
+                    m--;
+                }
+            }
+            while (z > fermatZahl(m)) {
+                m += 1;
+            }
+        }
+        if (z == fermatZahl(m)) {
+            statusAsFermatNumber = true;
+        }
+        if (showInternCalculation) {
+            System.out.println("(FermatZahl|calculateStatusAsFermatNumberFaster): "
+                    + m + "-e Fermatzahl: " + fermatZahl(m)
+                    + " und Ihre Zahl war: " + z);
+            System.out.println("Also Status: " + statusAsFermatNumber);
+        }
+        return statusAsFermatNumber;
     }
 
     public boolean calculateStatusAsFermatNumber(long zahl) {
         if (zahl <= 2) {
             if (zahl <= 0) {
-                if (showCalculation) {
+                if (showInternCalculation) {
                     System.out.println("!!!!!!!"
                             + "Fermatzahlen sind positiv!!!!!!!");
                 }
@@ -39,13 +87,13 @@ public class Fermatzahl {
             return false;
         }
         zahl -= 1;
-        if (showCalculation) {
-            System.out.println("\nRECHENWEG für die Zahl " + (zahl+1) + ":");
+        if (showInternCalculation) {
+            System.out.println("\nRECHENWEG für die Zahl " + (zahl + 1) + ":");
             System.out.println("Zuerst wird von " + (zahl + 1)
                     + " die Zahl 1 abgezogen: " + zahl);
         }
         if (!hilfsmethoden.getResultCheckIs2erPotenz(zahl)) {
-            if (showCalculation) {
+            if (showInternCalculation) {
                 System.out.println("Wir haben nun keine 2er-Potenz vorliegen!");
             }
             return false;
@@ -55,12 +103,12 @@ public class Fermatzahl {
         while (zahl % 2 == 0) {
             zahl /= 2;
             counter++;
-            if (showCalculation) {
+            if (showInternCalculation) {
                 System.out.println("Die " + counter + ". Division [counter="
                         + counter + "] durch 2 " + "liefert: " + zahl);
             }
         }
-        if (showCalculation) {
+        if (showInternCalculation) {
             System.out.println("Nach der letzten Division durch 2: " + zahl);
             System.out.println("Der Test, ob counter [=" + counter + "] eine 2er-Potenz ist"
                     + " (true=ja, false=nein), ergibt: " + hilfsmethoden.getResultCheckIs2erPotenz(counter));
@@ -70,11 +118,11 @@ public class Fermatzahl {
         return statusAsFermatNumber;
     }
 
-    public boolean getShowCalculation() {
-        return showCalculation;
+    public boolean getShowInternCalculation() {
+        return showInternCalculation;
     }
 
-    public void setShowCalculation(boolean showCalculation) {
-        this.showCalculation = showCalculation;
+    public void setShowInternCalculation(boolean showInternCalculation) {
+        this.showInternCalculation = showInternCalculation;
     }
 }
