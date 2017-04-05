@@ -25,7 +25,7 @@ public class KgV {
                 + Math.signum(testZahl));
     }
 
-    void go() {
+    private void go() {
         long a, b;
         System.out.print("Eingabe der Zahl a: ");
         a = ReadInput.readLong();

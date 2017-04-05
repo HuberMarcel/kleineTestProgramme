@@ -33,7 +33,7 @@ public class MathOperatorDemo {
         new MathOperatorDemo().go(operation);
     }
 
-    void go(String[] operation) {
+    private void go(String[] operation) {
         boolean bool = true;
 
         while (bool) {

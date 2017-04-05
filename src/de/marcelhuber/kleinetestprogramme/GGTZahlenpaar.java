@@ -56,7 +56,7 @@ public class GGTZahlenpaar {
         }
     }
 
-    void goCreateGGTObject(GGTZahlenpaar zahlenPaar) {
+    private void goCreateGGTObject(GGTZahlenpaar zahlenPaar) {
         int[] ausgabefeld = new int[3];
         ausgabefeld = zahlenPaar.calculatorErweiterterEuklidischerAlgorithmus();
         /* 

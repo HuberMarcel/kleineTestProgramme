@@ -64,7 +64,7 @@ public class GgT {
         System.out.println(new GgT().ggTNaiv(a, b));
     }
 
-    void go(String[] args) {
+    private void go(String[] args) {
         repeater = false; // damit die while-Schleife auch angesprochen wird,
         List<String> liste = new ArrayList<>();
         String readStr = "";

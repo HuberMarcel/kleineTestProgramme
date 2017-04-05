@@ -20,7 +20,7 @@ public class GgTDemo {
         new GgTDemo().go();
     }
 
-    void go() {
+    private void go() {
         long a, b, x, y;
         GgT ggTRechenObjekt = new GgT();
         System.out.print("Eingabe a: ");

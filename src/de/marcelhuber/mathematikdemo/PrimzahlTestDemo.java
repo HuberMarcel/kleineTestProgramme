@@ -20,7 +20,7 @@ public class PrimzahlTestDemo {
         new PrimzahlTestDemo().go();
     }
 
-    public void go() {
+    private void go() {
         long pruefZahl;
         PrimzahlTest primRechenObjekt = new PrimzahlTest();
         String ausgabePrimOderNicht;

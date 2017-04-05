@@ -22,7 +22,7 @@ public class ReihenfolgeTest02 {
 //        System.out.println("Hallo"+s) ;
     }
 
-    static void go() {
+    static private void go() {
         s += "s";
     }
 }

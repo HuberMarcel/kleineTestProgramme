@@ -56,11 +56,11 @@ public class KleineTestprogramme {
         };
     }
 
-    static void go00() {
+    static private void go00() {
         System.out.println("Ich bin die statische Methode go00!");
     }
 
-    void go01() throws ArithmeticException {
+    private void go01() throws ArithmeticException {
         int zaehler = 12;
 //        System.out.println(zaehler + "/" + kleineIntVariable++ + " = "
 //                + (zaehler / kleineIntVariable++));

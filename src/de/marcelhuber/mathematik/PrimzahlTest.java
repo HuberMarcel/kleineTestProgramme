@@ -32,7 +32,7 @@ public class PrimzahlTest {
         new PrimzahlTest().go();
     }
 
-    void go() {
+    private void go() {
         System.out.print("Geben Sie die Zahl ein, von der Sie wissen wollen, "
                 + "ob es eine Primzahl ist: ");
         pruefZahl = ReadInput.readLong();

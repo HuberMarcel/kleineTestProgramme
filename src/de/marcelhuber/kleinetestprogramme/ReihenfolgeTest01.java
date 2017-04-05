@@ -21,7 +21,7 @@ public class ReihenfolgeTest01 {
         s += " s2";
     }
 
-    static void go() {
+    static private void go() {
         s += s;
     }
 }
