@@ -4,6 +4,7 @@ package de.marcelhuber.mathematik;
 
 import de.marcelhuber.mathematischeHilfsprogramme.*;
 import de.marcelhuber.systemtools.PressEnter;
+import java.util.*;
 
 /**
  *
@@ -13,7 +14,9 @@ public class Fermatzahl {
 
     private boolean statusAsFermatNumber;
     private boolean showInternCalculation;
-    private long m = 0;
+    private List<Long> fermatZahlen = new ArrayList<>();
+//    private long m = 0;                    // alter Code 05.04.17
+    private int m = 0;                         // neuer Code 06.04.17
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -23,6 +26,8 @@ public class Fermatzahl {
         } else {
             System.out.println("Assertions Disabled");
         }
+        new Fermatzahl().goFermatZahlenTester(3);
+        PressEnter.toContinue();
         new Fermatzahl().go();
     }
 
@@ -35,11 +40,22 @@ public class Fermatzahl {
         System.out.println("5. Fermat-Zahl: " + fermatZahl(5));
 //        System.out.println("6. Fermat-Zahl: " + fermatZahl(6));
 
-        for (int i = 0; i < 100_000; i++) {
+//        PressEnter.toContinue();
+        for (int i = 0; i < 1_000_000; i++) {
             if (calculateStatusAsFermatNumberFaster(i)) {
+                System.out.print(i + " ist Fermatzahl! \t");
                 PressEnter.toContinue();
             }
         }
+    }
+
+    private void goFermatZahlenTester(long m) {
+//        PressEnter.toContinue();
+        fuelleFermatZahlen(m);
+//        fuelleFermatZahlen(m+2);
+        Long[] fermatAlsArray = new Long[fermatZahlen.size()];
+        fermatZahlen.toArray(fermatAlsArray);
+        System.out.println(Arrays.toString(fermatAlsArray));
     }
 
     public long fermatZahl(long m) {
@@ -50,30 +66,63 @@ public class Fermatzahl {
     }
 
     public boolean calculateStatusAsFermatNumberFaster(long z) {
+        if (!fermatZahlen.contains(fermatZahl(0))) {     // neuer Code 06.04.17
+            fermatZahlen.add(fermatZahl(0));             // neuer Code 06.04.17
+        }                                                // neuer Code 06.04.17
         statusAsFermatNumber = false;
-        if (z < fermatZahl(0)) {
+        if (z < fermatZahlen.get(0)) {
+//        if (z < fermatZahl(0)) {            // alter Code 05.04.17
             statusAsFermatNumber = false;
             m = 1;
         } else {
             if (z < fermatZahl(m)) {
-                while (z < fermatZahl(m)) {
+                if (fermatZahlen.size() < m + 1) {      // neuer Code 06.04.17
+                    fuelleFermatZahlen(m + 1);          // neuer Code 06.04.17
+                }                                   // neuer Code 06.04.17
+//                while (z < fermatZahl(m)) {         // alter Code 05.04.17
+                while (z < fermatZahlen.get(m)) {
                     m--;
                 }
             }
-            while (z > fermatZahl(m)) {
+//            while (z > fermatZahl(m)) {         // alter Code 05.04.17
+            if (fermatZahlen.size() < m + 1) {                 // neuer Code 06.04.17
+                fuelleFermatZahlen(m + 1);                     // neuer Code 06.04.17
+            }                                                  // neuer Code 06.04.17
+//            System.out.println("Zahl z=" + z + ",  m=" + m + "     FSIZE " + fermatZahlen.size());
+//            Long[] testAusgabe = new Long[fermatZahlen.size()];
+//            fermatZahlen.toArray(testAusgabe);
+//            System.out.println(Arrays.toString(testAusgabe));
+//            PressEnter.toContinue();
+            while (z > fermatZahlen.get(m)) {       // neuer Code 06.04.17
                 m += 1;
+                if (fermatZahlen.size() < m + 1) {                  // neuer Code 06.04.17
+                    fuelleFermatZahlen(m + 1);                     // neuer Code 06.04.17
+                }                                                  // neuer Code 06.04.17
             }
         }
-        if (z == fermatZahl(m)) {
+//        if (z == fermatZahl(m)) {                       // alter Code 05.04.17
+        if (fermatZahlen.size() < m + 1) {                  // neuer Code 06.04.17
+            fuelleFermatZahlen(m + 1);                     // neuer Code 06.04.17
+        }                                                  // neuer Code 06.04.17
+        if (z == fermatZahlen.get(m)) {         // neuer Code 06.04.17        
             statusAsFermatNumber = true;
         }
         if (showInternCalculation) {
             System.out.println("(FermatZahl|calculateStatusAsFermatNumberFaster): "
-                    + m + "-e Fermatzahl: " + fermatZahl(m)
+                    // + m + "-e Fermatzahl: " + fermatZahl(m)      // alter Code 05.04.17
+                    + m + "-e Fermatzahl: " + fermatZahlen.get(m) // neuer Code 06.04.17
                     + " und Ihre Zahl war: " + z);
             System.out.println("Also Status: " + statusAsFermatNumber);
         }
         return statusAsFermatNumber;
+    }
+
+    private void fuelleFermatZahlen(long m) {
+        for (int k = 0; k < m; k++) {
+            if (!fermatZahlen.contains(fermatZahl(k))) {
+                fermatZahlen.add(k, fermatZahl(k));
+            }
+        }
     }
 
     public boolean calculateStatusAsFermatNumber(long zahl) {

@@ -23,7 +23,7 @@ public class FermatzahlDemo {
         } else {
             System.out.println("Assertions Disabled");
         }
-        long schleifenEnde = 5_000_000;
+        long schleifenEnde = 500_000_000;
         new FermatzahlDemo().go(schleifenEnde, false);
         System.out.println("");
         new FermatzahlDemo().go(schleifenEnde, true);
