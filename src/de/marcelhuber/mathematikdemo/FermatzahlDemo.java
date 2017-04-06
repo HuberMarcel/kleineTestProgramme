@@ -9,6 +9,7 @@ import java.util.*;
 /**
  *
  * @author Marcel Huber
+ * Stand 06.04.2017, 20:00 Uhr
  */
 public class FermatzahlDemo {
 

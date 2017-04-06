@@ -88,16 +88,19 @@ public class Fermatzahl {
                     + firstExponent);
         }
         if (Math.abs(firstExponent - (long) firstExponent)
-                >= 1d / (LOG2 * (1 + (long) (Math.pow(2, (long) firstExponent))))) {
+                > 1D / (LOG2 * ((long) (Math.pow(2, 1 + (long) firstExponent))))) {
             return statusAsFermatNumber = false;
         }
         /*
-        Bemerkung zum letzten if-Block: Ich gehe davon aus, dass log(x)/log(2)
-        tatsächlich nur einen minimal zu großen Wert liefert. Nehmen wir an, 
-        dass x=2^m+1 ist. Dann gilt wegen 1-1/y <= log(y) also
-        (log(x)-log(2^m))/log(2) = log(x/2^m)/log(2) >= (1  - 2^m/x)/log(2)
-                                 = ((x-2^m)/x)/log(2) = 1/(log(2) *[2^m +1])
-        Wenn also ein Wert < der rechten Seite rauskommt, ist alles gut
+         Bemerkung zum letzten if-Block: Ich gehe davon aus, dass log(x)/log(2)
+         tatsächlich nur einen minimal zu großen Wert liefert. Nehmen wir an, 
+         dass x=2^m+1 ist. Dann gilt wegen log(y) <= y-1 also
+         (log(x)-log(2^m))/log(2) = log(x/2^m)/log(2) <=  {(1+ 1/2^m) -1}/log(2)
+                                  = 1/{log(2) *2^m} 
+         Wenn also ein Wert > der rechten Seite rauskommt, treffen wir 
+         keine 2er-Potenz
+         Weil wir ggf. x=2^m-1 hatten, erhöhen wir auf der rechten Seite der
+         Bedingung den Exponenten nochmal um 1 
          */
         if ((long) firstExponent == 1) {
             return statusAsFermatNumber = true;
@@ -108,14 +111,22 @@ public class Fermatzahl {
                     + secondExponent);
         }
         if (Math.abs(secondExponent - (long) secondExponent)
-                < 1d / (LOG2 * (1 + (long) (Math.pow(2, (long) secondExponent))))) {
+                < (1D / LOG2)
+                * (1 - (Math.pow(2, 1 + (long) secondExponent))
+                / (1 + Math.pow(2, 1 + (long) secondExponent)))) {
             statusAsFermatNumber = true;
         }
         /*
+         Bemerkung zum letzten if-Block:
          Wenn der Logarithmus nicht exakt rechnet, so muss die Differeny 
-         >= der rechten Seite sein, wenn wir nicht von einer Zweierpotenz, 
-        sondern von einer Zahl, die etwas größer als eine Zweier-Potenz ist,
-        ausgegangen sind. 
+         > der rechten Seite sein, wenn wir nicht von einer Zweierpotenz, 
+         sondern von einer Zahl, die etwas größer als eine Zweier-Potenz ist,
+         ausgegangen sind. 
+         Denn: es gilt 1-1/y <= log(y) und mit x=2^m+1 dann
+           log(x)-log(2^m) = log(x/2^m) 
+                           >= 1-2^m/(1+2^m)  
+        Wenn die Differenz also < ist, muss auch x kleiner sein und 
+        damit in Wahrheit x=0
          */
         return statusAsFermatNumber;
     }
