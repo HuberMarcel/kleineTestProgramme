@@ -8,8 +8,7 @@ import java.util.*;
 
 /**
  *
- * @author Marcel Huber
- * Stand 06.04.2017, 20:30 Uhr
+ * @author Marcel Huber Stand 06.04.2017, 20:30 Uhr
  */
 public class FermatzahlDemo {
 
@@ -19,9 +18,9 @@ public class FermatzahlDemo {
     private boolean goWithMethodeFaster;
     static private long timeFastMethodeFalse,
             timeFastMethodeTrue, timeMethodeWithLog; // Hilfsrechenvariablen
-    static private long startIndex 
-            = new Fermatzahl().fermatZahl(3);   // starte mit Fermatzahl mit
-                                                // hier sichtbarem Index
+    static private long startIndex
+            = 1 + new Fermatzahl().fermatZahl(4);   // starte mit Fermatzahl mit
+    // hier sichtbarem Index
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -35,15 +34,16 @@ public class FermatzahlDemo {
         long schleifenEnde = 5_000_000L; //  new Fermatzahl().fermatZahl(5);
 //        System.out.println(schleifenEnde); 
 //        PressEnter.toContinue();
+        new FermatzahlDemo().goMethodeWithLog(schleifenEnde);
+        System.out.println("");
         new FermatzahlDemo().go(schleifenEnde, false);
         System.out.println("");
         new FermatzahlDemo().go(schleifenEnde, true);
-        double zeitVerhaeltnis 
+        double zeitVerhaeltnis
                 = (double) timeFastMethodeTrue / timeFastMethodeFalse;
         NumberFormat nf = NumberFormat.getInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
-        new FermatzahlDemo().goMethodeWithLog(schleifenEnde);
         System.out.println("Verhältnis \"Schnell zu langsam\": "
                 + nf.format(zeitVerhaeltnis));
         System.out.println("Zeit [s] langsamere Methode: "
