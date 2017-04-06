@@ -16,8 +16,11 @@ public class FermatzahlDemo {
     private String rechenwegJaNein;
     private boolean fermatJaNein;
     private boolean goWithMethodeFaster;
-    static private long timeFastMethodFalse,
-            timeFastMethodTrue; // Hilfsrechenvariablen
+    static private long timeFastMethodeFalse,
+            timeFastMethodeTrue, timeMethodeWithLog; // Hilfsrechenvariablen
+    static private long startIndex 
+            = new Fermatzahl().fermatZahl(3);   // starte mit Fermatzahl mit
+                                                // hier sichtbarem Index
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -27,15 +30,27 @@ public class FermatzahlDemo {
         } else {
             System.out.println("Assertions Disabled");
         }
-        long schleifenEnde = 20_000_000;
+//        System.out.println(startIndex);
+        long schleifenEnde = 5_000_000L; //  new Fermatzahl().fermatZahl(5);
+//        System.out.println(schleifenEnde); 
+//        PressEnter.toContinue();
         new FermatzahlDemo().go(schleifenEnde, false);
         System.out.println("");
         new FermatzahlDemo().go(schleifenEnde, true);
-        double zeitVerhaeltnis = (double) timeFastMethodTrue / timeFastMethodFalse;
+        double zeitVerhaeltnis 
+                = (double) timeFastMethodeTrue / timeFastMethodeFalse;
         NumberFormat nf = NumberFormat.getInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
-        System.out.println("Schnell zu langsam: " + nf.format(zeitVerhaeltnis));
+        new FermatzahlDemo().goMethodeWithLog(schleifenEnde);
+        System.out.println("Verhältnis \"Schnell zu langsam\": "
+                + nf.format(zeitVerhaeltnis));
+        System.out.println("Zeit [s] langsamere Methode: "
+                + nf.format((double) timeFastMethodeFalse / 1000));
+        System.out.println("Zeit [s] schnelle Methode:   "
+                + nf.format((double) timeFastMethodeTrue / 1000));
+        System.out.println("Zeit [s Methode mit LOG2: "
+                + nf.format((double) timeMethodeWithLog / 1000));
     }
 
     private void go(long schleifenEnde, boolean goWithMethodeFaster) {
@@ -52,7 +67,7 @@ public class FermatzahlDemo {
         System.out.println(rechenwegJaNein);
         ausgabeFermatJaNein = new StringBuilder("Die Zahl ist keine Fermatzahl!");
         System.out.println("Schnellere Methode an? " + isGoWithMethodeFaster());
-        for (long zahl = fermatzahlRechenObjekt.fermatZahl(4); zahl < schleifenEnde; zahl++) {
+        for (long zahl = startIndex; zahl < schleifenEnde; zahl++) {
 //        System.out.print("Geben Sie eine Zahl ein: ");
 //        zahl = ReadInput.readLong();
             ausgabeFermatJaNein.insert(9, "" + zahl + " ");
@@ -85,12 +100,61 @@ public class FermatzahlDemo {
         {
             Date day = new Date();
             if (goWithMethodeFaster) {
-                timeFastMethodTrue = time;
+                timeFastMethodeTrue = time;
                 System.out.println(day);
             } else {
-                timeFastMethodFalse = time;
+                timeFastMethodeFalse = time;
                 System.out.println(day);
             }
+        }
+        anzeigeZeitInSekunden(time);
+    }
+
+    private void goMethodeWithLog(long schleifenEnde) {
+        System.out.println("\nLOG-METHODE\n");
+        long time = System.currentTimeMillis();
+        Fermatzahl fermatzahlRechenObjekt = new Fermatzahl();
+        fermatzahlRechenObjekt.setShowInternCalculation(false);
+        StringBuilder ausgabeFermatJaNein;
+        int indexOfKeine = 0;
+        rechenwegJaNein = "Der Rechenweg wird mit angezeigt (ja=true, "
+                + "nein=false): " + fermatzahlRechenObjekt.getShowInternCalculation();
+        rechenwegJaNein = "Der Rechenweg wird mit angezeigt (ja=true, "
+                + "nein=false): " + fermatzahlRechenObjekt.getShowInternCalculation();
+        System.out.println(rechenwegJaNein);
+        ausgabeFermatJaNein = new StringBuilder("Die Zahl ist keine Fermatzahl!");
+//        System.out.println("Schnellere Methode an? " + isGoWithMethodeFaster());
+        for (long zahl = startIndex; zahl < schleifenEnde; zahl++) {
+//        System.out.print("Geben Sie eine Zahl ein: ");
+//        zahl = ReadInput.readLong();
+            ausgabeFermatJaNein.insert(9, "" + zahl + " ");
+            fermatJaNein = fermatzahlRechenObjekt.
+                    calculateStatusAsFermatNumberWithLog(zahl);
+            if (fermatJaNein) {
+                indexOfKeine = ausgabeFermatJaNein.indexOf("keine");
+                ausgabeFermatJaNein.delete(indexOfKeine, indexOfKeine + 1);
+                System.out.print(fermatJaNein + "  |  ");
+                System.out.println(ausgabeFermatJaNein);
+//                PressEnter.toContinue();
+                time = System.currentTimeMillis() - time;
+                anzeigeZeitInSekunden(time);
+                PressEnter.toContinue();
+                time = System.currentTimeMillis();
+                ausgabeFermatJaNein.insert(indexOfKeine, "k");
+            } else if (zahl % 1000_000_000 == 0) {
+                System.out.println("Kontrollausgabe: ");
+                System.out.print(fermatJaNein + "  |  ");
+                System.out.println(ausgabeFermatJaNein + "\n");
+            }
+//            System.out.println(ausgabeFermatJaNein);
+            ausgabeFermatJaNein.delete(9, 9 + ((zahl + "").length()) + 1);
+        }
+        time -= System.currentTimeMillis();
+        time *= -1;
+        {
+            Date day = new Date();
+            timeMethodeWithLog = time;
+            System.out.println(day);
         }
         anzeigeZeitInSekunden(time);
     }

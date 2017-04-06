@@ -17,6 +17,7 @@ public class Fermatzahl {
     private List<Long> fermatZahlen = new ArrayList<>();
 //    private long m = 0;                    // alter Code 05.04.17
     private int m = 0;                         // neuer Code 06.04.17
+    private final double LOG2 = Math.log(2);
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -36,6 +37,12 @@ public class Fermatzahl {
     }
 
     private void go() {
+//        setShowInternCalculation(true);
+//        for (int j = -3; j < 10; j++) {
+//            System.out.println(j + ": Status - "
+//                    + calculateStatusAsFermatNumberWithLog(j));
+//        }
+//        PressEnter.toContinue();
         System.out.println("0. Fermat-Zahl: " + fermatZahl(0));
         System.out.println("1. Fermat-Zahl: " + fermatZahl(1));
         System.out.println("2. Fermat-Zahl: " + fermatZahl(2));
@@ -66,6 +73,51 @@ public class Fermatzahl {
             return 0;
         }
         return 1 + (long) Math.pow(2, Math.pow(2, m));
+    }
+
+    public boolean calculateStatusAsFermatNumberWithLog(long zahl) {
+        statusAsFermatNumber = false;
+        double firstExponent, secondExponent;
+        if (zahl < 3) {
+            return statusAsFermatNumber;
+        }
+        zahl -= 1;
+        firstExponent = Math.log(zahl) / LOG2;
+        if (showInternCalculation) {
+            System.out.println("Erster Exponent (zahl=" + (zahl + 1) + "):"
+                    + firstExponent);
+        }
+        if (Math.abs(firstExponent - (long) firstExponent)
+                >= 1d / (LOG2 * (1 + (long) (Math.pow(2, (long) firstExponent))))) {
+            return statusAsFermatNumber = false;
+        }
+        /*
+        Bemerkung zum letzten if-Block: Ich gehe davon aus, dass log(x)/log(2)
+        tatsächlich nur einen minimal zu großen Wert liefert. Nehmen wir an, 
+        dass x=2^m+1 ist. Dann gilt wegen 1-1/y <= log(y) also
+        (log(x)-log(2^m))/log(2) = log(x/2^m)/log(2) >= (1  - 2^m/x)/log(2)
+                                 = ((x-2^m)/x)/log(2) = 1/(log(2) *[2^m +1])
+        Wenn also ein Wert < der rechten Seite rauskommt, ist alles gut
+         */
+        if ((long) firstExponent == 1) {
+            return statusAsFermatNumber = true;
+        }
+        secondExponent = Math.log(firstExponent) / LOG2;
+        if (showInternCalculation) {
+            System.out.println("Zweiter Exponent (zahl=" + (zahl + 1) + "):"
+                    + secondExponent);
+        }
+        if (Math.abs(secondExponent - (long) secondExponent)
+                < 1d / (LOG2 * (1 + (long) (Math.pow(2, (long) secondExponent))))) {
+            statusAsFermatNumber = true;
+        }
+        /*
+         Wenn der Logarithmus nicht exakt rechnet, so muss die Differeny 
+         >= der rechten Seite sein, wenn wir nicht von einer Zweierpotenz, 
+        sondern von einer Zahl, die etwas größer als eine Zweier-Potenz ist,
+        ausgegangen sind. 
+         */
+        return statusAsFermatNumber;
     }
 
     public boolean calculateStatusAsFermatNumberFaster(long z) {
@@ -121,7 +173,7 @@ public class Fermatzahl {
     }
 
     private void fuelleFermatZahlen(long m) {
-        for (int k = 0; k < m + 1 ; k++) {
+        for (int k = 0; k < m + 1; k++) {
             if (!fermatZahlen.contains(fermatZahl(k))) {
                 fermatZahlen.add(k, fermatZahl(k));
             }
@@ -177,8 +229,8 @@ public class Fermatzahl {
     public void setShowInternCalculation(boolean showInternCalculation) {
         this.showInternCalculation = showInternCalculation;
     }
-    
-    public void anzeigeFermatzahlenListe(){
+
+    public void anzeigeFermatzahlenListe() {
         // dient zur Ausgabe der aktuellen Liste der Fermatzahlen
         Long[] fermatZahlenAlsArray = new Long[fermatZahlen.size()];
         fermatZahlen.toArray(fermatZahlenAlsArray);
