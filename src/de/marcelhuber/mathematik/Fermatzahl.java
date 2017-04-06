@@ -26,9 +26,13 @@ public class Fermatzahl {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new Fermatzahl().goFermatZahlenTester(3);
-        PressEnter.toContinue();
         new Fermatzahl().go();
+        PressEnter.toContinue();
+        new Fermatzahl().goFermatZahlenTester(-2);
+        new Fermatzahl().goFermatZahlenTester(-1);
+        new Fermatzahl().goFermatZahlenTester(0);
+        new Fermatzahl().goFermatZahlenTester(1);
+        new Fermatzahl().goFermatZahlenTester(2);
     }
 
     private void go() {
@@ -43,19 +47,18 @@ public class Fermatzahl {
 //        PressEnter.toContinue();
         for (int i = 0; i < 1_000_000; i++) {
             if (calculateStatusAsFermatNumberFaster(i)) {
-                System.out.print(i + " ist Fermatzahl! \t");
-                PressEnter.toContinue();
+                System.out.println(i + " ist Fermatzahl! \t");
+//                PressEnter.toContinue();
             }
         }
+
     }
 
     private void goFermatZahlenTester(long m) {
 //        PressEnter.toContinue();
         fuelleFermatZahlen(m);
 //        fuelleFermatZahlen(m+2);
-        Long[] fermatAlsArray = new Long[fermatZahlen.size()];
-        fermatZahlen.toArray(fermatAlsArray);
-        System.out.println(Arrays.toString(fermatAlsArray));
+        anzeigeFermatzahlenListe();
     }
 
     public long fermatZahl(long m) {
@@ -76,18 +79,14 @@ public class Fermatzahl {
             m = 1;
         } else {
             if (z < fermatZahl(m)) {
-                if (fermatZahlen.size() < m + 1) {      // neuer Code 06.04.17
-                    fuelleFermatZahlen(m + 1);          // neuer Code 06.04.17
-                }                                   // neuer Code 06.04.17
+                makeItPossibleToGetFermatNumberFromFermatzahlen(m);       // neuer Code 06.04.17
 //                while (z < fermatZahl(m)) {         // alter Code 05.04.17
                 while (z < fermatZahlen.get(m)) {
                     m--;
                 }
             }
 //            while (z > fermatZahl(m)) {         // alter Code 05.04.17
-            if (fermatZahlen.size() < m + 1) {                 // neuer Code 06.04.17
-                fuelleFermatZahlen(m + 1);                     // neuer Code 06.04.17
-            }                                                  // neuer Code 06.04.17
+            makeItPossibleToGetFermatNumberFromFermatzahlen(m);       // neuer Code 06.04.17
 //            System.out.println("Zahl z=" + z + ",  m=" + m + "     FSIZE " + fermatZahlen.size());
 //            Long[] testAusgabe = new Long[fermatZahlen.size()];
 //            fermatZahlen.toArray(testAusgabe);
@@ -95,15 +94,11 @@ public class Fermatzahl {
 //            PressEnter.toContinue();
             while (z > fermatZahlen.get(m)) {       // neuer Code 06.04.17
                 m += 1;
-                if (fermatZahlen.size() < m + 1) {                  // neuer Code 06.04.17
-                    fuelleFermatZahlen(m + 1);                     // neuer Code 06.04.17
-                }                                                  // neuer Code 06.04.17
+                makeItPossibleToGetFermatNumberFromFermatzahlen(m);       // neuer Code 06.04.17                                           
             }
         }
 //        if (z == fermatZahl(m)) {                       // alter Code 05.04.17
-        if (fermatZahlen.size() < m + 1) {                  // neuer Code 06.04.17
-            fuelleFermatZahlen(m + 1);                     // neuer Code 06.04.17
-        }                                                  // neuer Code 06.04.17
+        makeItPossibleToGetFermatNumberFromFermatzahlen(m);       // neuer Code 06.04.17                                 
         if (z == fermatZahlen.get(m)) {         // neuer Code 06.04.17        
             statusAsFermatNumber = true;
         }
@@ -117,8 +112,16 @@ public class Fermatzahl {
         return statusAsFermatNumber;
     }
 
+    private void makeItPossibleToGetFermatNumberFromFermatzahlen(int m) {
+        // erweiter die fermatZahlen-Liste so, dass sie fermatZahl(m),
+        // also die m-te Fermatzahl (die 0-te ist die 3) enthält
+        if (fermatZahlen.size() < m + 1) {      // neuer Code 06.04.17
+            fuelleFermatZahlen(m);          // neuer Code 06.04.17
+        }                                       // neuer Code 06.04.17
+    }
+
     private void fuelleFermatZahlen(long m) {
-        for (int k = 0; k < m; k++) {
+        for (int k = 0; k < m + 1 ; k++) {
             if (!fermatZahlen.contains(fermatZahl(k))) {
                 fermatZahlen.add(k, fermatZahl(k));
             }
@@ -173,5 +176,14 @@ public class Fermatzahl {
 
     public void setShowInternCalculation(boolean showInternCalculation) {
         this.showInternCalculation = showInternCalculation;
+    }
+    
+    public void anzeigeFermatzahlenListe(){
+        // dient zur Ausgabe der aktuellen Liste der Fermatzahlen
+        Long[] fermatZahlenAlsArray = new Long[fermatZahlen.size()];
+        fermatZahlen.toArray(fermatZahlenAlsArray);
+        System.out.println("Die Liste der aktuell vorhandenen "
+                + "Fermatzahlen: ");
+        System.out.println(Arrays.toString(fermatZahlenAlsArray));
     }
 }

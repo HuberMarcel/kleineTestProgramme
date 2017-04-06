@@ -3,6 +3,8 @@ package de.marcelhuber.mathematikdemo;
 import de.marcelhuber.mathematik.*;
 import de.marcelhuber.mathematischeHilfsprogramme.*;
 import de.marcelhuber.systemtools.*;
+import java.text.*;
+import java.util.*;
 
 /**
  *
@@ -14,6 +16,8 @@ public class FermatzahlDemo {
     private String rechenwegJaNein;
     private boolean fermatJaNein;
     private boolean goWithMethodeFaster;
+    static private long timeFastMethodFalse,
+            timeFastMethodTrue; // Hilfsrechenvariablen
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -23,11 +27,15 @@ public class FermatzahlDemo {
         } else {
             System.out.println("Assertions Disabled");
         }
-        long schleifenEnde = 500_000_000;
+        long schleifenEnde = 20_000_000;
         new FermatzahlDemo().go(schleifenEnde, false);
         System.out.println("");
         new FermatzahlDemo().go(schleifenEnde, true);
-
+        double zeitVerhaeltnis = (double) timeFastMethodTrue / timeFastMethodFalse;
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        System.out.println("Schnell zu langsam: " + nf.format(zeitVerhaeltnis));
     }
 
     private void go(long schleifenEnde, boolean goWithMethodeFaster) {
@@ -72,7 +80,18 @@ public class FermatzahlDemo {
 //            System.out.println(ausgabeFermatJaNein);
             ausgabeFermatJaNein.delete(9, 9 + ((zahl + "").length()) + 1);
         }
-        time = System.currentTimeMillis() - time;
+        time -= System.currentTimeMillis();
+        time *= -1;
+        {
+            Date day = new Date();
+            if (goWithMethodeFaster) {
+                timeFastMethodTrue = time;
+                System.out.println(day);
+            } else {
+                timeFastMethodFalse = time;
+                System.out.println(day);
+            }
+        }
         anzeigeZeitInSekunden(time);
     }
 
