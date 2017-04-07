@@ -18,7 +18,7 @@ public class FermatzahlDemo {
     private boolean goWithMethodeFaster;
     static private long timeFastMethodeFalse,
             timeFastMethodeTrue, timeMethodeWithLog; // Hilfsrechenvariablen
-    static private long startIndex
+    private static long startIndex
             = 1 + new Fermatzahl().fermatZahl(4);   // starte mit Fermatzahl mit
     // hier sichtbarem Index
 
@@ -31,7 +31,7 @@ public class FermatzahlDemo {
             System.out.println("Assertions Disabled");
         }
 //        System.out.println(startIndex);
-        long schleifenEnde = 5_000_000L; //  new Fermatzahl().fermatZahl(5);
+        long schleifenEnde = 5_000_000_000L; //  new Fermatzahl().fermatZahl(5);
 //        System.out.println(schleifenEnde); 
 //        PressEnter.toContinue();
         new FermatzahlDemo().goMethodeWithLog(schleifenEnde);
@@ -44,13 +44,13 @@ public class FermatzahlDemo {
         NumberFormat nf = NumberFormat.getInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
-        System.out.println("Verhältnis \"Schnell zu langsam\": "
+        System.out.println("Verhältnis \"Schnell zu langsam\":       "
                 + nf.format(zeitVerhaeltnis));
-        System.out.println("Zeit [s] langsamere Methode: "
+        System.out.println("Zeit [s] (eigtl.) langsamere Methode:      "
                 + nf.format((double) timeFastMethodeFalse / 1000));
-        System.out.println("Zeit [s] schnelle Methode:   "
+        System.out.println("Zeit [s] (eigtl.) schnelle Methode:        "
                 + nf.format((double) timeFastMethodeTrue / 1000));
-        System.out.println("Zeit [s Methode mit LOG2: "
+        System.out.println("Zeit [s]          Methode mit LOG2:        "
                 + nf.format((double) timeMethodeWithLog / 1000));
     }
 
