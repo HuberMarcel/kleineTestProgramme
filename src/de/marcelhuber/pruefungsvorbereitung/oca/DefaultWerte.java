@@ -27,7 +27,9 @@ public class DefaultWerte {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new DefaultWerte().go();
+        DefaultWerte dummy = new DefaultWerte();
+        dummy.go();
+        System.out.printf("%n" + dummy.getClass());
     }
 
     private void go() {
@@ -39,6 +41,8 @@ public class DefaultWerte {
         ausgabe("double:   " + d);
         ausgabe("char:     " + c + "(\\u0000 - Null-Character)");
         ausgabe("boolean:  " + bool);
+//        Integer test = new Integer("3");
+//        System.out.println("" + test);
     }
 
     private void ausgabe(String s) {
