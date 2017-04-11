@@ -11,10 +11,10 @@ public class hilfsmethoden {
         System.out.println(checkIs2erPotenz(8));
         System.out.println(checkIs2erPotenz(9));
     }
-    
+
     static private boolean check2erPotenz;
-    
-    static public boolean getResultCheckIs2erPotenz(long z){
+
+    static public boolean getResultCheckIs2erPotenz(long z) {
 //        System.out.println("(hilfsmethoden) checkIs2erPotenz: "+checkIs2erPotenz(z));
         return checkIs2erPotenz(z);
     }
@@ -29,9 +29,21 @@ public class hilfsmethoden {
         }
         if (z == 1) {
             check2erPotenz = true;
-        }  else{
+        } else {
             check2erPotenz = false;
         }
         return check2erPotenz;
+    }
+
+    static public long max2erExponent(double z) {
+        // gibt maximales m aus IN_0 mit 2^m <= |z| zurück, im Falle einer
+        // 2er Potenz dann den exakten Exponenten
+        long exponent = 0;
+        while (Math.abs(z / 2) >= 1) {
+            exponent++;
+            z /= 2;
+//                System.out.println(z);
+        }
+        return exponent;
     }
 }
