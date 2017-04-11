@@ -25,7 +25,7 @@ public class Teilbarkeit {
     private void go() {
         System.out.println("Rechenzeitvergleich:");
         boolean teilbar;
-        long a = 576531-27, b = 459;
+        long a = 576531 - 27, b = 459;
         long q, r;
         long timeDirekt = System.nanoTime();
         long timeIndirekt;
