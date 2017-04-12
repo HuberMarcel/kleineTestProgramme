@@ -9,7 +9,6 @@ public class DefaultWerte {
     // geht nicht, wenn nicht an anderer Stelle ein
     // Wert initialisiert wird 
 //    { b = 3;} so würde es gehen
-
     private byte b;
     private short s;
     private int i;
@@ -43,6 +42,8 @@ public class DefaultWerte {
         ausgabe("boolean:  " + bool);
 //        Integer test = new Integer("3");
 //        System.out.println("" + test);
+//        int k; // innerhalb einer Methode gibt es keine Initial-Werte
+//        System.out.println(k);
     }
 
     private void ausgabe(String s) {
