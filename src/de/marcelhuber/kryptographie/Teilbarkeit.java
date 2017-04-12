@@ -9,7 +9,7 @@ import de.marcelhuber.systemtools.PressEnter;
  */
 public class Teilbarkeit {
 
-    boolean showCalculation = true;
+    boolean showCalculation;// = true; // Zwischenschritte bei Rechnungen anzeigen
     String divisionszeichen = ":";
 
     public static void main(String[] args) {
@@ -21,8 +21,64 @@ public class Teilbarkeit {
             System.out.println("Assertions Disabled");
         }
 //        new Teilbarkeit().goTestFallNaiverTeilbarkeitsTest();
-        new Teilbarkeit().goTestSchriftlicheDivision();
+//        new Teilbarkeit().goTestSchriftlicheDivision();
 //        new Teilbarkeit().go();
+        new Teilbarkeit().goTestSchriftlicheDivisionReinAlgebraisch();
+    }
+
+    private void goTestSchriftlicheDivisionReinAlgebraisch() {
+        long a = (long) (Math.random() * Math.pow(10, 6));
+        long b = (long) (Math.random() * Math.pow(10, 5));
+        long q, q1, q2;
+        long r, r1, r2;
+        long time1, time2Algebraisch;
+        // es ist mir bewußt, dass die Methode in unnötiger Weise je 2-Mal läuft
+        time1 = System.nanoTime();
+        q1 = simuliereSchriftlicheDivision(a, b)[0];
+        r1 = simuliereSchriftlicheDivision(a, b)[1];
+        time1 = System.nanoTime() - time1;
+        time2Algebraisch = System.nanoTime();
+        q2 = simuliereSchriftlicheDivisionReinAlgebraisch(a, b)[0];
+        r2 = simuliereSchriftlicheDivisionReinAlgebraisch(a, b)[1];
+        time2Algebraisch = System.nanoTime() - time2Algebraisch;
+        System.out.printf("Zeit [s] der Berechnungen für die 1. Methode                   "
+                + ": %1$5.2f%n", (time1 / Math.pow(10, 9)));
+        System.out.printf("Zeit [s] der Berechnungen für die 2. Methode (rein algebraisch)"
+                + ": %1$5.2f%n", (time2Algebraisch / Math.pow(10, 9)));
+        System.out.println("\nDie 1. Methode sagt:");
+        System.out.println(a + " = " + q1 + "*" + b + "+" + r1);
+        System.out.println("Gegentest: " + q1 + "*" + b + "+" + r1 + " = " + (q1 * b + r1));
+        System.out.println("\nDie 2. Methode (rein algebraisch) sagt:");
+        System.out.println(a + " = " + q2 + "*" + b + "+" + r2);
+        System.out.println("Gegentest: " + q2 + "*" + b + "+" + r2 + " = " + (q2 * b + r2));
+        System.out.println("");
+        if (q1 == q2 && r1 == r2) {
+            System.out.println("ALLES GUT, GLEICHES ERGEBNIS!");
+        } else {
+            displayWarnung();
+        }
+        System.out.println("");
+        System.out.println("ZEITVERGLEICHE:");
+        long timeDirekt = System.nanoTime();
+        a = Math.abs(a); // in den anderen Methoden bilden wir ja auch immer die Beträge
+        b = Math.abs(b);
+        q = a / b;
+        r = a % b;
+        timeDirekt = System.nanoTime() - timeDirekt;
+        System.out.printf("Zeit [s] der Berechnungen hier                                 "
+                + ": %1$5.2f%n", (timeDirekt / Math.pow(10, 9)));
+        System.out.printf("Verhältnis 1. Methode zu hier:                    %1$5.2f%n",
+                1.0 * time1 / timeDirekt);
+        System.out.printf("Verhältnis 2. Methode (rein algebraisch) zu hier: %1$5.2f%n",
+                1.0 * time2Algebraisch / timeDirekt);
+        System.out.println("\nDiese Methode hier sagt:");
+        System.out.println(a + " = " + q + "*" + b + "+" + r);
+        System.out.println("");
+        if (q1 == q2 && q == q1 && r == r1 && r1 == r2) {
+            System.out.println("ALLES PERFEKT: ÜBERALL DAS GLEICHE ERGEBNIS!");
+        } else {
+            displayWarnung();
+        }
     }
 
     private void go() {
@@ -154,6 +210,75 @@ public class Teilbarkeit {
         }
     }
 
+    private long[] simuliereSchriftlicheDivisionReinAlgebraisch(long a, long b) {
+        long q = 0;
+        long r = 0;
+        long aRechendummy = 0;
+        long counter = 0;
+        long verbrauchteZiffern = 0;
+        long ergebnisZahl = 0;
+        long[] rueckgabeQuotientRest = new long[2];
+        a = Math.abs(a);
+        b = Math.abs(b);
+        if (a < b) {
+            q = 0;
+            r = a;
+            rueckgabeQuotientRest[0] = q;
+            rueckgabeQuotientRest[1] = r;
+            if (showCalculation) {
+                System.out.println("Ergebnis: " + q);
+                System.out.println("Rest:     " + r);
+            }
+            return rueckgabeQuotientRest;
+        }
+        if (b == 0) {
+            System.out.println("Division durch 0!");
+            r = a;
+        } else {
+            verbrauchteZiffern = zaehleZiffern(b);
+            aRechendummy = a;
+            long anzahlZifferna = zaehleZiffern(a);
+            while (verbrauchteZiffern <= anzahlZifferna) {
+                verbrauchteZiffern++;
+                aRechendummy /= Math.pow(10, anzahlZifferna - verbrauchteZiffern);
+                if (aRechendummy / 10 >= b) {
+                    verbrauchteZiffern--;
+                    aRechendummy /= 10;
+                }
+                ergebnisZahl += aRechendummy / b * (long) Math.pow(10, anzahlZifferna - verbrauchteZiffern);
+                if (showCalculation) {
+                    System.out.println(++counter + ". Rechenschritt:");
+                    System.out.println("Diese Zahl wird durch " + b + " geteilt:   " + aRechendummy);
+                    System.out.println("Ergebnis (bis zur " + counter + ". Ziffer von):   " + ergebnisZahl + ";");
+                    System.out.println("die letzte Ziffer (ganz rechts) wurde aktualisiert!");
+                    System.out.println("");
+                }
+                aRechendummy = a - ergebnisZahl * b;
+                verbrauchteZiffern++;
+            }
+            if (showCalculation) {
+                System.out.println("Ergebnis: " + ergebnisZahl);
+                System.out.println("Rest:     " + aRechendummy);
+            }
+            q = ergebnisZahl;
+        }
+        r = aRechendummy;
+        rueckgabeQuotientRest[0] = q;
+        rueckgabeQuotientRest[1] = r;
+        return rueckgabeQuotientRest;
+    }
+
+    private long zaehleZiffern(long z) {
+        z = Math.abs(z);
+        long counter = 0;
+        long dez = 1;
+        while (dez <= z) {
+            counter++;
+            dez *= 10;
+        }
+        return counter;
+    }
+
     private long[] simuliereSchriftlicheDivision(long a, long b) {
         long q = 0;
         long r = 0;
@@ -231,7 +356,8 @@ public class Teilbarkeit {
                         + ergebnisZahl + " REST " + r);
             }
         }
-        long[] rueckgabeQuotientRest = {Long.parseLong(ergebnisZahl.toString()), r};
+        q = Long.parseLong(ergebnisZahl.toString());
+        long[] rueckgabeQuotientRest = {q, r};
         return rueckgabeQuotientRest;
     }
 
@@ -240,5 +366,11 @@ public class Teilbarkeit {
         System.out.println("Ganzzahl-Division-Ergebnis: " + (long) ((Object[]) auswertung)[1]);
         System.out.println("Rest: " + (long) ((Object[]) auswertung)[2]);
 
+    }
+
+    private void displayWarnung() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!WARNUNG: EINE DER BEIDEN METHODEN IST WOHL DEFEKT!!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 }
