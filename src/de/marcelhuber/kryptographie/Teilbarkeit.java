@@ -67,9 +67,9 @@ public class Teilbarkeit {
         timeDirekt = System.nanoTime() - timeDirekt;
         System.out.printf("Zeit [s] der Berechnungen hier                                 "
                 + ": %1$5.2f%n", (timeDirekt / Math.pow(10, 9)));
-        System.out.printf("Verhältnis 1. Methode zu hier:                    %1$5.2f%n",
+        System.out.printf("Verhältnis 1. Methode zu hier:                    %1$10.2f%n",
                 1.0 * time1 / timeDirekt);
-        System.out.printf("Verhältnis 2. Methode (rein algebraisch) zu hier: %1$5.2f%n",
+        System.out.printf("Verhältnis 2. Methode (rein algebraisch) zu hier: %1$10.2f%n",
                 1.0 * time2Algebraisch / timeDirekt);
         System.out.println("\nDiese Methode hier sagt:");
         System.out.println(a + " = " + q + "*" + b + "+" + r);
