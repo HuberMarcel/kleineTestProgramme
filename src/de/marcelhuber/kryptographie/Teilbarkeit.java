@@ -185,9 +185,10 @@ public class Teilbarkeit {
         } else {
             teilbar = false;
         }
-        rueckgabe[0] = teilbar;
-        rueckgabe[1] = q;
-        rueckgabe[2] = rest;
+        rueckgabe = new Object[]{teilbar, q, rest};
+//        rueckgabe[0] = teilbar;
+//        rueckgabe[1] = q;
+//        rueckgabe[2] = rest;
         return rueckgabe;
     }
 
@@ -263,8 +264,9 @@ public class Teilbarkeit {
             q = ergebnisZahl;
         }
         r = aRechendummy;
-        rueckgabeQuotientRest[0] = q;
-        rueckgabeQuotientRest[1] = r;
+        rueckgabeQuotientRest = new long[]{q, r}; // Schreibweise für Felderzeugung + Wertebelegung
+//        rueckgabeQuotientRest[0] = q;
+//        rueckgabeQuotientRest[1] = r;
         return rueckgabeQuotientRest;
     }
 
