@@ -49,15 +49,17 @@ public class Passwort extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPasswordFeld.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPasswordFeld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordFeldActionPerformed(evt);
             }
         });
 
-        jLabelPasswort.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelPasswort.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelPasswort.setText("Passwort");
 
+        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jCheckBox1.setText(" Passwort anzeigen");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +82,7 @@ public class Passwort extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
+                .addContainerGap(125, Short.MAX_VALUE)
                 .addComponent(jLabelPasswort)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordFeld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,8 +131,8 @@ public class Passwort extends javax.swing.JFrame {
             pwString += pw[k];
         }
         if (pwString.length() <= 8) {
-            JOptionPane.showMessageDialog(jDialogPwWarning, "Ihr Passwort is zu kurz!",
-                    "FEHLER", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jDialogPwWarning, "Ihr Passwort ist zu"
+                    + " kurz!", "FEHLER", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
