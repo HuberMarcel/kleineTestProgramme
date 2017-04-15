@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Marcel
+ * @author Marcel Huber
  */
 public class CalculationGui extends javax.swing.JFrame {
 
