@@ -11,6 +11,7 @@ import javax.swing.text.StyledEditorKit;
 public class Lotto6Aus49 {
 
     private int anzahlSpiele;
+    private int[][] lottoZiehungen;
 
     public Lotto6Aus49() {
         this.anzahlSpiele = 1;
@@ -38,7 +39,7 @@ public class Lotto6Aus49 {
     }
 
     public void starteZiehungen() {
-        int[][] lottoZiehungen = new int[anzahlSpiele][6];
+        lottoZiehungen = new int[anzahlSpiele][6];
 //        for (int i = 0; i < lottoZiehungen.length; i++) {
         for (int i = 0; i < anzahlSpiele; i++) {
             if (i > 0 && (i + 1) % 10 == 0) {
@@ -142,5 +143,9 @@ public class Lotto6Aus49 {
 
     public int getAnzahlSpiele() {
         return anzahlSpiele;
+    }
+    
+    public int[][] getLottoZiehungen(){
+        return lottoZiehungen;
     }
 }
