@@ -10,8 +10,8 @@ import java.util.*;
  */
 public class Lottoaufruf {
 
-    private int[] letzteZiehung = {10, 11, 14, 24, 26, 48}; // Spiel vom 12.04.17
-//    private int[] letzteZiehung = {12, 18, 21, 27, 30, 36}; // Spiel vom 15.04.17
+//    private int[] letzteZiehung = {10, 11, 14, 24, 26, 48}; // Spiel vom 12.04.17
+    private int[] letzteZiehung = {12, 18, 21, 27, 30, 36}; // Spiel vom 15.04.17
 
     public static void main(String[] args) {
         int[][] ziehungen;
@@ -36,7 +36,7 @@ public class Lottoaufruf {
             lottoSpiele.starteZiehungen(10);
 //            letzteZiehung = lottoSpiele.getLottoZiehungen()[7];  // Zeile 1/2 zum Testen, ob der Treffer funktioniert
             for (int i = 0; i < 10; i++) {
-                if (compareLottoSpiele(lottoSpiele.getLottoZiehungen()[i], letzteZiehung)) {
+                if (compareLottoSpiele(letzteZiehung, lottoSpiele.getLottoZiehungen()[i])) {
                     letzteZiehungGetroffen = true;
 //                    System.out.println("i :" + i);  // Zeile 2/2 zum Testen, ob der Treffer funktioniert
                     PressEnter.toContinue();
