@@ -10,6 +10,17 @@ import javax.swing.text.StyledEditorKit;
  */
 public class Lotto6Aus49 {
 
+    private int anzahlSpiele;
+
+    public Lotto6Aus49() {
+        this.anzahlSpiele = 1;
+    }
+
+    public Lotto6Aus49(int anzahlSpiele) {
+        this.anzahlSpiele = anzahlSpiele;
+        starteZiehungen();
+    }
+
     public static void main(String[] args) {
         boolean assertionEnabled = false;
         assert assertionEnabled = true;
@@ -18,54 +29,69 @@ public class Lotto6Aus49 {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new Lotto6Aus49().go();
+//        new Lotto6Aus49().starteZiehungen(); // so wird genau ein Lottospiel gestartet, siehe Konstruktor
+        Lotto6Aus49 lottoSpiele = new Lotto6Aus49();
+//        lottoSpiele.setAnzahlSpiele(30);
+//        lottoSpiele.starteZiehungen();
+        lottoSpiele.starteZiehungen(30);
+// wegen der Überladung liefert das das gleiche wie die zwei Zeilen darüber
     }
 
-    private void go() {
-        int anzahlSpiele = 24;
+    public void starteZiehungen() {
         int[][] lottoZiehungen = new int[anzahlSpiele][6];
-        int potentielleZahl;
-        boolean isANewNumber = true;
 //        for (int i = 0; i < lottoZiehungen.length; i++) {
         for (int i = 0; i < anzahlSpiele; i++) {
             if (i > 0 && (i + 1) % 10 == 0) {
                 System.out.println("");
             }
-            potentielleZahl = 1 + (int) (49 * Math.random());
-            lottoZiehungen[i][0] = potentielleZahl;
-            for (int j = 1; j < lottoZiehungen[0].length; j++) {
-                do {
-                    potentielleZahl = 1 + (int) (49 * Math.random());
-                    isANewNumber = true;
-                    for (int tmp = 0; tmp < j; tmp++) {
-                        if (potentielleZahl == lottoZiehungen[i][tmp]) {
-                            isANewNumber = false;
-                        }
-                    }
-                } while (!isANewNumber);
-//                System.out.println(potentielleZahl);
-                lottoZiehungen[i][j] = potentielleZahl;
-
-            }
-//            lottoZiehungen[i][4] = 18; 
-//            zum Testen, was passiert, wenn mal nicht alle Zahlen voneinander
-//            verschieden sind, obige Zeile einkommentieren
-            Arrays.sort(lottoZiehungen[i]);
-//            System.out.println("Ziehung " + (i + 1) + ": "
-//                    + Arrays.toString(lottoZiehungen[i]));
+            lottoZiehungen[i] = eineSortierteZiehung();
             System.out.print("Ziehung " + (i + 1) + ": ");
             displayIntArray(lottoZiehungen[i]);
-            if (!kontrolle(lottoZiehungen[i]) || !kontrolleSchnell(lottoZiehungen[i])) {
-                System.out.print("   --   alle Zahlen verschieden:"
-                        + kontrolle(lottoZiehungen[i]));
-                System.out.print("   --   alle Zahlen verschieden:"
-                        + kontrolleSchnell(lottoZiehungen[i]) + " ");
-                PressEnter.toContinue();
-            }
+            displayFehlerhafteZiehung(lottoZiehungen[i]);
             System.out.println("");
-
         }
-//        System.out.println(Arrays.deepToString(lottoZiehungen));
+    }
+
+    public void starteZiehungen(int anzahlSpiele) {
+        this.anzahlSpiele = anzahlSpiele;
+        starteZiehungen();
+    }
+
+    void displayFehlerhafteZiehung(int[] lottoZiehung) {
+        if (!kontrolle(lottoZiehung) || !kontrolleSchnell(lottoZiehung)) {
+            System.out.print("   --   alle Zahlen verschieden:"
+                    + kontrolle(lottoZiehung));
+            System.out.print("   --   alle Zahlen verschieden:"
+                    + kontrolleSchnell(lottoZiehung) + " ");
+            PressEnter.toContinue();
+        }
+
+    }
+
+    int[] eineSortierteZiehung() {
+        int potentielleZahl;
+        boolean isANewNumber = true;
+        int[] lottoZiehung = new int[6];
+//        potentielleZahl = 1 + (int) (49 * Math.random());
+        Random zahlGenerator = new Random();
+        potentielleZahl = 1 + zahlGenerator.nextInt(49);
+        lottoZiehung[0] = potentielleZahl;
+        for (int j = 1; j < lottoZiehung.length; j++) {
+            do {
+//                potentielleZahl = 1 + (int) (49 * Math.random());
+                potentielleZahl = 1 + zahlGenerator.nextInt(49);
+                isANewNumber = true;
+                for (int tmp = 0; tmp < j; tmp++) {
+                    if (potentielleZahl == lottoZiehung[tmp]) {
+                        isANewNumber = false;
+                    }
+                }
+            } while (!isANewNumber);
+            lottoZiehung[j] = potentielleZahl;
+        }
+        // die Ziehung wird sortiert
+        Arrays.sort(lottoZiehung);
+        return lottoZiehung;
     }
 
     boolean kontrolleSchnell(int[] intArray) {
@@ -108,5 +134,13 @@ public class Lotto6Aus49 {
             }
         }
         System.out.print(Arrays.toString(strArray));
+    }
+
+    public void setAnzahlSpiele(int anzahlSpiele) {
+        this.anzahlSpiele = anzahlSpiele;
+    }
+
+    public int getAnzahlSpiele() {
+        return anzahlSpiele;
     }
 }
