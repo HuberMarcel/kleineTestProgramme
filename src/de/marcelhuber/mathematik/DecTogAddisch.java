@@ -151,7 +151,8 @@ public class DecTogAddisch {
 
     public List<Long>[] calculateDecTogAddisch(long dec, long g) {
         List<Long>[] exponentenZiffernListe = new ArrayList[2];
-//        List<List<Long>> exponentenZiffernListe; // besser dieses verwenden
+//        List<List<Long>> exponentenZiffernListe; // besser dieses verwenden, siehe Seite 372/373
+                                                   // in https://www.uni-trier.de/fileadmin/urt/doku/java/v80/java8.pdf
 //        exponentenZiffernListe[0] = new ArrayList<Long>();
 //        exponentenZiffernListe[1] = new ArrayList<Long>();
         List<Long> ziffern = new ArrayList<>();
