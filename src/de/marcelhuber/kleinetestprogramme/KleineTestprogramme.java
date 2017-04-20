@@ -69,6 +69,7 @@ public class KleineTestprogramme {
                 break;
             case 1:
                 ++kleineIntVariable;
+                break;
             default:
                 break;
         }

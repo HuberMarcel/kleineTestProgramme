@@ -13,7 +13,7 @@ public class ReihenfolgeTest01 {
 //        s += " pre ";
         System.out.print(s);
         go();
-        new ReihenfolgeTest01().go();
+        ReihenfolgeTest01.go();
         System.out.println(s);
     }
 

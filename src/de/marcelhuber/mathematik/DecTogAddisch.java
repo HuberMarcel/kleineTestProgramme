@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author Marcel
+ * @author Marcel Huber
  */
 public class DecTogAddisch {
 
@@ -150,10 +150,9 @@ public class DecTogAddisch {
     }
 
     public List<Long>[] calculateDecTogAddisch(long dec, long g) {
-        // in exponentenZiffernListe[0] stehen die Ziffern der g-adischen
-        // Darstellung, in exponentenZiffernListe[1] die zur Basis g
-        // zugehörigen Exponenten
         List<Long>[] exponentenZiffernListe = new ArrayList[2];
+//        exponentenZiffernListe[0] = new ArrayList<Long>();
+//        exponentenZiffernListe[1] = new ArrayList<Long>();
         List<Long> ziffern = new ArrayList<>();
         List<Long> exponenten = new ArrayList<>();
         long differenz = dec;
