@@ -6,7 +6,7 @@ import de.marcelhuber.pruefungsvorbereitung.oca.*;
  *
  * @author Marcel Huber
  */
-public class InterfaceTester implements IBeispielInterface {
+public class InterfaceTester implements IBeispielInterfacePublic {
 //    long variable; // auch das wäre eine shadowing-Variable
 //    static long variable; // auch das wäre shadowing
 
