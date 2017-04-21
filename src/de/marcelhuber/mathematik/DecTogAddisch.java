@@ -11,7 +11,7 @@ import java.util.List;
  * @author Marcel Huber
  */
 public class DecTogAddisch {
-    
+        
     private long decNumber;
     private long gBase;
     
