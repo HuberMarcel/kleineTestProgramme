@@ -32,20 +32,25 @@ public class EnumAmpelTestDemo {
         gelb.showAnzeige();
         rot.showAnzeige();
         System.out.println("");
-        System.out.println("Nun behandeln wir den Switch-Case");
-
+        System.out.println("Wir geben mal die Konstanten aus:");
         for (EnumAmpelTest enumAmpel : EnumAmpelTest.values()) {
+            System.out.print(enumAmpel + " ");
+        }
+        System.out.println("\n");
+        System.out.println("Nun behandeln wir den Switch-Case");
+        for (EnumAmpelTest enumAmpel : EnumAmpelTest.values()) {
+            System.out.print(enumAmpel + ": ");
             switch (enumAmpel) {
                 case GRUEN: // wichtig: unqualifizierter Name der Konstanten
-                    System.out.print("GRUEN: ");
+//                    System.out.print("GRUEN: ");
                     enumAmpel.showAnzeige();
                     break;
                 case GELB:
-                    System.out.print("GELB:  ");
+//                    System.out.print("GELB:  ");
                     enumAmpel.showAnzeige();
                     break;
                 case ROT:
-                    System.out.print("ROT:   ");
+//                    System.out.print("ROT:   ");
                     enumAmpel.showAnzeige();
                     break;
                 default:
