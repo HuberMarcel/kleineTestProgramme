@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class UnmodifiableListTester {
 
-    ArrayList<Long> testListe = new ArrayList<>();
+    List<Long> testListe = new ArrayList<>();
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -23,20 +23,32 @@ public class UnmodifiableListTester {
     }
 
     private void go() {
-        UnmodifiableArrayList<Long> listeZumAuslesen = rueckgabeUnmodfiableList();
-//        listeZumAuslesen.add(27L);    
+        List<Long> listeZumAuslesen = rueckgabeUnmodfiableList();
+        try {
+            //            ((List<Long>) listeZumAuslesen).add(27L); // bringt nix, da Polymorphie
+            listeZumAuslesen.add(27L); // das geht nicht, da wir hier eine unmodifizierbare Liste bekommen 
+            // rueckgabeUnmodfiableList() die erste Zeile einkommentiert ist
+        } catch (UnsupportedOperationException ex) {
+            System.out.println("Fehler:" + ex);
+        }
+        testListe.add(testListe.size(), 45L);  // Z2: // wenn Z1: einkommentiert, bleibt testListe modifizierbar
+        Long[] longArray = new Long[testListe.size()];
+        testListe.toArray(longArray);
+        System.out.println(Arrays.toString(longArray));
+        // Ausgabe von [45], wenn Zeile Z1:   einkommentiert, da dann in rueckgabeUnmodfiableList()
+        // mit shadow-Variable für Liste gearbeitet wird
+        // RuntimeError in Zeile, wenn Z1:   auskommentiert, da dann zwischendurch testListe unmodifiziertbar gesetzt wird
     }
 
-    private UnmodifiableArrayList<Long> rueckgabeUnmodfiableList() {
-        UnmodifiableArrayList<Long> ichBinEineUnmodifizierbareListe;
-        testListe = new ArrayList<>();
+    private List<Long> rueckgabeUnmodfiableList() {
+        List<Long> testListe = new ArrayList<>(); // Z1:   läßt man diese Zeile weg, so knallt es in 
+        // List<Long> listeZumAuslesen = rueckgabeUnmodfiableList(); bei der go()-Methode
         testListe.add(1L);
         testListe.add(3L);
         testListe.add(5L);
         testListe.add(7L);
         testListe.add(9L);
-        ichBinEineUnmodifizierbareListe = (UnmodifiableArrayList<Long>) Collections.unmodifiableList(testListe);
-        return ichBinEineUnmodifizierbareListe;
+        testListe = Collections.unmodifiableList(testListe); // hier wird die globale Testliste unmodifizierbar
+        return testListe;
     }
-
 }
