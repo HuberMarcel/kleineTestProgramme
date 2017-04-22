@@ -22,8 +22,10 @@ public class RaetselMitZahlen {
 
     List<StringBuilder> liste = new ArrayList<>();
     List<Long> ziffernZaehler = new ArrayList<>();
+    int anzahl;
 
     boolean endless;
+    boolean zusatzInfos;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -36,8 +38,15 @@ public class RaetselMitZahlen {
         new RaetselMitZahlen().go();
     }
 
+    public void go(int anzahl) {
+        this.anzahl = anzahl;
+        go();
+    }
+    
     private void go() {
-        int anzahl = 43;
+        if (anzahl == 0) {
+            anzahl = 20;
+        }
         int numberCounter;
         String actualNumber;
         StringBuilder letzteZeile = new StringBuilder("1");
@@ -55,7 +64,9 @@ public class RaetselMitZahlen {
             ziffernZaehler.add((long) letzteZeile.length());
 //            System.out.print("Zeile " + (j + 1) + " :   ");
 //            System.out.println(liste.get(j));
-            System.out.println("Zeile Nr." + (j + 1));
+            if (zusatzInfos) {
+                System.out.println("Zeile Nr." + (j + 1));
+            }
             System.out.println(letzteZeile);
             while (letzteZeile.length() > 0) {
                 actualNumber = letzteZeile.substring(0, 1);
@@ -74,9 +85,10 @@ public class RaetselMitZahlen {
 //                PressEnter.toContinue();
 //            }
         }
-        System.out.println("");
-        System.out.println("");
-        System.out.println("Erneut die Ausgabe:");
+        if (zusatzInfos) {
+            System.out.println("");
+            System.out.println("");
+            System.out.println("Erneut die Ausgabe:");
 //        // Möglichkeit mit enhanced for-Schleide
 //        for (StringBuilder listenElement : liste) {
 //            System.out.println(listenElement);
@@ -84,21 +96,22 @@ public class RaetselMitZahlen {
 //        for (int i = 0; i < liste.size(); i++) {
 //            System.out.println(liste.get(i));
 //        }
-        // schlechte for-Schleife, da sich die Listengröße während des Durchlaufs ändert
+            // schlechte for-Schleife, da sich die Listengröße während des Durchlaufs ändert
 //        for (int i = 0; i < liste.size(); i++) {
 //            System.out.println(liste.remove(0));
 //        }
-        // so würde die vorangegangene Schleife sinnvoll sein
-        int size = liste.size();
-        for (int i = 0; i < size; i++) {
-            System.out.println(liste.remove(0));
+            // so würde die vorangegangene Schleife sinnvoll sein
+            int size = liste.size();
+            for (int i = 0; i < size; i++) {
+                System.out.println(liste.remove(0));
+            }
+            System.out.println("Die Zeile Nr." + ziffernZaehler.size() + " besteht "
+                    + "aus " + ziffernZaehler.get(ziffernZaehler.size() - 1)
+                    + " Ziffern!");
+            Long[] ziffernZaehlerAsArray = new Long[ziffernZaehler.size()];
+            ziffernZaehler.toArray(ziffernZaehlerAsArray);
+            System.out.println("\n\nHier alle berechneten Zahlen-Werte!");
+            System.out.println(Arrays.toString(ziffernZaehlerAsArray));
         }
-        System.out.println("Die Zeile Nr." + ziffernZaehler.size() + " besteht "
-                + "aus " + ziffernZaehler.get(ziffernZaehler.size() - 1)
-                + " Ziffern!");
-        Long[] ziffernZaehlerAsArray = new Long[ziffernZaehler.size()];
-        ziffernZaehler.toArray(ziffernZaehlerAsArray);
-        System.out.println("\n\nHier alle berechneten Zahlen-Werte!");
-        System.out.println(Arrays.toString(ziffernZaehlerAsArray));
     }
 }

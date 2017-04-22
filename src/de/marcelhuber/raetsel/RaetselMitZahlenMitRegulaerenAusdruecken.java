@@ -1,8 +1,6 @@
 package de.marcelhuber.raetsel;
 
-// Programm ist aktuell fehlerbehaftet, tut noch nicht das gleiche 
-// wie Raetsel mit Zahlen....
-
+// Programm läuft nun fehlerfrei (23.04.2017)
 import de.marcelhuber.systemtools.PressEnter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +15,7 @@ import java.util.regex.Pattern;
 public class RaetselMitZahlenMitRegulaerenAusdruecken {
 
     int[] indizesDerSortierung;
+    int anzahl;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -26,15 +25,32 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
         } else {
             System.out.println("Assertions Disabled");
         }
+//        new RaetselMitZahlenMitRegulaerenAusdruecken().goTesteMeineSortierung();
         new RaetselMitZahlenMitRegulaerenAusdruecken().go();
     }
 
+    private void goTesteMeineSortierung() {
+        Integer[] test = new Integer[]{3, 4, 2, 5, 1};
+        erstelleSortierIndizes(test);
+        sortiereMeinArray(test);
+        System.out.println(Arrays.toString(indizesDerSortierung));
+    }
+
+    public void go(int anzahl) {
+        this.anzahl = anzahl;
+        go();
+    }
+
     private void go() {
-        String letzteZeile = "3111";
+        if (anzahl == 0) {
+            anzahl = 20;
+        }
+        String letzteZeile = "1";
         String naechsteZeile = "";
-        int anzahl = 14;
         int counter = -1;
-        while (++counter < anzahl) {
+        boolean endless = false;
+        while (++counter < anzahl || endless) {
+            System.out.println(letzteZeile);
             naechsteZeile = "";
             List<List<Integer>> stellenStartEndZiffern = new ArrayList<>();
             List<Integer> ziffern = new ArrayList<>();
@@ -48,7 +64,7 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
                     ziffern.add(k);
                     stellenStart.add(matcher.start());
                     stellenEnd.add(matcher.end());
-                    System.out.println(matcher.group());
+//                    System.out.println(matcher.group());
                 }
             }
             stellenStartEndZiffern.add(ziffern);
@@ -69,19 +85,21 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
             stellenStartArray = sortiereMeinArray(stellenStartArray);
             stellenEndArray = sortiereMeinArray(stellenEndArray);
             ziffernArray = sortiereMeinArray(ziffernArray);
-            System.out.println("\n\nSortierung vorgenommen: ");
-            System.out.println(Arrays.toString(ziffernArray));
-            System.out.println(Arrays.toString(stellenStartArray));
-            System.out.println(Arrays.toString(stellenEndArray));
-            System.out.println("Sortierte Indizes: ");
-            System.out.println(Arrays.toString(indizesDerSortierung));
+//            System.out.println("\n\nSortierung vorgenommen: ");
+//            System.out.println(Arrays.toString(ziffernArray));
+//            System.out.println(Arrays.toString(stellenStartArray));
+//            System.out.println(Arrays.toString(stellenEndArray));
+//            System.out.println("Sortierte Indizes: ");
+//            System.out.println(Arrays.toString(indizesDerSortierung));
             for (int i = 0; i < stellenStartArray.length; i++) {
                 naechsteZeile += "" + (stellenEndArray[i] - stellenStartArray[i])
                         + ziffernArray[i];
             }
             letzteZeile = naechsteZeile;
-            System.out.println(naechsteZeile);
-            PressEnter.toContinue();
+//            System.out.println(naechsteZeile);
+            if (counter > 0 && counter % 10 == 0) {
+//                PressEnter.toContinue();
+            }
         }
     }
 
@@ -99,10 +117,11 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
         int minIndex;
 
         for (int j = 0; j < indizesDerSortierung.length; j++) {
-            minIndex = 0;
+            minIndex = j;
             labelOne:
             for (int k = 0; k < intFeld.length; k++) {
                 minIndex = k;
+
                 for (int m = 0; m < j; m++) {
                     if (k == indizesDerSortierung[m]) {
                         continue labelOne;
@@ -119,8 +138,8 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
                         minIndex = p;
                     }
                 }
+                indizesDerSortierung[j] = minIndex;
             }
-            indizesDerSortierung[j] = minIndex;
         }
 //        System.out.println(Arrays.toString(indizesDerSortierung));
     }
