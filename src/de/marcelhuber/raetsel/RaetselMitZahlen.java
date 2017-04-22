@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  *
- * @author Marcel
+ * @author Marcel Huber
  */
 public class RaetselMitZahlen {
 
