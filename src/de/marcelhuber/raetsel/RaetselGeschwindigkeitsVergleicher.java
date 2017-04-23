@@ -21,7 +21,7 @@ public class RaetselGeschwindigkeitsVergleicher {
 
     private void go() {
         int faelle = 3;
-        int anzahl = 8;
+        int anzahl = 9;
         long time1, time2, time3;
         RaetselMitZahlen rmZ
                 = new RaetselMitZahlen();

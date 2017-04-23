@@ -81,7 +81,7 @@ public class SortierungsErsteller {
             }
             if (i != indexActualMin) {
                 tauschHelfer = integerFeldCopy[i];
-                indexTauschHelfer = i;
+                indexTauschHelfer = indizesDerSortierung[i];
                 integerFeldCopy[i] = integerFeldCopy[indexActualMin];
                 indizesDerSortierung[i] = indizesDerSortierung[indexActualMin];
                 integerFeldCopy[indexActualMin] = tauschHelfer;
