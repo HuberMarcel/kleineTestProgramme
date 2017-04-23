@@ -22,17 +22,18 @@ public class RaetselGeschwindigkeitsVergleicher {
 
     private void go() {
         int fallSwitcher = 3;
-        int anzahl = 15;
+        int anzahl = 20;
         long time1, time2, time3;
+        boolean showCalculation = true;
         RaetselMitZahlen rmZ
                 = new RaetselMitZahlen();
         RaetselMitZahlenMitRegulaerenAusdruecken rmZmrA
                 = new RaetselMitZahlenMitRegulaerenAusdruecken();
         RaetselMitZahlenMitRegulaerenAusdruecken rmZmrA2
                 = new RaetselMitZahlenMitRegulaerenAusdruecken();
-        rmZ.setShowCalculationInConsole(true);
-        rmZmrA.setShowCalculationInConsole(true);
-        rmZmrA2.setShowCalculationInConsole(true);
+        rmZ.setShowCalculationInConsole(showCalculation);
+        rmZmrA.setShowCalculationInConsole(showCalculation);
+        rmZmrA2.setShowCalculationInConsole(showCalculation);
         time1 = System.nanoTime();
         rmZ.go(anzahl);
         time1 = System.nanoTime() - time1;
