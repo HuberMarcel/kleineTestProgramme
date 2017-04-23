@@ -22,9 +22,9 @@ public class RaetselGeschwindigkeitsVergleicher {
 
     private void go() {
         int fallSwitcher = 3;
-        int anzahl = 20;
+        int anzahl = 22;
         long time1, time2, time3;
-        boolean showCalculation = true;
+        boolean showCalculation = false;
         RaetselMitZahlen rmZ
                 = new RaetselMitZahlen();
         RaetselMitZahlenMitRegulaerenAusdruecken rmZmrA
