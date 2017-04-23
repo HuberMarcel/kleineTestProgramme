@@ -29,15 +29,15 @@ public class SiebDesEratosthenes {
                 + "bis zu welcher ".toUpperCase() + "%nSie die Primzahlen [einschließlich] sehen "
                 + "möchten (unsinnige Eingaben %nwerden auf 0 gesetzt!): ");
         long readLong = ReadInput.readLong();
-        Integer[] primzahlenArray;
+        Long[] primzahlenArray;
         timeSieb = System.currentTimeMillis();
         primzahlenArray = primzahlenAlsArray(siebDesEratothenes(readLong));
         timeSieb = System.currentTimeMillis() - timeSieb;
         System.out.println(Arrays.toString(primzahlenArray));
     }
 
-    private List<Integer> siebDesEratothenes(long readLong) {
-        List<Integer> siebAlsListe = new ArrayList<>();
+    private List<Long> siebDesEratothenes(long readLong) {
+        List<Long> siebAlsListe = new ArrayList<>();
         int faktor;
         if (readLong <= 0) {
             return siebAlsListe;
@@ -55,17 +55,17 @@ public class SiebDesEratosthenes {
                 }
             }
         }
-        for (int i = 0; i < readLong; i++) {
+        for (long i = 0; i < readLong; i++) {
 //            System.out.println("zahl=" + (i + 1) + "      - " + isNotPrim[i]);
-            if (!isNotPrim[i]) {
+            if (!isNotPrim[(int) i]) {
                 siebAlsListe.add(i + 1);
             }
         }
         return siebAlsListe;
     }
 
-    private Integer[] primzahlenAlsArray(List<Integer> siebDesEratothenes) {
-        Integer[] primzahlenArray = new Integer[siebDesEratothenes.size()];
+    private Long[] primzahlenAlsArray(List<Long> siebDesEratothenes) {
+        Long[] primzahlenArray = new Long[siebDesEratothenes.size()];
         siebDesEratothenes.toArray(primzahlenArray);
         return primzahlenArray;
     }
@@ -74,7 +74,7 @@ public class SiebDesEratosthenes {
         return timeSieb;
     }
     
-    public Integer[] calculateSiebDesEratosthenes(long z){
+    public Long[] calculateSiebDesEratosthenes(long z){
         return primzahlenAlsArray(siebDesEratothenes(z));
     }
 }

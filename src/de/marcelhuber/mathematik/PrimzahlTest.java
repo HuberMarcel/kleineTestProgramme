@@ -246,12 +246,12 @@ public class PrimzahlTest {
             isPrim = false;
         } else {
             long wurzel = naivElementareWurzel(zahl);
-            Integer[] primzahlenBisWurzel
+            Long[] primzahlenBisWurzel
                     = new SiebDesEratosthenes().
                             calculateSiebDesEratosthenes(wurzel);
             isPrim = true;
 //            System.out.println(Arrays.toString(primzahlenBisWurzel));
-            for (Integer primzahl : primzahlenBisWurzel) {
+            for (Long primzahl : primzahlenBisWurzel) {
 //                System.out.println(zahl+"%"+primzahl+"="+(zahl%primzahl));
                 if (zahl % primzahl == 0) {
                     isPrim = false;
