@@ -26,6 +26,7 @@ public class RaetselMitZahlen {
 
     boolean endless;
     boolean zusatzInfos;
+    boolean showCalculationInConsole;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -42,7 +43,7 @@ public class RaetselMitZahlen {
         this.anzahl = anzahl;
         go();
     }
-    
+
     private void go() {
         if (anzahl == 0) {
             anzahl = 20;
@@ -67,7 +68,9 @@ public class RaetselMitZahlen {
             if (zusatzInfos) {
                 System.out.println("Zeile Nr." + (j + 1));
             }
-            System.out.println(letzteZeile);
+            if (showCalculationInConsole) {
+                System.out.println(letzteZeile);
+            }
             while (letzteZeile.length() > 0) {
                 actualNumber = letzteZeile.substring(0, 1);
                 numberCounter = 0;
@@ -114,4 +117,13 @@ public class RaetselMitZahlen {
             System.out.println(Arrays.toString(ziffernZaehlerAsArray));
         }
     }
+
+    public void setShowCalculationInConsole(boolean showCalculationInConsole) {
+        this.showCalculationInConsole = showCalculationInConsole;
+    }
+
+    public boolean getShowCalculationInConsole() {
+        return showCalculationInConsole;
+    }
+
 }

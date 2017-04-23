@@ -1,5 +1,6 @@
 package de.marcelhuber.raetsel;
 
+import de.marcelhuber.systemtools.PressEnter;
 import java.util.Arrays;
 
 /**
@@ -21,12 +22,17 @@ public class RaetselGeschwindigkeitsVergleicher {
 
     private void go() {
         int fallSwitcher = 3;
-        int anzahl = 20;
+        int anzahl = 15;
         long time1, time2, time3;
         RaetselMitZahlen rmZ
                 = new RaetselMitZahlen();
         RaetselMitZahlenMitRegulaerenAusdruecken rmZmrA
                 = new RaetselMitZahlenMitRegulaerenAusdruecken();
+        RaetselMitZahlenMitRegulaerenAusdruecken rmZmrA2
+                = new RaetselMitZahlenMitRegulaerenAusdruecken();
+        rmZ.setShowCalculationInConsole(true);
+        rmZmrA.setShowCalculationInConsole(true);
+        rmZmrA2.setShowCalculationInConsole(true);
         time1 = System.nanoTime();
         rmZ.go(anzahl);
         time1 = System.nanoTime() - time1;
@@ -35,6 +41,7 @@ public class RaetselGeschwindigkeitsVergleicher {
             return;
         }
         time2 = System.nanoTime();
+//        PressEnter.toContinue();
         rmZmrA.go(anzahl);
         time2 = System.nanoTime() - time2;
 //        System.out.println(Arrays.toString(rmZmrA.getIndizesDerSortierung()));
@@ -45,7 +52,7 @@ public class RaetselGeschwindigkeitsVergleicher {
             return;
         }
         time3 = System.nanoTime();
-        rmZmrA.goIneffizient(anzahl);
+        rmZmrA2.goIneffizient(anzahl);
         time3 = System.nanoTime() - time3;
 //        System.out.println(Arrays.toString(rmZmrA.getIndizesDerSortierung()));
         System.out.printf("time1 [s]: %1$24.2f%n", time1 * 1.0 / Math.pow(10, 9));

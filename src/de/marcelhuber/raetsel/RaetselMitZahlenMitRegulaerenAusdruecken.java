@@ -19,6 +19,8 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
     Integer[] indizesFuerSortierung;
     int anzahl;
 
+    boolean showCalculationInConsole;
+
     public static void main(String[] args) {
         boolean assertionEnabled = false;
         assert assertionEnabled = true;
@@ -40,6 +42,16 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
         System.out.println(Arrays.toString(indizesDerSortierung));
     }
 
+    public void go(int anzahl) {
+        this.anzahl = anzahl;
+        go();
+    }
+
+    public void goIneffizient(int anzahl) {
+        this.anzahl = anzahl;
+        goIneffizient();
+    }
+
     private void go() {
         if (anzahl == 0) {
             anzahl = 20;
@@ -49,7 +61,9 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
         int counter = -1;
         boolean endless = false;
         while (++counter < anzahl || endless) {
-            System.out.println(letzteZeile);
+            if (showCalculationInConsole) {
+                System.out.println(letzteZeile);
+            }
             naechsteZeile = "";
             List<List<Integer>> stellenStartEndZiffern = new ArrayList<>();
             List<Integer> ziffern = new ArrayList<>();
@@ -79,8 +93,13 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
                     = makeIntegerArrayListToIntegerArray(stellenStartEndZiffern.get(2));
 //        System.out.println(Arrays.toString(stellenEndArray));
 //        System.out.println(letzteZeile);
-            erstelleSortierIndizes(stellenStartArray);
-//        System.out.println(Arrays.toString(indizesDerSortierung));
+//            erstelleSortierIndizes(stellenStartArray);   // old
+            indizesFuerSortierung // new
+                    = new SortierungsErsteller().indizesFuerIntegerfeldSortierungEffizienter(stellenStartArray); // new
+            indizesDerSortierung = new int[indizesFuerSortierung.length];                                        // new
+            for (int i = 0; i < indizesDerSortierung.length; i++) {                                              // new
+                indizesDerSortierung[i] = indizesFuerSortierung[i];                                              // new
+            }                                                                                                    // new
             stellenStartArray = sortiereMeinArray(stellenStartArray);
             stellenEndArray = sortiereMeinArray(stellenEndArray);
             ziffernArray = sortiereMeinArray(ziffernArray);
@@ -102,16 +121,6 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
         }
     }
 
-    public void go(int anzahl) {
-        this.anzahl = anzahl;
-        go();
-    }
-
-    public void goIneffizient(int anzahl) {
-        this.anzahl = anzahl;
-        goIneffizient();
-    }
-
     private void goIneffizient() {
         if (anzahl == 0) {
             anzahl = 20;
@@ -121,7 +130,9 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
         int counter = -1;
         boolean endless = false;
         while (++counter < anzahl || endless) {
-            System.out.println(letzteZeile);
+            if (showCalculationInConsole) {
+                System.out.println(letzteZeile);
+            }
             naechsteZeile = "";
             List<List<Integer>> stellenStartEndZiffern = new ArrayList<>();
             List<Integer> ziffern = new ArrayList<>();
@@ -152,13 +163,7 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
 //        System.out.println(Arrays.toString(stellenEndArray));
 //        System.out.println(letzteZeile);
 
-//          erstelleSortierIndizes(stellenStartArray);  // old
-            indizesFuerSortierung
-                    = new SortierungsErsteller().indizesFuerIntegerfeldSortierungEffizienter(stellenStartArray);
-            indizesDerSortierung = new int[indizesFuerSortierung.length];
-            for (int i = 0; i < indizesDerSortierung.length; i++) {
-                indizesDerSortierung[i] = indizesFuerSortierung[i];
-            }
+            erstelleSortierIndizes(stellenStartArray);                                       // old
 //        System.out.println(Arrays.toString(indizesDerSortierung));
             stellenStartArray = sortiereMeinArray(stellenStartArray);
             stellenEndArray = sortiereMeinArray(stellenEndArray);
@@ -230,5 +235,13 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
 
     public int[] getIndizesDerSortierung() {
         return indizesDerSortierung;
+    }
+
+    public void setShowCalculationInConsole(boolean showCalculationInConsole) {
+        this.showCalculationInConsole = showCalculationInConsole;
+    }
+
+    public boolean getShowCalculationInConsole() {
+        return showCalculationInConsole;
     }
 }
