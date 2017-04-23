@@ -1,6 +1,7 @@
 package de.marcelhuber.raetsel;
 
 // Programm läuft nun fehlerfrei (23.04.2017)
+import de.marcelhuber.mathematik.SortierungsErsteller;
 import de.marcelhuber.systemtools.PressEnter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
 public class RaetselMitZahlenMitRegulaerenAusdruecken {
 
     int[] indizesDerSortierung;
+    Integer[] indizesFuerSortierung;
     int anzahl;
 
     public static void main(String[] args) {
@@ -26,22 +28,99 @@ public class RaetselMitZahlenMitRegulaerenAusdruecken {
             System.out.println("Assertions Disabled");
         }
 //        new RaetselMitZahlenMitRegulaerenAusdruecken().goTesteMeineSortierung();
+//        new RaetselMitZahlenMitRegulaerenAusdruecken().goIneffizient();
         new RaetselMitZahlenMitRegulaerenAusdruecken().go();
     }
 
     private void goTesteMeineSortierung() {
         Integer[] test = new Integer[]{3, 4, 2, 5, 1};
-        erstelleSortierIndizes(test);
+//        erstelleSortierIndizes(test); // old
+        new SortierungsErsteller().indizesFuerIntegerfeldSortierungEffizienter(test); // new
         sortiereMeinArray(test);
         System.out.println(Arrays.toString(indizesDerSortierung));
+    }
+
+    private void go() {
+        if (anzahl == 0) {
+            anzahl = 20;
+        }
+        String letzteZeile = "1";
+        String naechsteZeile = "";
+        int counter = -1;
+        boolean endless = false;
+        while (++counter < anzahl || endless) {
+            System.out.println(letzteZeile);
+            naechsteZeile = "";
+            List<List<Integer>> stellenStartEndZiffern = new ArrayList<>();
+            List<Integer> ziffern = new ArrayList<>();
+            List<Integer> stellenStart = new ArrayList<>();
+            List<Integer> stellenEnd = new ArrayList<>();
+            Matcher matcher;
+
+            for (int k = 0; k < 10; ++k) { // vermutlich wird hier eh nur k < 4 möglich sein 
+                matcher = Pattern.compile(k + "+").matcher(letzteZeile);
+                while (matcher.find()) {
+                    ziffern.add(k);
+                    stellenStart.add(matcher.start());
+                    stellenEnd.add(matcher.end());
+//                    System.out.println(matcher.group());
+                }
+            }
+            stellenStartEndZiffern.add(ziffern);
+            stellenStartEndZiffern.add(stellenStart);
+            stellenStartEndZiffern.add(stellenEnd);
+            Integer[] ziffernArray
+                    = makeIntegerArrayListToIntegerArray(stellenStartEndZiffern.get(0));
+//        System.out.println(Arrays.toString(ziffernArray));
+            Integer[] stellenStartArray
+                    = makeIntegerArrayListToIntegerArray(stellenStartEndZiffern.get(1));
+//        System.out.println(Arrays.toString(stellenStartArray));
+            Integer[] stellenEndArray
+                    = makeIntegerArrayListToIntegerArray(stellenStartEndZiffern.get(2));
+//        System.out.println(Arrays.toString(stellenEndArray));
+//        System.out.println(letzteZeile);
+
+//            erstelleSortierIndizes(stellenStartArray);                               // old
+            SortierungsErsteller sortErst = new SortierungsErsteller();              // new
+            indizesFuerSortierung
+                    = sortErst.indizesFuerIntegerfeldSortierungEffizienter(stellenStartArray); // new
+            indizesDerSortierung = new int[indizesFuerSortierung.length];
+            for (int i = 0; i < indizesFuerSortierung.length; i++) {
+                indizesDerSortierung[i] = indizesFuerSortierung[i];
+            }
+//        System.out.println(Arrays.toString(indizesDerSortierung));
+            stellenStartArray = sortiereMeinArray(stellenStartArray);
+            stellenEndArray = sortiereMeinArray(stellenEndArray);
+            ziffernArray = sortiereMeinArray(ziffernArray);
+//            System.out.println("\n\nSortierung vorgenommen: ");
+//            System.out.println(Arrays.toString(ziffernArray));
+//            System.out.println(Arrays.toString(stellenStartArray));
+//            System.out.println(Arrays.toString(stellenEndArray));
+//            System.out.println("Sortierte Indizes: ");
+//            System.out.println(Arrays.toString(indizesDerSortierung));
+            for (int i = 0; i < stellenStartArray.length; i++) {
+                naechsteZeile += "" + (stellenEndArray[i] - stellenStartArray[i])
+                        + ziffernArray[i];
+            }
+            letzteZeile = naechsteZeile;
+//            System.out.println(naechsteZeile);
+            if (counter > 0 && counter % 10 == 0) {
+//                PressEnter.toContinue();
+            }
+        }
     }
 
     public void go(int anzahl) {
         this.anzahl = anzahl;
         go();
     }
+    
+    public void goIneffizient(int anzahl) {
+        this.anzahl = anzahl;
+        goIneffizient();
+    }
 
-    private void go() {
+    private void goIneffizient() {
         if (anzahl == 0) {
             anzahl = 20;
         }
