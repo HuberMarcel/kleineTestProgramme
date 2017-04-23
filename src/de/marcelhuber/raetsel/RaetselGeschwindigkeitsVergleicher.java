@@ -22,7 +22,7 @@ public class RaetselGeschwindigkeitsVergleicher {
 
     private void go() {
         int fallSwitcher = 3;
-        int anzahl = 22;
+        int anzahl = 20;
         long time1, time2, time3;
         boolean showCalculation = false;
         RaetselMitZahlen rmZ
