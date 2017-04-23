@@ -24,7 +24,7 @@ public class SortierungsErsteller {
     }
 
     private void go() {
-        Long[] longFeld = new Long[]{1L, 5L, 3L, 4L, 2L, 7L};
+        Long[] longFeld = new Long[]{2L, 8L, 34L, 5L, 21L, 3L, 13L,};
         Long[] longFeldSortiert = new Long[longFeld.length];
         Integer[] indizesSortiertesFeld
                 = indizesFuerLongfeldSortierungEffizienter(longFeld);
@@ -40,7 +40,7 @@ public class SortierungsErsteller {
     }
 
     private void goNichtEffizient() {
-        Long[] longFeld = new Long[]{1L, 5L, 3L, 4L, 2L, 7L};
+        Long[] longFeld = new Long[]{2L, 8L, 34L, 5L, 21L, 3L, 13L,};
         Long[] longFeldSortiert = new Long[longFeld.length];
         Integer[] indizesSortiertesFeld
                 = indizesFuerLongfeldSortierung(longFeld);
@@ -90,7 +90,7 @@ public class SortierungsErsteller {
         }
         return indizesDerSortierung;
     }
-    
+
     public Integer[] indizesFuerLongfeldSortierungEffizienter(Long[] longFeld) {
         // longFeld ist eine Referenz auf das übergebene Feld, wenn wir hier
         // longFeld verändern, dann verändert sich das global; daher arbeiten 
@@ -115,14 +115,18 @@ public class SortierungsErsteller {
                     indexActualMin = j;
                 }
             }
+            System.out.println("indexActualMin:" + indexActualMin);
             if (i != indexActualMin) {
                 tauschHelfer = longFeldCopy[i];
-                indexTauschHelfer = i;
+                indexTauschHelfer = indizesDerSortierung[i];
                 longFeldCopy[i] = longFeldCopy[indexActualMin];
                 indizesDerSortierung[i] = indizesDerSortierung[indexActualMin];
                 longFeldCopy[indexActualMin] = tauschHelfer;
                 indizesDerSortierung[indexActualMin] = indexTauschHelfer;
             }
+//            System.out.println("Feld: " + Arrays.toString(longFeldCopy));
+//            System.out.println(Arrays.toString(indizesDerSortierung));
+//            PressEnter.toContinue();
         }
         return indizesDerSortierung;
     }

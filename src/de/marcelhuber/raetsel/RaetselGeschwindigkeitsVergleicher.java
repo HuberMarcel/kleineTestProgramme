@@ -1,5 +1,7 @@
 package de.marcelhuber.raetsel;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Marcel Huber
@@ -19,7 +21,7 @@ public class RaetselGeschwindigkeitsVergleicher {
 
     private void go() {
         int faelle = 3;
-        int anzahl = 15;
+        int anzahl = 8;
         long time1, time2, time3;
         RaetselMitZahlen rmZ
                 = new RaetselMitZahlen();
@@ -35,6 +37,7 @@ public class RaetselGeschwindigkeitsVergleicher {
         time2 = System.nanoTime();
         rmZmrA.go(anzahl);
         time2 = System.nanoTime() - time2;
+        System.out.println(Arrays.toString(rmZmrA.getIndizesDerSortierung()));
         if (faelle == 2) {
             System.out.printf("time1 [s]: %1$24.2f%n", time1 * 1.0 / Math.pow(10, 9));
             System.out.printf("time2 [s]: %1$24.2f%n", time2 * 1.0 / Math.pow(10, 9));
@@ -44,6 +47,7 @@ public class RaetselGeschwindigkeitsVergleicher {
         time3 = System.nanoTime();
         rmZmrA.goIneffizient(anzahl);
         time3 = System.nanoTime() - time3;
+        System.out.println(Arrays.toString(rmZmrA.getIndizesDerSortierung()));
         System.out.printf("time1 [s]: %1$24.2f%n", time1 * 1.0 / Math.pow(10, 9));
         System.out.printf("time2 [s]: %1$24.2f%n", time2 * 1.0 / Math.pow(10, 9));
         System.out.printf("Faktor time2/time1 ist ca.: %1$7.2f%n", 1.0 * time2 / time1);
