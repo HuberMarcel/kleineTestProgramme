@@ -25,8 +25,8 @@ public class PrimfaktorzerlegungsDemo {
     }
 
     private void go() {
-        //        System.out.println(Integer.MAX_VALUE);
-        zahl = 92233726L; // 447483647; // 547483647; // 1347483647; // 4323422L; // 67534856847L;
+//        System.out.println(Long.MAX_VALUE);
+        zahl = 922337203685477578L; // 447483647; // 547483647; // 1347483647; // 4323422L; // 67534856847L;
         zahlEingabe = true;
         if (zahlEingabe) {
             System.out.println("Geben Sie bitte eine Zahl ein:");
