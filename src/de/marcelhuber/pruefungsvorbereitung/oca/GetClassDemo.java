@@ -36,9 +36,9 @@ public class GetClassDemo {
                 + "die für die Erzeugung des Objektes verantwortlich war.\nAuch, "
                 + "wenn man nach oben casted, wird die Kindklasse ausgegeben!");
         System.out.println("");
-        System.out.println("child instanceof OverwritingSubclass:       "
+        System.out.println("child instanceof OverwritingSubclass:          "
                 + (child instanceof OverwritingSubclass));
-        System.out.println("child instanceof Overwriting:               "
+        System.out.println("child instanceof Overwriting:                  "
                 + (child instanceof Overwriting));
         System.out.println("(((Overwriting) child) instanceof Overwriting: "
                 + (((Overwriting) child) instanceof Overwriting));
