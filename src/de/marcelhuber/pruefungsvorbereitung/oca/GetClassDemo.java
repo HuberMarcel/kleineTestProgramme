@@ -36,11 +36,16 @@ public class GetClassDemo {
                 + "die für die Erzeugung des Objektes verantwortlich war.\nAuch, "
                 + "wenn man nach oben casted, wird die Kindklasse ausgegeben!");
         System.out.println("");
-        System.out.println("child instanceof OverwritingSubclass:          "
+        System.out.println("child instanceof OverwritingSubclass:"
+                + "                                          "
                 + (child instanceof OverwritingSubclass));
-        System.out.println("child instanceof Overwriting:                  "
+        System.out.println("child instanceof de.marcelhuber.pruefungsvorbereitung.oca.OverwritingSubclass:"
+                + " " + (child instanceof de.marcelhuber.pruefungsvorbereitung.oca.OverwritingSubclass));
+        System.out.println("child instanceof Overwriting:"
+                + "                                                  "
                 + (child instanceof Overwriting));
-        System.out.println("(((Overwriting) child) instanceof Overwriting: "
+        System.out.println("(((Overwriting) child) instanceof Overwriting:"
+                + "                                 "
                 + (((Overwriting) child) instanceof Overwriting));
         System.out.println(Integer.MAX_VALUE);       // vom Typ int
         System.out.println(Integer.MAX_VALUE + 1);   // vom Typ int
