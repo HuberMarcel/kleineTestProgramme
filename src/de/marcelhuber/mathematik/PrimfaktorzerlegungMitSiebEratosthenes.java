@@ -1,13 +1,14 @@
 package de.marcelhuber.mathematik;
 
-import de.marcelhuber.systemtools.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
  * @author Marcel Huber
  */
-public class Primfaktorzerlegung {
+public class PrimfaktorzerlegungMitSiebEratosthenes {
 
     List<List<Long>> primfaktorenUndExponten = new ArrayList<>();
     Long zahl = 133L;
@@ -20,11 +21,25 @@ public class Primfaktorzerlegung {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new Primfaktorzerlegung().go();
+        new PrimfaktorzerlegungMitSiebEratosthenes().go();
     }
 
     private void go() {
-        zerlegeZahl(12);
+//        List<List<Long>> primUndExpo = zerlegeZahl(8);
+//        Long[] prim = new Long[primUndExpo.get(0).size()];
+//        Long[] expo = new Long[primUndExpo.get(1).size()];
+//        primUndExpo.get(0).toArray(prim);
+//        primUndExpo.get(1).toArray(expo);
+//        System.out.println("Primzahlen: " + Arrays.toString(prim));
+//        System.out.println("Exponenten: " + Arrays.toString(expo));
+        zerlegeZahl(zahl);
+        System.out.println(Arrays.toString(getPrimfaktorenAlsArray()));
+        System.out.println(Arrays.toString(getExponentenAlsArray()));
+        System.out.println("");
+        System.out.println("Es gilt also: ");
+        zeigeZahlDarstellung();
+        System.out.println("\nKontrolle durch Ausrechnen der rechten Seite:");
+        kontrolliereZahlDarstellung();
     }
 
     public List<List<Long>> zerlegeZahl(long zahl) {
@@ -33,35 +48,23 @@ public class Primfaktorzerlegung {
 //        System.out.println("zahl: " + zahl);
         List<Long> primfaktoren = new ArrayList<>();
         List<Long> exponenten = new ArrayList<>();
-        PrimzahlTest pzTest = new PrimzahlTest();
-        long teiler = 2;
-        long exponent;
-        while (zahl > 1) {
-            // Finde die nächste Primzahl
-            while (!pzTest.primAusscheidungsverfahren(teiler)) {
-                ++teiler;
+        Long counter;
+        SiebDesEratosthenes sDE = new SiebDesEratosthenes();
+        Long[] primzahlenRelevant = sDE.calculateSiebDesEratosthenes(zahl);
+//        System.out.println("Ausgabe");
+//        System.out.println(Arrays.toString(primzahlenRelevant));
+        for (int k = 0; k < primzahlenRelevant.length; k++) {
+            if (zahl % primzahlenRelevant[k] == 0) {
+                primfaktoren.add(0L + primzahlenRelevant[k]);
+                counter = 0L;
+                do {
+                    zahl /= primzahlenRelevant[k];
+                    counter++;
+                } while (zahl % primzahlenRelevant[k] == 0);
+                exponenten.add(counter);
             }
-            exponent = 0;
-            if (zahl % teiler == 0) {
-                while (zahl % teiler == 0) {
-                    zahl /= teiler;
-                    ++exponent;
-//                    System.out.println("zahl:     " + zahl);
-//                    System.out.println("exponent: " + exponent);
-//                    System.out.println("teiler:   " + teiler);
-//                    PressEnter.toContinue();
-                }
-                primfaktoren.add(teiler);
-                exponenten.add(exponent);
-            }
-            ++teiler;
+//            System.out.println("");
         }
-//        Long[] primfaktorenArray = new Long[primfaktoren.size()];
-//        Long[] exponentenArray = new Long[exponenten.size()];
-//        primfaktoren.toArray(primfaktorenArray);
-//        exponenten.toArray(exponentenArray);
-//        System.out.println(Arrays.toString(primfaktorenArray));
-//        System.out.println(Arrays.toString(exponentenArray));
         primfaktorenUndExponten.add(primfaktoren);
         primfaktorenUndExponten.add(exponenten);
         return primfaktorenUndExponten;
