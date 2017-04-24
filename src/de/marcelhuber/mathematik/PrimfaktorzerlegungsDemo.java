@@ -1,5 +1,6 @@
 package de.marcelhuber.mathematik;
 
+import de.marcelhuber.systemtools.*;
 import java.util.Arrays;
 
 /**
@@ -7,6 +8,9 @@ import java.util.Arrays;
  * @author Marcel Huber
  */
 public class PrimfaktorzerlegungsDemo {
+
+    boolean zahlEingabe;
+    long zahl;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -20,8 +24,14 @@ public class PrimfaktorzerlegungsDemo {
     }
 
     private void go() {
-        System.out.println(Long.MAX_VALUE);
-        long zahl = 92233726L; // 4323422L; // 67534856847L;
+//        System.out.println(Integer.MAX_VALUE);
+        zahl = 92233726L; // 447483647; // 547483647; // 1347483647; // 4323422L; // 67534856847L;
+        zahlEingabe = true;
+        if (zahlEingabe) {
+            System.out.println("Geben Sie bitte eine Zahl ein:");
+            zahl = ReadInput.readLong();
+        }
+//        PressEnter.toContinue();
         Primfaktorzerlegung pfz = new Primfaktorzerlegung();
         long time = System.nanoTime();
         pfz.zerlegeZahl(zahl);
