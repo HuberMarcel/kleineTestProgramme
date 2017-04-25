@@ -18,6 +18,11 @@ class Overwriting { // es darf nur eine public-Klasse in einer Datei geben
         System.out.println("Ich bin nicht statisch/Elternklasse!");
         return 0;
     }
+    
+    private void ichBinEinePrivateMethode(){
+        System.out.println("Ich bin privat - Elternklasse - und mich kann "
+                + "man nicht überschreiben!");
+    }
 
     //Long ichBinNichtStatischLong(){
     Number ichBinNichtStatischLong() {

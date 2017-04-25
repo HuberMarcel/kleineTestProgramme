@@ -6,6 +6,11 @@ package de.marcelhuber.pruefungsvorbereitung.oca;
  */
 public class OverwritingSubclass extends Overwriting { // Access-Level ist egal
 
+    public void ichBinEinePrivateMethode(){
+        System.out.println("Ich - aus der Kindklasse - nenne mich zwar privat, "
+                + "bin es aber eigenttlich gar nicht!");
+    }
+    
     static void ichBinStatisch() {
         System.out.println("Ich bin statisch/Kindklasse!");
     }
@@ -71,6 +76,11 @@ public class OverwritingSubclass extends Overwriting { // Access-Level ist egal
         System.out.println("");
         child.ichBinEineStatischeMethode();                      // E
         ((Overwriting) child).ichBinEineStatischeMethode();      // E
+        System.out.println("");             
+        child.ichBinEinePrivateMethode();                        // K
+//        ((Overwriting) child).ichBinEinePrivateMethode();        // geht natürlich nicht, da diese Methode nur innerhalb 
+//                                                                 // der Elternklasse Overwriting verfügbar ist
+        
         // Ausgaben: EEE KKK EEEE KK EE KK E K EE
     }
 }
