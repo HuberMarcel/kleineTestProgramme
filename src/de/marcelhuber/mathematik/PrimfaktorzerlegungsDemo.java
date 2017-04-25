@@ -9,8 +9,8 @@ import java.util.Arrays;
  */
 public class PrimfaktorzerlegungsDemo {
 
-    boolean zahlEingabe;
-    long zahl;
+    private boolean zahlEingabe;
+    private long zahl;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;

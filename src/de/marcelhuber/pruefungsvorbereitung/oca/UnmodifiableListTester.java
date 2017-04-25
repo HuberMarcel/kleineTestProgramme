@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class UnmodifiableListTester {
 
-    List<Long> testListe = new ArrayList<>();
+    private List<Long> testListe = new ArrayList<>();
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;

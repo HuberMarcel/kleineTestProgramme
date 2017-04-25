@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class SortierungsErsteller {
 
-    Integer[] indizesDerSortierung;
+    private Integer[] indizesDerSortierung;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;

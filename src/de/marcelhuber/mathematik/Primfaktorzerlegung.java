@@ -9,8 +9,8 @@ import java.util.*;
  */
 public class Primfaktorzerlegung {
 
-    List<List<Long>> primfaktorenUndExponten = new ArrayList<>();
-    Long zahl = 133L;
+    private List<List<Long>> primfaktorenUndExponten = new ArrayList<>();
+    private Long zahl = 133L;
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
