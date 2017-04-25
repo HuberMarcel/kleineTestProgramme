@@ -29,7 +29,15 @@ public class ClassCastException {
             System.out.println("(Info [keine Klasse]): A Hund is doch ka Katz!");
         }
         //        ((Cat) dog).eat(); // ClassCastException: cce
+//        (Cat) ((Dog) dog).eatsCat(); // muss irgendwas machen
         ((Cat) ((Dog) dog).eatsCat()).eat();
+        ((Dog) dog).eatsCat();
+        // ClassCastException ist nicht Throwable
+//        try {
+//            ((Cat) dog).eatWhatACatEats();
+//        } catch (ClassCastException cce) {
+//            System.out.println("Hallo!");
+//        }
     }
 }
 
