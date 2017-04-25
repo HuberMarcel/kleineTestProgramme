@@ -26,7 +26,7 @@ public class ClassCastException {
         if (dog instanceof Cat) {
             ((Cat) dog).eatWhatACatEats();
         } else {
-            System.out.println("(Info [keine Klasse]): A Hund is doch ka Katz!");
+            System.out.println("(Info [keine Klasse]): A Hund is doch ka Katz'!");
         }
         //        ((Cat) dog).eat(); // ClassCastException: cce
 //        (Cat) ((Dog) dog).eatsCat(); // muss irgendwas machen
@@ -38,6 +38,16 @@ public class ClassCastException {
 //        } catch (ClassCastException cce) {
 //            System.out.println("Hallo!");
 //        }
+        try {
+            if (!(dog instanceof Cat)) {
+                ((Cat) dog).eatWhatACatEats();
+                throw new RuntimeException();
+            }
+        } catch (RuntimeException cce) {
+            System.out.println("Wie gesagt: A Hund is doch ka Katz'!");
+        }
+        Class wasBinIchfuerEineKlasse = dog.getClass();
+        System.out.println(wasBinIchfuerEineKlasse);
     }
 }
 
