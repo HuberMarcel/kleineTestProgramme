@@ -1,12 +1,11 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp;
 // Ein bisschen Eigenkreation für einen Builder
-// unschön gekapselt, da auch Objekte der Klasse Human erzeugt werden können
 
 /**
  *
  * @author Marcel Huber
  */
-public class Human {
+public class HumanGoodEncapsulation {
 
     private String name;                   // Pflichtattribut
     private int age;                       // Pflichtattribut
@@ -14,7 +13,7 @@ public class Human {
     private String telephonnumber;
     private boolean isMarried;
 
-    private Human(Builder b) {
+    private HumanGoodEncapsulation(Builder b) {
         this.name = b.name;
         this.age = b.age;
         this.city = b.city;
@@ -73,7 +72,7 @@ public class Human {
         private Builder() {
         }
 
-        public Builder(String name, int age) {    // Z1
+        private Builder(String name, int age) {    // Z1
             this.name = name;
             this.age = age;
         }
@@ -93,8 +92,8 @@ public class Human {
             return this;
         }
 
-        public Human build() {
-            return new Human(this);
+        public HumanGoodEncapsulation build() {
+            return new HumanGoodEncapsulation(this);
         }
 
     }
@@ -149,7 +148,7 @@ public class Human {
 
 }
 
-class TestHuman {
+class TestHumanGoodEncapsulation {
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
@@ -159,12 +158,12 @@ class TestHuman {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new TestHuman().go();
+        new TestHumanGoodEncapsulation().go();
     }
 
     private void go() {
-        System.out.println("");
-//        Human marcel = new Human.Builder()                   
+//        System.out.println("");
+//        HumanGoodEncapsulation marcel = new HumanGoodEncapsulation.Builder()                   
 //                .nameAge("Marcel Huber", 36)
 //                .city("Trier")
 //                .isMarried(false)
@@ -172,12 +171,12 @@ class TestHuman {
 //                .build();
 //        System.out.println(marcel);
 
-//        Human marcel = new Human.Builder.IsNecessary()    // so knallt es zur Laufzeit
+//        HumanGoodEncapsulation marcel = new HumanGoodEncapsulation.Builder.IsNecessary()    // so knallt es zur Laufzeit
 //                .name("Marcel")
 //                .buildIsNecessary()
 //                .build();
-//        Human marcel = new Human.Builder.IsNecessary()
-        Human marcel = new Human.Builder.IsNecessary("name", 0)
+        HumanGoodEncapsulation marcel = new HumanGoodEncapsulation.Builder.IsNecessary()
+//        HumanGoodEncapsulation marcel = new HumanGoodEncapsulation.Builder.IsNecessary("name", 0)
                 .age(36)
                 .name("Marcel")
                 .buildIsNecessary()
@@ -188,15 +187,16 @@ class TestHuman {
         System.out.println(marcel);
         System.out.println("");
         
-        Human sascha = new Human.Builder("Sascha", 38)
+        HumanGoodEncapsulation sascha = new HumanGoodEncapsulation.Builder.IsNecessary("Sascha", 38)
+                .buildIsNecessary()
                 .city("Trier")
                 .isMarried(false)
-                .telephonnumber("xx xx xx xx xx xx")
+                .telephonnumber("** ** ** ** ** **")
                 .build();
         System.out.println(sascha);
         System.out.println("");
         
-        Human pascal = new Human.Builder.IsNecessary()
+        HumanGoodEncapsulation pascal = new HumanGoodEncapsulation.Builder.IsNecessary()
                 .age(24)
                 .name("Pascal")
                 .buildIsNecessary()
@@ -206,3 +206,4 @@ class TestHuman {
 
     }
 }
+
