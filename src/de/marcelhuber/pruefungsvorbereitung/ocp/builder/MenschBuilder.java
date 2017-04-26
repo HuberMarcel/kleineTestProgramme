@@ -1,4 +1,4 @@
-package de.marcelhuber.pruefungsvorbereitung.ocp;
+package de.marcelhuber.pruefungsvorbereitung.ocp.builder;
 
 /**
  *
@@ -12,23 +12,23 @@ class MenschBuilder{
     String telefonnummer;
     boolean statusVerheiratet;
 
-    MenschBuilder MenschBuilder(String name, int alter) {
+    public MenschBuilder MenschBuilder(String name, int alter) {
         this.name = name;
         this.alter = alter;
         return this;
     }
 
-    MenschBuilder wohnort(String wohnort) {
+    public MenschBuilder wohnort(String wohnort) {
         this.wohnort = wohnort;
         return this;
     }
 
-    MenschBuilder telefonnummer(String telefonummer) {
+    public MenschBuilder telefonnummer(String telefonummer) {
         this.telefonnummer = telefonummer;
         return this;
     }
 
-    MenschBuilder statusVerheiratet(boolean statusVerheiratet) {
+    public MenschBuilder statusVerheiratet(boolean statusVerheiratet) {
         this.statusVerheiratet = statusVerheiratet;
         return this;
     }

@@ -1,4 +1,4 @@
-package de.marcelhuber.pruefungsvorbereitung.ocp;
+package de.marcelhuber.pruefungsvorbereitung.ocp.builder;
 
 /**
  *
