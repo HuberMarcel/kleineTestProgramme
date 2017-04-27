@@ -218,8 +218,8 @@ class TestHumanGoodEncapsulation {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMinimumFractionDigits(2);
         nf.setMaximumFractionDigits(2);
-        nf.setMinimumIntegerDigits(4);
-        nf.setMaximumIntegerDigits(4);
+        nf.setMinimumIntegerDigits(6);                         // beachte die Gruppierungszeichen
+        nf.setMaximumIntegerDigits(6);                         // beachte die Gruppierungszeichen
         System.out.println(nf.format(28.43456));
     }
 }
