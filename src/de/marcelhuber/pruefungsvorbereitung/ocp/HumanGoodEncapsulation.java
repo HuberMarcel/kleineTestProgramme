@@ -1,6 +1,9 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp;
 // Ein bisschen Eigenkreation für einen Builder
 
+import java.text.*;
+import javax.swing.text.*;
+
 /**
  *
  * @author Marcel Huber
@@ -176,7 +179,7 @@ class TestHumanGoodEncapsulation {
 //                .buildIsNecessary()
 //                .build();
         HumanGoodEncapsulation marcel = new HumanGoodEncapsulation.Builder.IsNecessary()
-//        HumanGoodEncapsulation marcel = new HumanGoodEncapsulation.Builder.IsNecessary("name", 0)
+                //        HumanGoodEncapsulation marcel = new HumanGoodEncapsulation.Builder.IsNecessary("name", 0)
                 .age(36)
                 .name("Marcel")
                 .buildIsNecessary()
@@ -186,7 +189,7 @@ class TestHumanGoodEncapsulation {
                 .build();
         System.out.println(marcel);
         System.out.println("");
-        
+
         HumanGoodEncapsulation sascha = new HumanGoodEncapsulation.Builder.IsNecessary("Sascha", 38)
                 .buildIsNecessary()
                 .city("Trier")
@@ -195,7 +198,7 @@ class TestHumanGoodEncapsulation {
                 .build();
         System.out.println(sascha);
         System.out.println("");
-        
+
         HumanGoodEncapsulation pascal = new HumanGoodEncapsulation.Builder.IsNecessary()
                 .age(24)
                 .name("Pascal")
@@ -204,6 +207,19 @@ class TestHumanGoodEncapsulation {
                 .build();
         System.out.println(pascal);
 
+        System.out.println("");
+        System.out.println("Nochmal Spielereien mit Zahlenformattierungen!");
+        System.out.format("%1$10.2f%n", 28.43546);
+        System.out.format("%1$10.2f%n", 3.446);
+        System.out.print(String.format("%1$10.2f%n", 28.43546));
+        System.out.print(String.format("%1$10.2f%n", 3.446));
+        System.out.print(String.format("%10.2f%n", 28.43546));
+        System.out.print(String.format("%010.2f%n", 3.446));
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMinimumFractionDigits(2);
+        nf.setMaximumFractionDigits(2);
+        nf.setMinimumIntegerDigits(4);
+        nf.setMaximumIntegerDigits(4);
+        System.out.println(nf.format(28.43456));
     }
 }
-
