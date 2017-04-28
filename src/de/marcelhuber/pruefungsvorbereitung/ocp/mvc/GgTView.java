@@ -7,7 +7,7 @@ package de.marcelhuber.pruefungsvorbereitung.ocp.mvc;
 public interface GgTView {
     void setController(GgTController controller);              // okay
     void showView();                                           // okay
-    void resetView();                                          // okay
+    void reset();                                          // okay
     long getEingabeA();                                        // okay
     long getEingabeB();                                        // okay
     void getEingabenAB();                                      // okay

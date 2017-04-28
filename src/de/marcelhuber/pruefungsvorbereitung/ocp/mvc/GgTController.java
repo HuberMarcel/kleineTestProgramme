@@ -24,7 +24,7 @@ public class GgTController implements Observer {
     }
 
     public void resetView() {
-        ggTView.resetView();
+        ggTView.reset();
     }
 
     public void newGgTCalculation(long a, long b) {

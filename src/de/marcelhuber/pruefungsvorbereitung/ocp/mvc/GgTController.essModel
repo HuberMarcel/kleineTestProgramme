@@ -1,0 +1,38 @@
+[Box: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc - ::<<Unknown>>::Observable]
+X=471
+Y=40
+
+[Box: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc - ::<<Unknown>>::Observer]
+X=239
+Y=643
+
+[Box: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc - ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc::GgTController]
+X=239
+Y=421
+
+[Box: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc - ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc::GgTModel]
+X=444
+Y=421
+
+[Box: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc - ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc::GgTModelCalculator]
+X=20
+Y=643
+
+[Box: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc - ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc::GgTMVC]
+X=266
+Y=40
+
+[Box: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc - ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc::GgTView]
+X=34
+Y=421
+
+[Box: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc - ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc::GgTViewConsole]
+X=61
+Y=40
+
+[Diagram: ::de.marcelhuber.pruefungsvorbereitung.ocp.mvc]
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowAssoc=1
+

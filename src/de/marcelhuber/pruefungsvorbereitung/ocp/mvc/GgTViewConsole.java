@@ -23,7 +23,7 @@ public class GgTViewConsole implements GgTView {
     @Override
     public void showView() {
         System.out.println("***  Berechne GGT zweier Zahlen a und b "
-                + "(Abbruch mit q/Q, Neustart mit w/W)  ***");
+                + "(Abbruch mit q/Q, Neustart (Reset) mit w/W/r/R)  ***");
         System.out.println("");
         getEingabenAB();
         System.out.println("");
@@ -35,7 +35,7 @@ public class GgTViewConsole implements GgTView {
     }
 
     @Override
-    public void resetView() {
+    public void reset() {
         System.out.println("Reset...");
         eingabeA = 0;
         eingabeB = 0;
@@ -67,11 +67,13 @@ public class GgTViewConsole implements GgTView {
             String s = reader.readLine();
             if (s.toUpperCase().equals("Q")) {
                 System.out.println("");
-                System.out.println("!!Programm von Benutzer beendet!!");
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                System.out.println("!!!  Programm vom Benutzer beendet  !!!");
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 System.exit(0);
             } else if (s.toLowerCase().equals("w") || s.toLowerCase().equals("r")) {
                 System.out.println("");
-                resetView();
+                reset();
             }
             return eingabe = Long.parseLong(s);
         } catch (IOException | NumberFormatException ex) {
