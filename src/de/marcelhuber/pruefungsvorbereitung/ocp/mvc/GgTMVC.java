@@ -15,7 +15,10 @@ public class GgTMVC {
     
     void go() {
         ggtModel = new GgTModel();
-        ggtView = new GgTViewConsole();
+        
+//        ggtView = new GgTViewConsole();
+        ggtView = new GgTViewGUI();
+        
         ggtController = new GgTController(ggtModel, ggtView);
         ggtController.showView();
     }

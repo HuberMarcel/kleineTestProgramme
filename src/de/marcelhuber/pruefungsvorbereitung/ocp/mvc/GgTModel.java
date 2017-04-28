@@ -31,6 +31,9 @@ public class GgTModel extends Observable {
         x = ergebnisFeld[0];
         y = ergebnisFeld[1];
         resultGgT = ergebnisFeld[2];
+//        System.out.println("x:" + x);
+//        System.out.println("y:" + y);
+//        System.out.println("ggT:" + resultGgT);
         benachrichtige();
     }
 

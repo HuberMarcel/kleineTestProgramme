@@ -1,6 +1,8 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.mvc;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.*;
 import javax.swing.*;
 
@@ -17,17 +19,29 @@ public class GgTViewGUI extends JFrame implements GgTView {
     private JLabel labelAusgabeX;
     private JLabel labelAusgabeY;
     private JLabel labelAusgabeResultGgT;
+    private JLabel labelKontrollrechnung;
 
     private JTextField textEingabeA;
     private JTextField textEingabeB;
     private JTextField textAusgabeX;
     private JTextField textAusgabeY;
     private JTextField textAusgabeResultGgT;
+    private JTextField textKontrollRechnung;
 
-    public static void main(String[] args) {
-        new GgTViewGUI();
-    }
+    private JButton buttonBerechneGgT;
+    private JButton buttonReset;
 
+    private long a;
+    private long b;
+    private long x;
+    private long y;
+    private long resultGgT;
+
+    private String str;
+
+//    public static void main(String[] args) {
+//        new GgTViewGUI();
+//    }
     public GgTViewGUI() {
         super("Berechnung des ggT's zweier Zahlen a und b!");  // 1. Frame Erzeugen
         initForm();
@@ -36,13 +50,36 @@ public class GgTViewGUI extends JFrame implements GgTView {
     private void initForm() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        // 2. Programm beenden
         setLayout(new FlowLayout());
-        setSize(500, 200);
+        setSize(1350, 200);
 
         initializeLabels();
+        labelKontrollrechnung = new JLabel("Kontrolle");
+        textKontrollRechnung = new JTextField();
         initializeJTextfields();
-        addToFrameJLabelsAndTextFields();
+        initializeButtons();
+        addToFrameJLabelsAndJTextFieldsAndJButtons();
 
-        setVisible(true);
+        buttonReset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ggTController.reset();
+            }
+        });
+
+        buttonBerechneGgT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getEingabenAB();
+                ggTController.newGgTCalculation(a, b);
+                x = ggTController.getX();
+                y = ggTController.getY();
+                resultGgT = ggTController.getGgT();
+                kontrollRechnung();
+                showResults();
+            }
+        });
+
+        showView();
 //        try {
 //            Thread.sleep(8000);
 //        } catch (InterruptedException ex) {
@@ -51,7 +88,32 @@ public class GgTViewGUI extends JFrame implements GgTView {
 //        System.exit(0);
     }
 
-    void addToFrameJLabelsAndTextFields() {
+    void kontrollRechnung() {
+        str = "Es gilt:   " 
+                + x + " * " + klammerNegLong(a) 
+                + " + " + klammerNegLong(y) + " * " +klammerNegLong(b) 
+                + " = " + (x * a + y * b);
+
+        add(labelKontrollrechnung);
+        textKontrollRechnung.setText(str);
+        add(textKontrollRechnung);
+    }
+    
+    public String klammerNegLong(long h) {
+        // diese Methode liefert einen long
+        // als String zurück, wobei negative
+        // Werte geklammert werden (nur diese)
+        if (h < 0) {
+            return "(" + h + ")";
+        } else {
+            return "" + h;
+        }
+    }
+
+    void addToFrameJLabelsAndJTextFieldsAndJButtons() {
+        add(buttonBerechneGgT);
+        add(buttonReset);
+
         add(labelEingabeA);
         add(textEingabeA);
         add(labelEingabeB);
@@ -60,9 +122,14 @@ public class GgTViewGUI extends JFrame implements GgTView {
         add(textAusgabeX);
         add(labelAusgabeY);
         add(textAusgabeY);
-        
+
         add(labelAusgabeResultGgT);
         add(textAusgabeResultGgT);
+    }
+
+    void initializeButtons() {
+        buttonBerechneGgT = new JButton("GGT berechnen");
+        buttonReset = new JButton("RESET");
     }
 
     void initializeLabels() {
@@ -81,54 +148,78 @@ public class GgTViewGUI extends JFrame implements GgTView {
         textAusgabeResultGgT = new JTextField(10);
     }
 
+    void clear(JTextField jText) {
+        jText.setText("");
+    }
+
     @Override
     public void setController(GgTController controller) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ggTController = controller;
     }
 
     @Override
     public void showView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setVisible(true);
     }
 
     @Override
     public void reset() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        str = "";
+        remove(labelKontrollrechnung);
+        remove(textKontrollRechnung);
+        a=0;
+        b=0;
+        ggTController.newGgTCalculation(a, b);
+        clear(textEingabeA);
+        clear(textEingabeB);
+        clear(textAusgabeX);
+        clear(textAusgabeY);
+        clear(textAusgabeResultGgT);
+        textEingabeA.requestFocus();
+        showView();
     }
 
     @Override
     public long getEingabeA() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return readTextToLong(textEingabeA.getText());
     }
 
     @Override
     public long getEingabeB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return readTextToLong(textEingabeB.getText());
     }
 
     @Override
     public void getEingabenAB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void showResultGgT(long resultGgT) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        a = getEingabeA();
+        b = getEingabeB();
     }
 
     @Override
     public void showResultX(long x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        textAusgabeX.setText("" + x);
     }
 
     @Override
     public void showResultY(long y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        textAusgabeY.setText("" + y);
+    }
+
+    @Override
+    public void showResultGgT(long resultGgT) {
+        textAusgabeResultGgT.setText("" + resultGgT);
     }
 
     @Override
     public void showResults() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        showResultX(x);
+        showResultY(y);
+        showResultGgT(resultGgT);
+        showView();
+    }
+
+    public long readTextToLong(String txt) {
+        return Long.parseLong(txt);
     }
 
 }

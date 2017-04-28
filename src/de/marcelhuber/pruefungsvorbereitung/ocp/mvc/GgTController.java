@@ -23,7 +23,7 @@ public class GgTController implements Observer {
         ggTView.showView();
     }
 
-    public void resetView() {
+    public void reset() {
         ggTView.reset();
     }
 
