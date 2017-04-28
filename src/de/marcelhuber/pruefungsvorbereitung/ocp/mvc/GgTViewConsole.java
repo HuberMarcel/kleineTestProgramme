@@ -22,8 +22,17 @@ public class GgTViewConsole implements GgTView {
 
     @Override
     public void showView() {
-        System.out.println("***  Berechne GGT zweier Zahlen a und b "
+        System.out.println("***************************************************"
+                + "*********************************************");
+        System.out.println("***************************************************"
+                + "*********************************************");
+        System.out.println("***  Berechne GGT zweier Zahlen a und b  ***"
                 + "(Abbruch mit q/Q, Neustart (Reset) mit w/W/r/R)  ***");
+        System.out.println("**************************************************"
+                + "**********************************************");
+        System.out.println("***************************************************"
+                + "*********************************************");
+
         System.out.println("");
         getEingabenAB();
         System.out.println("");
@@ -100,6 +109,7 @@ public class GgTViewConsole implements GgTView {
                 + "rechten Seite,\ndiese sollte dem oben linksstehenden ggT entsprechen: ");
         System.out.println(ggTController.getX() * eingabeA
                 + ggTController.getY() * eingabeB);
+        System.out.println("");
     }
 
     public String klammerNegLong(long h) {
