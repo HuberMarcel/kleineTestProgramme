@@ -3,6 +3,10 @@ package de.marcelhuber.pruefungsvorbereitung.ocp.mvc;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.logging.*;
 import javax.swing.*;
 
@@ -12,6 +16,8 @@ import javax.swing.*;
  */
 public class GgTViewGUI extends JFrame implements GgTView {
 
+    private long calculationCounter;
+
     private GgTController ggTController;
 
     private JLabel labelEingabeA;
@@ -20,6 +26,7 @@ public class GgTViewGUI extends JFrame implements GgTView {
     private JLabel labelAusgabeY;
     private JLabel labelAusgabeResultGgT;
     private JLabel labelKontrollrechnung;
+    private JDialog dialogFehleingabe;
 
     private JTextField textEingabeA;
     private JTextField textEingabeB;
@@ -37,11 +44,14 @@ public class GgTViewGUI extends JFrame implements GgTView {
     private long y;
     private long resultGgT;
 
+    private boolean textEingabeIsALong;
+
     private String str;
 
 //    public static void main(String[] args) {
 //        new GgTViewGUI();
 //    }
+    
     public GgTViewGUI() {
         super("Berechnung des ggT's zweier Zahlen a und b!");  // 1. Frame Erzeugen
         initForm();
@@ -50,7 +60,8 @@ public class GgTViewGUI extends JFrame implements GgTView {
     private void initForm() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        // 2. Programm beenden
         setLayout(new FlowLayout());
-        setSize(1350, 200);
+//        setSize(1350, 150);
+        setSize(1350, 500);
 
         initializeLabels();
         labelKontrollrechnung = new JLabel("Kontrolle");
@@ -58,6 +69,24 @@ public class GgTViewGUI extends JFrame implements GgTView {
         initializeJTextfields();
         initializeButtons();
         addToFrameJLabelsAndJTextFieldsAndJButtons();
+        dialogFehleingabe = new javax.swing.JDialog();
+        javax.swing.GroupLayout dialogFehleingabeLayout = new javax.swing.GroupLayout(dialogFehleingabe.getContentPane());
+        dialogFehleingabeLayout.setHorizontalGroup(
+                dialogFehleingabeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 400, Short.MAX_VALUE)
+        );
+        dialogFehleingabeLayout.setVerticalGroup(
+                dialogFehleingabeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 300, Short.MAX_VALUE)
+        );
+        dialogFehleingabe.getContentPane().setLayout(dialogFehleingabeLayout);
+
+        buttonBerechneGgT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startCalculation();
+            }
+        });
 
         buttonReset.addActionListener(new ActionListener() {
             @Override
@@ -66,20 +95,92 @@ public class GgTViewGUI extends JFrame implements GgTView {
             }
         });
 
-        buttonBerechneGgT.addActionListener(new ActionListener() {
+        buttonReset.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ggTController.reset();
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                this.keyPressed(ke);
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                this.keyPressed(ke);
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
+
+        buttonBerechneGgT.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    startCalculation();
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+//                return;
+                keyPressed(ke);
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+//                return;
+                keyPressed(ke);
+//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
+
+        textEingabeA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getEingabenAB();
-                ggTController.newGgTCalculation(a, b);
-                x = ggTController.getX();
-                y = ggTController.getY();
-                resultGgT = ggTController.getGgT();
-                kontrollRechnung();
-                showResults();
+                textEingabeB.requestFocus();
+            }
+        });
+
+        textEingabeB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startCalculation();
+            }
+        });
+
+        pressEnterTochangeFocusToButtonBerechneGgT(textAusgabeX);
+        pressEnterTochangeFocusToButtonBerechneGgT(textAusgabeY);
+        pressEnterTochangeFocusToButtonBerechneGgT(textAusgabeResultGgT);
+        pressEnterTochangeFocusToButtonBerechneGgT(textKontrollRechnung);
+        textKontrollRechnung.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                keyPressed(ke);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    buttonBerechneGgT.requestFocus();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                keyPressed(ke);
             }
         });
 
         showView();
+        textEingabeA.requestFocus();
 //        try {
 //            Thread.sleep(8000);
 //        } catch (InterruptedException ex) {
@@ -88,18 +189,40 @@ public class GgTViewGUI extends JFrame implements GgTView {
 //        System.exit(0);
     }
 
-    void kontrollRechnung() {
-        str = "Es gilt:   " 
-                + x + " * " + klammerNegLong(a) 
-                + " + " + klammerNegLong(y) + " * " +klammerNegLong(b) 
+    private void pressEnterTochangeFocusToButtonBerechneGgT(JTextField jTextField) {
+        jTextField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                keyPressed(ke);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    buttonBerechneGgT.requestFocus();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                keyPressed(ke);
+            }
+        });
+    }
+            
+    private void kontrollRechnung() {
+        str = "Es gilt:   "
+                + x + " * " + klammerNegLong(a)
+                + " + " + klammerNegLong(y) + " * " + klammerNegLong(b)
                 + " = " + (x * a + y * b);
 
         add(labelKontrollrechnung);
         textKontrollRechnung.setText(str);
         add(textKontrollRechnung);
+        textKontrollRechnung.setEditable(false);
     }
-    
-    public String klammerNegLong(long h) {
+
+    private String klammerNegLong(long h) {
         // diese Methode liefert einen long
         // als String zurück, wobei negative
         // Werte geklammert werden (nur diese)
@@ -110,7 +233,7 @@ public class GgTViewGUI extends JFrame implements GgTView {
         }
     }
 
-    void addToFrameJLabelsAndJTextFieldsAndJButtons() {
+    private void addToFrameJLabelsAndJTextFieldsAndJButtons() {
         add(buttonBerechneGgT);
         add(buttonReset);
 
@@ -127,12 +250,12 @@ public class GgTViewGUI extends JFrame implements GgTView {
         add(textAusgabeResultGgT);
     }
 
-    void initializeButtons() {
+    private void initializeButtons() {
         buttonBerechneGgT = new JButton("GGT berechnen");
         buttonReset = new JButton("RESET");
     }
 
-    void initializeLabels() {
+    private void initializeLabels() {
         labelEingabeA = new JLabel("Zahl a:");
         labelEingabeB = new JLabel("Zahl b:");
         labelAusgabeX = new JLabel("Ausgabe x:");
@@ -140,15 +263,31 @@ public class GgTViewGUI extends JFrame implements GgTView {
         labelAusgabeResultGgT = new JLabel("Ausgabe ggT:");
     }
 
-    void initializeJTextfields() {
+    private void initializeJTextfields() {
         textEingabeA = new JTextField(10);
+        textEingabeA.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textEingabeA.selectAll();
+            }
+        });
         textEingabeB = new JTextField(10);
+        textEingabeB.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textEingabeB.selectAll();
+            }
+        });
         textAusgabeX = new JTextField(10);
+//        textAusgabeX.setEnabled(false);
+        textAusgabeX.setEditable(false);
         textAusgabeY = new JTextField(10);
+        textAusgabeY.setEditable(false);
         textAusgabeResultGgT = new JTextField(10);
+        textAusgabeResultGgT.setEditable(false);
     }
 
-    void clear(JTextField jText) {
+    private void clear(JTextField jText) {
         jText.setText("");
     }
 
@@ -167,32 +306,70 @@ public class GgTViewGUI extends JFrame implements GgTView {
         str = "";
         remove(labelKontrollrechnung);
         remove(textKontrollRechnung);
-        a=0;
-        b=0;
+        a = 0;
+        b = 0;
         ggTController.newGgTCalculation(a, b);
         clear(textEingabeA);
         clear(textEingabeB);
         clear(textAusgabeX);
         clear(textAusgabeY);
         clear(textAusgabeResultGgT);
+//        System.out.println("RESET durchgeführt");
+//        marker();
         textEingabeA.requestFocus();
+        // Warum muss man hier das JFrame aktualisieren???
+        reloadJFrame();
         showView();
+    }
+
+    private void reloadJFrame() {
+//        setSize(1250, 50);
+//        setSize(1350, 150);
+        this.repaint();
     }
 
     @Override
     public long getEingabeA() {
-        return readTextToLong(textEingabeA.getText());
+        return getEingabe(textEingabeA);
     }
 
     @Override
     public long getEingabeB() {
-        return readTextToLong(textEingabeB.getText());
+        return getEingabe(textEingabeB);
+    }
+
+    private long getEingabe(JTextField jTextField) throws NumberFormatException {
+        textEingabeIsALong = false;
+        try {
+            textEingabeIsALong = true;
+            return readTextToLong(jTextField.getText());
+        } catch (NumberFormatException nFex) {
+            textEingabeIsALong = false;
+            JOptionPane.showMessageDialog(dialogFehleingabe, "Sie haben "
+                    + "in dem aktuellen Textfeld keinen long-Wert eingegeben!!",
+                    "Eingabe-Fehler!!", JOptionPane.WARNING_MESSAGE);
+            jTextField.requestFocus();
+        }
+        return 0;
     }
 
     @Override
-    public void getEingabenAB() {
-        a = getEingabeA();
-        b = getEingabeB();
+    public void getEingabenAB() throws NumberFormatException {
+        if (!textEingabeIsALong) {
+            a = getEingabe(textEingabeA);
+            if (textEingabeIsALong) {
+                textEingabeA.setText("" + a);                   // sinnvoll, um Eingaben wie 00835 als 835 anzuzeigen
+            }
+        }
+        if (textEingabeIsALong) {
+            textEingabeB.requestFocus();
+            b = getEingabeB();
+            if (textEingabeIsALong) {
+                textEingabeB.setText("" + b);                  // sinnvoll, um Eingaben wie 00835 als 835 anzuzeigen
+            }
+        } else {
+            return;
+        };
     }
 
     @Override
@@ -215,11 +392,48 @@ public class GgTViewGUI extends JFrame implements GgTView {
         showResultX(x);
         showResultY(y);
         showResultGgT(resultGgT);
+        textEingabeA.selectAll();
+        textEingabeB.selectAll();
+        textEingabeA.requestFocus();
+        reloadJFrame();
         showView();
     }
 
-    public long readTextToLong(String txt) {
+    private long readTextToLong(String txt) {
         return Long.parseLong(txt);
     }
 
+    private void startCalculation() {
+        getEingabenAB();
+        if (textEingabeIsALong) {    // falls ALLE Texteingaben korrekt sind
+//            System.out.println(++calculationCounter);
+            this.setTitle(++calculationCounter + ". Berechnung des ggT's zweier Zahlen a und b!");
+            ggTController.newGgTCalculation(a, b);
+            x = ggTController.getX();
+            y = ggTController.getY();
+            resultGgT = ggTController.getGgT();
+            kontrollRechnung();
+            showResults();
+            textEingabeIsALong = false;
+            textKontrollRechnung.requestFocus();
+        }
+//        } catch (NumberFormatException nFex) {
+//            JOptionPane.showMessageDialog(dialogFehleingabe, "Sie haben "
+//                    + "in einem der Textfelder keinen long-Wert "
+//                    + "eingegeben!!",
+//                    "Eingabe-Fehler!!", JOptionPane.WARNING_MESSAGE);
+//            ggTController.reset();
+    }
+
+    private void pause(long timeInMillis) {
+        try {
+            Thread.sleep(timeInMillis);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GgTViewGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void marker() {
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    }
 }
