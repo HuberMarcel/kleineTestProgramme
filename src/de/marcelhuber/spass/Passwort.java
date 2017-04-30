@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.marcelhuber.spass;
 
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Marcel
+ * @author Marcel Huber
  */
 public class Passwort extends javax.swing.JFrame {
 
@@ -114,8 +109,8 @@ public class Passwort extends javax.swing.JFrame {
             pwString += pw[k];
         }
         if (pwString.length() <= 5) {
-            JOptionPane.showMessageDialog(jDialogPwWarning, "Ihr Passwort is zu kurz!",
-                    "FEHLER", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jDialogPwWarning, "Sie benötigen ein "
+                    + "längeres Passwort...", "FEHLER", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jPasswordFeldActionPerformed
 
@@ -130,9 +125,9 @@ public class Passwort extends javax.swing.JFrame {
         for (int k = 0; k < pw.length; k++) {
             pwString += pw[k];
         }
-        if (pwString.length() <= 8) {
-            JOptionPane.showMessageDialog(jDialogPwWarning, "Ihr Passwort ist zu"
-                    + " kurz!", "FEHLER", JOptionPane.ERROR_MESSAGE);
+        if (pwString.length() <= 10) {
+            JOptionPane.showMessageDialog(jDialogPwWarning, "Ihr Passwort ist "
+                    + "veraltet und somit unbrauchbar...", "HINWEIS", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
