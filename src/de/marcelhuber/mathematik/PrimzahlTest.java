@@ -292,8 +292,7 @@ public class PrimzahlTest {
         }
         return ergebnis;
     }
-    
-
+  
     public long getPruefZahl() {
         return pruefZahl;
     }

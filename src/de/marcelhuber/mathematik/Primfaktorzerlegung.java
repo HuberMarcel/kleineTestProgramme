@@ -62,8 +62,13 @@ public class Primfaktorzerlegung {
 //        exponenten.toArray(exponentenArray);
 //        System.out.println(Arrays.toString(primfaktorenArray));
 //        System.out.println(Arrays.toString(exponentenArray));
-        primfaktorenUndExponten.add(primfaktoren);
-        primfaktorenUndExponten.add(exponenten);
+        if (primfaktorenUndExponten.size() == 0) {
+            primfaktorenUndExponten.add(primfaktoren);
+            primfaktorenUndExponten.add(exponenten);
+        } else {
+            primfaktorenUndExponten.set(0, primfaktoren);
+            primfaktorenUndExponten.set(1, exponenten);
+        }
         return primfaktorenUndExponten;
     }
 
@@ -74,6 +79,7 @@ public class Primfaktorzerlegung {
         primfaktorenUndExponten.get(0).toArray(primzahlenLong);
         for (int k = 0; k < primzahlen.length; k++) {
             primzahlen[k] = primzahlenLong[k];
+//            System.out.println((k + 1) + ". Primzahl: " + primzahlen[k]);
         }
         return primzahlen;
     }
@@ -111,5 +117,9 @@ public class Primfaktorzerlegung {
 
     public Long getZahl() {
         return zahl;
+    }
+
+    public void setZahl(long zahl) {
+        this.zahl = zahl;
     }
 }
