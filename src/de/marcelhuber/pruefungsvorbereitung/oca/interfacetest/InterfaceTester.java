@@ -21,7 +21,13 @@ public class InterfaceTester implements IBeispielInterfacePublic {
         new InterfaceTester().go();
     }
 
+//    @Override
+//    public void michGibtEsSeiJava8() {
+//        IBeispielInterfacePublic.super.michGibtEsSeiJava8();
+//    }
+
     private void go() {
+//        michGibtEsSeiJava8();
         ichBinAutomatischEineAbstrakteMethode();
         int testVariable = variable; // die Variable "variable" ist die aus dem
         // Interface

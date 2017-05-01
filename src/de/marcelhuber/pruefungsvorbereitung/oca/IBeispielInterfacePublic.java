@@ -12,4 +12,10 @@ public interface IBeispielInterfacePublic {
 //  }
 
     void ichBinAutomatischEineAbstrakteMethode();
+
+//    default void michGibtEsSeiJava8() {
+//        System.out.println("mich kann man ab Java "
+//                + "8 benutzen");
+//    }
+
 }
