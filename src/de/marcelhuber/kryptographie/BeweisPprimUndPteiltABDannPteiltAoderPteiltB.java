@@ -10,7 +10,7 @@ import java.util.Arrays;
  *
  * @author Marcel Huber
  */
-public class BeweisPprimUndpTeilABDannPteilAoderPteiltB {
+public class BeweisPprimUndPteiltABDannPteiltAoderPteiltB {
 
     private long a;
     private long b;
@@ -24,7 +24,7 @@ public class BeweisPprimUndpTeilABDannPteilAoderPteiltB {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new BeweisPprimUndpTeilABDannPteilAoderPteiltB().go();
+        new BeweisPprimUndPteiltABDannPteiltAoderPteiltB().go();
     }
 
     private void go() {
