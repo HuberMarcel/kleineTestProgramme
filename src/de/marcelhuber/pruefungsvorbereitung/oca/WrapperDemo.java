@@ -91,5 +91,8 @@ public class WrapperDemo {
             }
         }
         System.out.println("");
+
+        System.out.println(i2.byteValue());
+        System.out.println((byte) (int) i2);
     }
 }
