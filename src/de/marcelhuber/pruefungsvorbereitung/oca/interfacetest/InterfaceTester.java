@@ -40,6 +40,7 @@ public class InterfaceTester implements IBeispielInterfacePublic {
 
     @Override
     public void ichBinAutomatischEineAbstrakteMethode() {
+//        IBeispielInterfacePublic.super.ichBinAutomatischEineAbstrakteMethode();
         System.out.println("Ich überschreibe die Methode namens: "
                 + "ichBinAutomatischEineAbstrakteMethode()");
     }
