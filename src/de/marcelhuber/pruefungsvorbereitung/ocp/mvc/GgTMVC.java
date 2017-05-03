@@ -17,8 +17,8 @@ public class GgTMVC {
     void go() {
         ggtModel = new GgTModel();
 
-//        GgTViewSelection viewChooser = GgTViewSelection.CONSOLE;
         GgTViewSelection viewChooser = GgTViewSelection.GUI;
+//        GgTViewSelection viewChooser = GgTViewSelection.CONSOLE;
 //        GgTViewSelection viewChooser = GgTViewSelection.DEFAULT;
 
         switch (viewChooser) {
