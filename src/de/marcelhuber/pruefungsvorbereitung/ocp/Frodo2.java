@@ -1,6 +1,6 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp;
 
-import de.marcelhuber.pruefungsvorbereitung.oca.selftestseite75.*;
+import de.marcelhuber.pruefungsvorbereitung.oca.selftestseite075.Hobbit2;
 
 /**
  *

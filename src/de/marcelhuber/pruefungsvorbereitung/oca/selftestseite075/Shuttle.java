@@ -1,4 +1,4 @@
-package de.marcelhuber.pruefungsvorbereitung.oca.selftestseite75;
+package de.marcelhuber.pruefungsvorbereitung.oca.selftestseite075;
 // Hinweis: wenn Zeile A auskommentiert wird, wird sowieso die 
 // Methode blastOff aus der Shuttle-Klasse verwendet:
 // output: sh-bang
