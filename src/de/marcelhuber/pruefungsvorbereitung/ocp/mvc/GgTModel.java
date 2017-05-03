@@ -50,9 +50,11 @@ public class GgTModel extends Observable {
     }
 
     private void benachrichtige() {
+//        setChanged();
+//        notifyObservers(x);
+//        setChanged();
+//        notifyObservers(y);
         setChanged();
-        notifyObservers(x);
-        notifyObservers(y);
         notifyObservers(resultGgT);
     }
 }
