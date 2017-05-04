@@ -2,7 +2,7 @@ package de.marcelhuber.pruefungsvorbereitung.ocp.generics;
 
 /**
  *
- * @author Marcel
+ * @author Marcel Huber
  */
 public class GenericsDemo {
 
