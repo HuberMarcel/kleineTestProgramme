@@ -30,6 +30,7 @@ public class VokabularEnglischDeutsch {
         uebersetze("to promote      ", " fordern");
         uebersetze("to derive       ", " ableiten");
         uebersetze("further         ", " des Weiteren");
+        uebersetze("appropriate     ", " angemessen");
     }
 
     private void uebersetze(String englisch, String deutsch) {
