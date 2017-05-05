@@ -4,7 +4,7 @@ package de.marcelhuber.pruefungsvorbereitung.ocp.innerclasses;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.*;
 
-public class RegulaereInnereKlasse {
+public class RegulaereInnereKlasse_de {
 
     /*
      Innere Klassen
@@ -20,7 +20,7 @@ public class RegulaereInnereKlasse {
     
      */
     public static void main(String[] args) {
-        new RegulaereInnereKlasse().go();
+        new RegulaereInnereKlasse_de().go();
     }
 
     private void go() {
