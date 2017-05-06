@@ -52,6 +52,7 @@ public class VokabularEnglischDeutschAnzeigen {
             for (String wortEn : fachwoerterBuchEnDe) {
                 if (wort.toLowerCase().equals(bundle.getString(wortEn).toLowerCase())) {
                     System.out.printf("%" + maxStringLengthDeEn + "s - %s%n", wort, wortEn);
+                    break;
                 }
             }
         }
