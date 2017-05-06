@@ -11,31 +11,6 @@ public class VokabularEnglischDeutsch_de extends ListResourceBundle {
 //    public static void main(String[] args) {
 //        new VokabularEnglischDeutsch_de().go();
 //    }
-    private void go() {
-//        uebersetze("unpredictable   ", " unvorhersehbar");
-//        uebersetze("Gadget          ", " Sondervorrichtung");
-//        uebersetze("crudely         ", " roh");
-//        uebersetze("up to           ", " bis zu");
-//        uebersetze("fragments       ", " Bruchstücke");
-//        uebersetze("to may not      ", " nicht dürfen");
-//        uebersetze("raptor          ", " Greifvogel");
-//        uebersetze("hawk            ", " Falke");
-//        uebersetze("to represent    ", " darstellen");
-//        uebersetze("dozen           ", " Dutzend");
-//        uebersetze("flexibility     ", " Flexibilität");
-//        uebersetze("maintainability ", " Wartbarkeit");
-//        uebersetze("benefits        ", " Vorteile");
-//        uebersetze("to insulate     ", " isolieren");
-//        uebersetze("extensibility   ", " Erweiterbarkeit");
-//        uebersetze("ahead           ", " voraus");
-//        uebersetze("to promote      ", " fordern");
-//        uebersetze("to derive       ", " ableiten");
-//        uebersetze("further         ", " des Weiteren");
-//        uebersetze("appropriate     ", " angemessen");
-//        uebersetze("to consider     ", " prüfen");
-        System.out.println("unpre");
-    }
-
     private void uebersetze(String englisch, String deutsch) {
         System.out.println(englisch + " - " + deutsch);
     }
@@ -43,7 +18,11 @@ public class VokabularEnglischDeutsch_de extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
         return new Object[][]{
-//            {"Germany", "Deutschland"},
+            //            {"Germany", "Deutschland"},
+            {"cereals", "Getreide"},
+            {"cause", "Ursache"},
+            {"parantheses", "Klammern"},
+            {"to accomplish", "erreichen"},
             {"unpredictable", "unvorhersehbar"},
             {"gadget", "Sondervorrichtung"},
             {"crudely", "roh"},
@@ -66,5 +45,30 @@ public class VokabularEnglischDeutsch_de extends ListResourceBundle {
             {"appropriate", "angemessen"},
             {"to consider", "prüfen"},
             {"must not", "darf nicht"}};
+    }
+
+    private void go() {
+//        uebersetze("unpredictable   ", " unvorhersehbar");
+//        uebersetze("Gadget          ", " Sondervorrichtung");
+//        uebersetze("crudely         ", " roh");
+//        uebersetze("up to           ", " bis zu");
+//        uebersetze("fragments       ", " Bruchstücke");
+//        uebersetze("to may not      ", " nicht dürfen");
+//        uebersetze("raptor          ", " Greifvogel");
+//        uebersetze("hawk            ", " Falke");
+//        uebersetze("to represent    ", " darstellen");
+//        uebersetze("dozen           ", " Dutzend");
+//        uebersetze("flexibility     ", " Flexibilität");
+//        uebersetze("maintainability ", " Wartbarkeit");
+//        uebersetze("benefits        ", " Vorteile");
+//        uebersetze("to insulate     ", " isolieren");
+//        uebersetze("extensibility   ", " Erweiterbarkeit");
+//        uebersetze("ahead           ", " voraus");
+//        uebersetze("to promote      ", " fordern");
+//        uebersetze("to derive       ", " ableiten");
+//        uebersetze("further         ", " des Weiteren");
+//        uebersetze("appropriate     ", " angemessen");
+//        uebersetze("to consider     ", " prüfen");
+
     }
 }
