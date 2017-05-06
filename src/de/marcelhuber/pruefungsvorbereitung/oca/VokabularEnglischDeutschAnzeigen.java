@@ -9,30 +9,51 @@ import javax.annotation.*;
  */
 public class VokabularEnglischDeutschAnzeigen {
 
-    List<String> fachwoerterBuch = new ArrayList<>();
+    List<String> fachwoerterBuchEnDe = new ArrayList<>();
+    List<String> fachwoerterBuchDeEn = new ArrayList<>();
 
     public static void main(String[] args) {
         new VokabularEnglischDeutschAnzeigen().go();
     }
 
     private void go() {
-        VokabularEnglischDeutsch woerterBuch = new VokabularEnglischDeutsch();
+        ResourceBundle bundle = ResourceBundle.getBundle("de.marcelhuber.pruefungsvorbereitung.oca.VokabularEnglischDeutsch");
+        VokabularEnglischDeutsch_de woerterBuch = new VokabularEnglischDeutsch_de();
 //        System.out.println(woerterBuch.keySet());
         for (String wort : woerterBuch.keySet()) {
-            fachwoerterBuch.add(wort);
+            fachwoerterBuchEnDe.add(wort);
+            fachwoerterBuchDeEn.add(bundle.getString(wort));
         }
-        Collections.sort(fachwoerterBuch);
+        Collections.sort(fachwoerterBuchEnDe, new VokabularEnglischDeutschComparator());
+        Collections.sort(fachwoerterBuchDeEn, new VokabularEnglischDeutschComparator());
+
+        // Comparator sortiert NICHT nach Groß- und Kleinschreibung 
 //        System.out.println(fachwoerterBuch);
-        ResourceBundle bundle = ResourceBundle.getBundle("de.marcelhuber.pruefungsvorbereitung.oca.VokabularEnglischDeutsch");
-        long maxStringLength = 0;
-        for (String wort : fachwoerterBuch) {
-            if (wort.length() > maxStringLength) {
-                maxStringLength = wort.length();
+        long maxStringLengthEnDe = 0;
+        long maxStringLengthDeEn = 0;
+        for (String wort : fachwoerterBuchEnDe) {
+            if (wort.length() > maxStringLengthEnDe) {
+                maxStringLengthEnDe = wort.length();
+            }
+            if (bundle.getString(wort).length() > maxStringLengthDeEn) {
+                maxStringLengthDeEn = bundle.getString(wort).length();
             }
         }
-        maxStringLength = maxStringLength+1;
-        for (String wort : fachwoerterBuch) {
-            System.out.printf("%"+maxStringLength+"s - %s%n",wort,bundle.getString(wort));
+        maxStringLengthEnDe = maxStringLengthEnDe + 1;
+        System.out.println("Ausgabe des Wörterbuchs (EN - DE):".toUpperCase());
+        for (String wort : fachwoerterBuchEnDe) {
+            System.out.printf("%" + maxStringLengthEnDe + "s - %s%n", wort, bundle.getString(wort));
+        }
+        System.out.println("");
+        System.out.println("Ausgabe des Wörterbuchs (DE - EN)".toUpperCase() + " [momentan schlecht "
+                + "implementiert]:");
+//        Enumeration<String> keys = bundle.getKeys();
+        for (String wort : fachwoerterBuchDeEn) {
+            for (String wortEn : fachwoerterBuchEnDe) {
+                if (wort.toLowerCase().equals(bundle.getString(wortEn).toLowerCase())) {
+                    System.out.printf("%" + maxStringLengthDeEn + "s - %s%n", wort, wortEn);
+                }
+            }
         }
     }
 }

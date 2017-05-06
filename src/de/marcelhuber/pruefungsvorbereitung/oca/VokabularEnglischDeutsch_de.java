@@ -6,10 +6,10 @@ import java.util.*;
  *
  * @author Marcel Huber
  */
-public class VokabularEnglischDeutsch extends ListResourceBundle {
+public class VokabularEnglischDeutsch_de extends ListResourceBundle {
 
 //    public static void main(String[] args) {
-//        new VokabularEnglischDeutsch().go();
+//        new VokabularEnglischDeutsch_de().go();
 //    }
     private void go() {
 //        uebersetze("unpredictable   ", " unvorhersehbar");
@@ -43,7 +43,7 @@ public class VokabularEnglischDeutsch extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
         return new Object[][]{
-            {"Germany", "Deutschland"},
+//            {"Germany", "Deutschland"},
             {"unpredictable", "unvorhersehbar"},
             {"gadget", "Sondervorrichtung"},
             {"crudely", "roh"},
