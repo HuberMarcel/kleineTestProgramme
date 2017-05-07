@@ -1,6 +1,8 @@
+// Infos zu Exceptions bzw. Checked-Exceptions: https://coderanch.com/t/540082/certification/checked-unchecked-exception-list
 package de.marcelhuber.pruefungsvorbereitung.oca;
 
 import de.marcelhuber.systemtools.Marker;
+import de.marcelhuber.systemtools.ReadInput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,11 @@ import java.util.List;
 public class BesondereHinweise {
 
     private String intToShadow;
+    final private int finaleVariable;                          // spätestens im Init-Block muss sie festgelegt werden - kein Initialwert
+
+    public BesondereHinweise() {
+        this.finaleVariable = Integer.MAX_VALUE;
+    }
 
 //    static private Integer intToShadow;          // gleicher Variablenname für statische Variable geht nicht
     public static void main(String[] args) {
@@ -19,7 +26,19 @@ public class BesondereHinweise {
 //        new BesondereHinweise().kurzSchlussOperatoren();
 //        new BesondereHinweise().switchStatements();
 //        new BesondereHinweise().shadowing();
-        new BesondereHinweise().arrays();
+//        new BesondereHinweise().arrays();
+// Infos zu Exceptions bzw. Checked-Exceptions: https://coderanch.com/t/540082/certification/checked-unchecked-exception-list
+        System.out.println(Boolean.parseBoolean(null));
+        System.out.println("Geben Sie einen Boolean-Wert ein:");
+        ReadInput.readBooleanWithExceptionHandling();
+        System.out.println("Geben Sie einen Int-Wert ein:");
+        ReadInput.readIntWithExceptionHandling();
+        System.out.println("Geben Sie einen Long-Wert ein:");
+        ReadInput.readLongWithExceptionHandling();
+        System.out.println("Geben Sie einen Double-Wert ein:");
+        ReadInput.readDoubleWithExceptionHandling();
+        new BesondereHinweise().tryCatch();
+        System.out.println("Return erhalten!");
     }
 
     void wrapperInformations() {
@@ -368,11 +387,94 @@ public class BesondereHinweise {
         System.out.println(test.toString().length());
         System.out.println(Arrays.toString(test));
         System.out.println(Arrays.toString(intArray));
-        List <Integer> intArrayAsList = new ArrayList<>();
+        List<Integer> intArrayAsList = new ArrayList<>();
         for (int i = 0; i < intArray.length; i++) {
             intArrayAsList.add(intArray[i]);
         }
         System.out.println(intArrayAsList);
+        Object[] o = new Object[1];
+        o[0] = intArray;
+        System.out.println(Arrays.deepToString(o));
+        int a = 3;
+        int b = 1;
+        for (; a != 1; System.out.println("a: " + a + ",  b: " + b), a = a - b) {
+            System.out.print("HaHa   ");
+        }
+        System.out.println("After loop: ");
+        System.out.println("a: " + a + ",  b: " + b);
+        // ouput: Haha   a: 3,  b: 1
+        //        Haha   a: 2,  b: 1
+        //        After loop:
+        //        a: 1,  b: 1
+        Marker.marker();
+        System.out.println("Ein Feld von Number-Objekten".toUpperCase());
+        Number[] numberArray = new Number[]{(long) 2 * Integer.MAX_VALUE, (byte) 127, (short) 65000};
+//        for (Long number : numberArray) {                      // illegal!!
+        for (Number number : numberArray) {
+            System.out.print(number);
+            if (number != numberArray[numberArray.length - 1]) {    // der letzte Eintrag des Feldes sollte hierfür ein Unikat sein
+                System.out.print(", ");
+            } else {
+                System.out.println("");
+            }
+        }
+        System.out.println(Arrays.toString(numberArray));
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Zum Continue-Statement".toUpperCase());
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Inside loop, i: " + i);
+            if (i < 8) {
+                continue;  // springt an's Ende des Blocks
+            }
+            System.out.println("Hallo, nochmal i:" + i);
+        }
+        int j = 0;
+//        do while(++j < 10) { System.out.print("j:"+j);} while(++j < 20);
+        do {
+            while (++j < 4) {
+                System.out.print("j: " + j + " ");
+            }
+            System.out.println("j: " + j);
+        } while (++j < 8);
+        // output: j: 1 j: 2 j: 3 j: 4|j: 6|j: 8 // dabei | Zeilenumbruch
+    }
+
+    void tryCatch() {
+        try {
+            System.out.println(7 / 1);
+//            return;
+        } catch (ArithmeticException arithmEx) {
+//            System.out.println("Fehler: " + arithmEx);
+            return;
+        } finally {
+            System.out.println("Beendet!!");
+        }
+        System.out.println("Hallo");
+        //
+        //
+        try {
+            int[] intArray = new int[]{1, 3, 5, 7, 9};
+            for (int i = 0; i < 10; i++) {
+                System.out.println((i + 1) + "er Wert: " + intArray[i]);
+            }
+        } catch (ArrayIndexOutOfBoundsException aiooBex) {
+            System.out.println("Array-Grenze überschritten, Meldung: " + aiooBex);
+        }
+        // vor der Ausführung des returns erst der finally-Block
+        try {
+            System.out.println(7 / 0);
+//            return;
+        } catch (ArithmeticException arithmEx) {
+//            System.out.println("Fehler: " + arithmEx);
+//            System.out.println("Hallo ".substring(2,7));    // this produces a StringIndexOutOfBoundsException
+            System.out.println("Hallo ".substring(0, 5));
+            return;
+        } finally {
+            System.out.println("Beendet!!");
+        }
+        System.out.println("Hallo");
+
     }
 
     Boolean doStuff() { // just a function which returns new Boolean(true);

@@ -18,7 +18,21 @@ public class VokabularEnglischDeutsch_de extends ListResourceBundle {
     @Override
     protected Object[][] getContents() {
         return new Object[][]{
+            {"to omit", "ausLassen"}, // extra falsch geschrieben, da es nochmal überschrieben wird
             //            {"Germany", "Deutschland"},
+            {"rather", "lieber"},
+            {"feat", "Kunststück"},
+            {"doubtful", "zweifelhaft"},
+            {"requirement", "Anforderung"},
+            {"exhaustion", "Erschöpfung"},
+            {"bunch", "Bündel"},
+            {"to alter", "ändern"},
+            {"occurence", "Auftreten"},
+            {"to arm", "bewaffnen"},
+            {"tedious", "langweilig"},
+            {"to bloat", "aufblähen"},
+            {"conjunction", "Verbindung"},
+            {"to adhere", "festhalten an/angebunden sein an"},
             {"purpose", "Zweck"},
             {"to omit", "auslassen"},
             {"colon", "Doppelpunkt"},
