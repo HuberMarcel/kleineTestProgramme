@@ -19,6 +19,11 @@ public class VokabularEnglischDeutsch_de extends ListResourceBundle {
     protected Object[][] getContents() {
         return new Object[][]{
             //            {"Germany", "Deutschland"},
+            {"purpose", "Zweck"},
+            {"to omit", "auslassen"},
+            {"colon", "Doppelpunkt"},
+            {"to cause", "verursachen"},
+            {"pointlsess", "zwecklos"},
             {"misleading", "irreführend"},
             {"to indent", "einrücken"},
             {"indent", "Einzug"},
