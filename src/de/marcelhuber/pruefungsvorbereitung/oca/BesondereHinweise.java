@@ -19,6 +19,10 @@ public class BesondereHinweise {
     public BesondereHinweise() {
         this.finaleVariable = Integer.MAX_VALUE;
     }
+    
+    public int returnValue(int x){
+        return x++;
+    }
 
 //    static private Integer intToShadow;          // gleicher Variablenname für statische Variable geht nicht
     public static void main(String[] args) {
