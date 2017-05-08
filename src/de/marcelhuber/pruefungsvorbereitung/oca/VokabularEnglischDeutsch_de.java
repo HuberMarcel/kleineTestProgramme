@@ -20,6 +20,7 @@ public class VokabularEnglischDeutsch_de extends ListResourceBundle {
         return new Object[][]{
             {"to omit", "ausLassen"}, // extra falsch geschrieben, da es nochmal überschrieben wird
             //            {"Germany", "Deutschland"},
+            {"exempt", "befreit"},
             {"rather", "lieber"},
             {"feat", "Kunststück"},
             {"doubtful", "zweifelhaft"},

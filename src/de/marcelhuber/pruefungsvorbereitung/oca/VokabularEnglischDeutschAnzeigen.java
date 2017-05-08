@@ -20,6 +20,16 @@ public class VokabularEnglischDeutschAnzeigen {
         ResourceBundle bundle = ResourceBundle.getBundle("de.marcelhuber.pruefungsvorbereitung.oca.VokabularEnglischDeutsch");
         VokabularEnglischDeutsch_de woerterBuch = new VokabularEnglischDeutsch_de();
 //        System.out.println(woerterBuch.keySet());
+        Map<String, String> sortedMap = new TreeMap<>(new VokabularEnglischDeutschComparator());
+        // Sortierung nach values
+        for (String key : bundle.keySet()) {
+            sortedMap.put(bundle.getString(key), key);
+        }
+        for (String value : sortedMap.keySet()) {
+            System.out.println(value);
+//            System.out.println(value + " - " + bundle.);          // wie geht das nun?
+        }
+        //
         for (String wort : woerterBuch.keySet()) {
             fachwoerterBuchEnDe.add(wort);
             fachwoerterBuchDeEn.add(bundle.getString(wort));
@@ -28,7 +38,7 @@ public class VokabularEnglischDeutschAnzeigen {
         Collections.sort(fachwoerterBuchDeEn, new VokabularEnglischDeutschComparator());
 
         // Comparator sortiert NICHT nach Groß- und Kleinschreibung 
-//        System.out.println(fachwoerterBuch);
+        // System.out.println(fachwoerterBuch);
         long maxStringLengthEnDe = 0;
         long maxStringLengthDeEn = 0;
         for (String wort : fachwoerterBuchEnDe) {
