@@ -10,4 +10,9 @@ class DarthVader {
     void ichStelleMichVor() {
         System.out.println("Luke: Ich bin Dein Vater!");
     }
+
+    DarthVader getDarthVader() {
+        return this;
+    }
+
 }
