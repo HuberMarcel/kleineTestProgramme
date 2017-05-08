@@ -20,6 +20,12 @@ public class VokabularEnglischDeutsch_de extends ListResourceBundle {
         return new Object[][]{
             {"to omit", "ausLassen"}, // extra falsch geschrieben, da es nochmal überschrieben wird
             //            {"Germany", "Deutschland"},
+            {"to retread", "runderneuern"},
+            {"tire", "Reifen"},
+            {"amount", "Menge"},
+            {"is toast", "erledigt sein"},
+            {"to arose", "entstehen"},
+            {"to invoke", "aufrufen"},
             {"exempt", "befreit"},
             {"rather", "lieber"},
             {"feat", "Kunststück"},

@@ -21,15 +21,6 @@ public class VokabularEnglischDeutschAnzeigen {
         VokabularEnglischDeutsch_de woerterBuch = new VokabularEnglischDeutsch_de();
 //        System.out.println(woerterBuch.keySet());
         Map<String, String> sortedMap = new TreeMap<>(new VokabularEnglischDeutschComparator());
-        // Sortierung nach values
-        for (String key : bundle.keySet()) {
-            sortedMap.put(bundle.getString(key), key);
-        }
-        for (String value : sortedMap.keySet()) {
-            System.out.println(value);
-//            System.out.println(value + " - " + bundle.);          // wie geht das nun?
-        }
-        //
         for (String wort : woerterBuch.keySet()) {
             fachwoerterBuchEnDe.add(wort);
             fachwoerterBuchDeEn.add(bundle.getString(wort));
@@ -55,16 +46,29 @@ public class VokabularEnglischDeutschAnzeigen {
             System.out.printf("%" + maxStringLengthEnDe + "s - %s%n", wort, bundle.getString(wort));
         }
         System.out.println("");
-        System.out.println("Ausgabe des Wörterbuchs (DE - EN)".toUpperCase() + " [momentan schlecht "
-                + "implementiert]:");
-//        Enumeration<String> keys = bundle.getKeys();
-        for (String wort : fachwoerterBuchDeEn) {
-            for (String wortEn : fachwoerterBuchEnDe) {
-                if (wort.toLowerCase().equals(bundle.getString(wortEn).toLowerCase())) {
-                    System.out.printf("%" + maxStringLengthDeEn + "s - %s%n", wort, wortEn);
-                    break;
-                }
-            }
+
+        /*    Schlechte Implementierung des Wöterbuchs in umgekehrter Reihenfolge
+         System.out.println("Ausgabe des Wörterbuchs (DE - EN)".toUpperCase() + " [momentan schlecht "
+         + "implementiert]:");
+         //        Enumeration<String> keys = bundle.getKeys();
+         for (String wort : fachwoerterBuchDeEn) {
+         for (String wortEn : fachwoerterBuchEnDe) {
+         if (wort.toLowerCase().equals(bundle.getString(wortEn).toLowerCase())) {
+         System.out.printf("%" + maxStringLengthDeEn + "s - %s%n", wort, wortEn);
+         break;
+         }
+         }
+         }
+         */
+        // Elegantere Loesung
+        // Sortierung nach values
+        System.out.println("Ausgabe des Wörterbuchs (DE - EN):".toUpperCase());
+        for (String key : bundle.keySet()) {
+            sortedMap.put(bundle.getString(key), key);
         }
+        for (String value : sortedMap.keySet()) {
+            System.out.printf("%" + maxStringLengthDeEn + "s - %s%n", value, sortedMap.get(value));
+        }
+        //
     }
 }
