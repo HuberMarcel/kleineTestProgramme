@@ -6,6 +6,10 @@ package de.marcelhuber.pruefungsvorbereitung.oca;
  */
 public class Parents {
 
+    private void getMeinVersteck(){
+        System.out.println("Das hier sehe nur ich!");
+    }
+    
     static int getEinkommen() {
         return 10_000;
     }
