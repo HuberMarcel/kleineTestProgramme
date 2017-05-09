@@ -6,6 +6,10 @@ package de.marcelhuber.pruefungsvorbereitung.oca;
  */
 public class Parents {
 
+    static int getEinkommen() {
+        return 10_000;
+    }
+
     Parents getMe() {
         return this;
     }
