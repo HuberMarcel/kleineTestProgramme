@@ -37,7 +37,7 @@ class KindVonAbstrakteKlasseMitInterface extends AbstrakteKlasseMitInterface {
 
             @Override
             public int compare(String s1, String s2) {
-                return s1.compareToIgnoreCase(s2);
+                return -s1.compareToIgnoreCase(s2);   // alphabetisch absteigend sortieren ohne Beachtung der Groß-/Kleinschreibung
             }
 //        };);   // falsche Syntax
         });
