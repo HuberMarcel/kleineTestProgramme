@@ -44,7 +44,7 @@ public class VokabularEnglischDeutsch_de extends ListResourceBundle {
             {"to omit", "auslassen"},
             {"colon", "Doppelpunkt"},
             {"to cause", "verursachen"},
-            {"pointlsess", "zwecklos"},
+            {"pointless", "zwecklos"},
             {"misleading", "irreführend"},
             {"to indent", "einrücken"},
             {"indent", "Einzug"},

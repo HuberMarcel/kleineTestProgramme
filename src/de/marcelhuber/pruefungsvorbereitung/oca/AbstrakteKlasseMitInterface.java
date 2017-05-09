@@ -9,6 +9,12 @@ import java.util.*;
  */
 public abstract class AbstrakteKlasseMitInterface implements IBeispielInterfaceDefault {
 
+//    abstract void goAbstrakt();   // das deklariert eine abstrakte Methode // auskommentiert, da erbende Klassen sonst implementieren müssen
+
+    public int goNichtAbstrakt() {
+        return 10;
+    }
+
     private void go() {
         ichBinAutomatischEineAbstrakteMethode();
     }
