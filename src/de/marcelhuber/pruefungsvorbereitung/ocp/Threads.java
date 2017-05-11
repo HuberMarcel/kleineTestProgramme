@@ -55,8 +55,8 @@ public class Threads {
         //  (6,1)  -->                              799: Waiting for the key!
         // (10,1)  -->                              464: Waiting for the key! 
         // witzig: Das ist abhängig von der Priorität des flushMyQueueThreads
-        fillMyQueue.setPriority(5);
-        flushMyQueue.setPriority(10);
+        fillMyQueue.setPriority(7);    // wenn die obere Priorität > untere: Pause einkommentieren
+        flushMyQueue.setPriority(3);
         fillMyQueue.start();
 //        pause(2);
         /**
@@ -67,7 +67,9 @@ public class Threads {
 //            System.out.println(++waitingCounter + ": Waiting for the key!");
 //        }
         flushMyQueue.start();
-//        pause(16_000);
+        if (fillMyQueue.getPriority() > flushMyQueue.getPriority()) {
+            pause(16_000);
+        }
         System.err.print("(" + fillMyQueue.getPriority() + ","
                 + flushMyQueue.getPriority() + ") -->                           ");
         System.err.println("KeyFreigabe nach " + waitingCounter + " Zählungen!");
@@ -83,7 +85,6 @@ public class Threads {
         System.out.println(publicQueue.size());
         pause(1000);
         System.out.println(publicQueue.size());
-        
     }
 
     void pause(long time) {
