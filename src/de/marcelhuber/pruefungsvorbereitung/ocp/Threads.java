@@ -27,7 +27,7 @@ public class Threads {
     void go() {
         FillTheQueWithNumbers fillTheQueWithNumbers = new FillTheQueWithNumbers(publicQueue);
         fillTheQueWithNumbers.setTime(1);
-        fillTheQueWithNumbers.setAnzahlNumbers(5_000);     // mal mit 100_000 testen - Problem
+        fillTheQueWithNumbers.setAnzahlNumbers(35_000_000);     // mal mit 100_000 testen - Problem
         Thread fillMyQueue = new Thread(fillTheQueWithNumbers);
 //        fillMyQueue.start();
         secondThread = true;
@@ -55,17 +55,20 @@ public class Threads {
         //  (6,1)  -->                              799: Waiting for the key!
         // (10,1)  -->                              464: Waiting for the key! 
         // witzig: Das ist abhängig von der Priorität des flushMyQueueThreads
-        fillMyQueue.setPriority(7);    // wenn die obere Priorität > untere: Pause einkommentieren
-        flushMyQueue.setPriority(3);
+        fillMyQueue.setPriority(10);    // wenn die obere Priorität > untere: Pause einkommentieren
+        flushMyQueue.setPriority(1);
         fillMyQueue.start();
 //        pause(2);
         /**
          * Für Priority-Tests die folgenden 3 Zeilen und die übernächste Pause
          * einkommentieren *
          */
-//        while (!fillTheQueWithNumbers.isKeyIsFree()) {
-//            System.out.println(++waitingCounter + ": Waiting for the key!");
-//        }
+        while (!fillTheQueWithNumbers.isKeyIsFree()) {
+            System.out.println(++waitingCounter + ": Waiting for the key!");
+        }
+        if (fillTheQueWithNumbers.isKeyIsFree()) {
+            return;
+        }
         flushMyQueue.start();
         if (fillMyQueue.getPriority() > flushMyQueue.getPriority()) {
             pause(16_000);
@@ -112,7 +115,7 @@ class FillTheQueWithNumbers implements Runnable {
         // try-catch außerhalb der for-Schleife, da die vermutlich Zeit kostet
         try {
             for (int i = 0; i < anzahlNumbers; i++) {
-                myQueue.offer((Long) (long) (Math.random() * 10_000));    // Zahlen zwischen 0 und 9999
+                myQueue.offer((Long) (long) (Math.random() * 100_000));    // Zahlen zwischen 0 und 9999
                 Thread.sleep(time);
             }
         } catch (InterruptedException ex) {

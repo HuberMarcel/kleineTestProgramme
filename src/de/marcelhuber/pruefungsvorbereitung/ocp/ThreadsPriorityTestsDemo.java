@@ -17,16 +17,16 @@ public class ThreadsPriorityTestsDemo {
     }
 
     void go() {
-        int priority01 = 7;
-        int priority02 = 6;
+        int priority01 = 10;
+        int priority02 = 1;
         int priority03 = 1;
-        int listSize = 300_000;
-        Queue<Long> list01 = new LinkedList<>();
-        Queue<Long> list02 = new LinkedList<>();
-        FillMyQueueWithLongs fillmQwL01 = new FillMyQueueWithLongs(list01);
-        FillMyQueueWithLongs fillmQwL02 = new FillMyQueueWithLongs(list02);
-        fillmQwL01.setListSize(listSize);
-        fillmQwL02.setListSize(listSize);
+        int queueSize = 5_000_000;
+        Queue<Long> queue01 = new LinkedList<>();
+        Queue<Long> queue02 = new LinkedList<>();
+        FillMyQueueWithLongs fillmQwL01 = new FillMyQueueWithLongs(queue01);
+        FillMyQueueWithLongs fillmQwL02 = new FillMyQueueWithLongs(queue02);
+        fillmQwL01.setQueueSize(queueSize);
+        fillmQwL02.setQueueSize(queueSize);
         Thread fmQwL01Thread = new Thread(fillmQwL01);
         Thread fmQwL02Thread = new Thread(fillmQwL02);
         fmQwL01Thread.setPriority(priority01);
@@ -35,7 +35,7 @@ public class ThreadsPriorityTestsDemo {
 //        fmQwL02Thread.start();
         //
         //
-        FlushMyQueueWithLongs flushmQwL01 = new FlushMyQueueWithLongs(list01);
+        FlushMyQueueWithLongs flushmQwL01 = new FlushMyQueueWithLongs(queue01);
         Thread flushmQwL01Thread = new Thread(flushmQwL01);
         flushmQwL01Thread.setPriority(priority03);
         fmQwL01Thread.start();
@@ -47,15 +47,20 @@ public class ThreadsPriorityTestsDemo {
 
         System.out.println("Priorität01 = " + fmQwL01Thread.getPriority() + ",\n"
                 + "Priorität02 = " + fmQwL02Thread.getPriority() + ",\n"
-                + "Size List01 = " + list01.size() + ",\n"
-                + "Size List02 = " + list02.size());
+                + "Size Queue01 = " + queue01.size() + ",\n"
+                + "Size Queue02 = " + queue02.size());
         System.out.println("");
-        pause(1_000);
+        if (fillmQwL02.getTimeInMillis() > 0) {
+            System.out.println("");
+            System.out.println("Zeitliche Verhältnis des ersten zum zweiten Threads:");
+            System.out.println(fillmQwL01.getTimeInMillis() * 1.0 / fillmQwL02.getTimeInMillis());
+        }
+        pause(5_000);
 
         System.out.println("Priorität01 = " + fmQwL01Thread.getPriority() + ",\n"
                 + "Priorität02 = " + fmQwL02Thread.getPriority() + ",\n"
-                + "Size List01 = " + list01.size() + ",\n"
-                + "Size List02 = " + list02.size());
+                + "Size Queue01 = " + queue01.size() + ",\n"
+                + "Size Qqeue02 = " + queue02.size());
         if (fillmQwL02.getTimeInMillis() > 0) {
             System.out.println("");
             System.out.println("Zeitliche Verhältnis des ersten zum zweiten Threads:");
@@ -63,11 +68,17 @@ public class ThreadsPriorityTestsDemo {
         }
         System.out.println("");
 
-        pause(20_000);
+        pause(7_000);
         System.out.println("Priorität01 = " + fmQwL01Thread.getPriority() + ",\n"
                 + "Priorität02 = " + fmQwL02Thread.getPriority() + ",\n"
-                + "Size List01 = " + list01.size() + ",\n"
-                + "Size List02 = " + list02.size());
+                + "Size Queue01 = " + queue01.size() + ",\n"
+                + "Size Queue02 = " + queue02.size());
+        if (fillmQwL02.getTimeInMillis() > 0) {
+            System.out.println("");
+            System.out.println("Zeitliche Verhältnis des ersten zum zweiten Threads:");
+            System.out.println(fillmQwL01.getTimeInMillis() * 1.0 / fillmQwL02.getTimeInMillis());
+        }
+        System.out.println("");
     }
 
     public void pause(long timeOut) {
@@ -81,32 +92,32 @@ public class ThreadsPriorityTestsDemo {
 
 class FillMyQueueWithLongs implements Runnable {
 
-    private Queue<Long> liste;
-    private int listSize;
+    private Queue<Long> queue;
+    private int queueSize;
     private int counterOfferGelungen;
 
     private long timeInMillis;
 
-    public FillMyQueueWithLongs(Queue<Long> liste) {
-        this.liste = liste;
+    public FillMyQueueWithLongs(Queue<Long> queue) {
+        this.queue = queue;
     }
 
     @Override
     public void run() {
         timeInMillis = System.currentTimeMillis();
-        for (int i = 0; i < listSize; i++) {
+        for (int i = 0; i < queueSize; i++) {
             counterOfferGelungen++;
-            liste.offer((long) (Math.random() * 10_000));
+            queue.offer((long) (Math.random() * 10_000));
         }
         timeInMillis = System.currentTimeMillis() - timeInMillis;
     }
 
-    public int getListSize() {
-        return listSize;
+    public int getQueueSize() {
+        return queueSize;
     }
 
-    public void setListSize(int listSize) {
-        this.listSize = listSize;
+    public void setQueueSize(int queueSize) {
+        this.queueSize = queueSize;
     }
 
     public long getTimeInMillis() {
@@ -120,25 +131,25 @@ class FillMyQueueWithLongs implements Runnable {
 
 class FlushMyQueueWithLongs implements Runnable {
 
-    private Queue<Long> liste;
+    private Queue<Long> queue;
     long timeInMillis;
     int counterPollGelungen;
 
     @Override
     public void run() {
         timeInMillis = System.currentTimeMillis();
-        while (!liste.isEmpty()) {
-            liste.poll();
+        while (!queue.isEmpty()) {
+            queue.poll();
             counterPollGelungen++;
         }
         timeInMillis = System.currentTimeMillis() - timeInMillis;
         Marker.marker();
-        System.out.println("Schon fertig mit dem Leeren der Liste!");
+        System.out.println("Schon fertig mit dem Leeren der Queue!");
         Marker.marker();
     }
 
-    public FlushMyQueueWithLongs(Queue<Long> liste) {
-        this.liste = liste;
+    public FlushMyQueueWithLongs(Queue<Long> queue) {
+        this.queue = queue;
     }
 
     public long getTimeInMillis() {
