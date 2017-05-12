@@ -8,7 +8,7 @@ import static de.marcelhuber.systemtools.Pause.*;
 
 /**
  *
- * @author Huber
+ * @author Marcel Huber
  */
 public class MyOwnAtomicIntegerDemoVsAtomicIntegerDemo {
 
@@ -36,7 +36,7 @@ public class MyOwnAtomicIntegerDemoVsAtomicIntegerDemo {
         System.out.println(moAIRunnable.getIntegerValueOfMyOwnAtomicInteger());
         Thread thread01 = new Thread(moAIRunnable);
         Thread thread02 = new Thread(moAIRunnable);
-        breakInSeconds(3);
+        breakInSeconds(5);
         // Zeitmessung
         timeMyOwnAtomicInteger = System.currentTimeMillis();
         thread01.start();
@@ -80,6 +80,8 @@ public class MyOwnAtomicIntegerDemoVsAtomicIntegerDemo {
 
 class MyOwnAtomicInteger {
 
+    static private boolean stateSaved;
+
     private Integer myInteger = 0;
     private Integer myOldInteger = 0;
 
@@ -95,7 +97,29 @@ class MyOwnAtomicInteger {
         this.myInteger = myInteger;
     }
 
-//    public synchronized Integer getAndIncrement() {
+    public Integer getAndIncrementWithMyOwnAtomicWay() {
+
+        synchronized (this) {
+            myTemp = myInteger;
+            myOldInteger = myInteger;
+            stateSaved = true;
+        }
+
+        while (!compareMyTempMyIntegerWithoutSynchronized());
+        synchronized (this) {
+            if (stateSaved) {
+
+                ++myInteger;
+//        }
+//        
+//        synchronized (this) {
+                stateSaved = false;
+            }
+            return myInteger;
+        }
+    }
+    //    public synchronized Integer getAndIncrement() {
+
     public Integer getAndIncrement() {
 
         synchronized (this) {
@@ -105,6 +129,10 @@ class MyOwnAtomicInteger {
         synchronized (this) {
             return ++myInteger;
         }
+    }
+
+    private boolean compareMyTempMyIntegerWithoutSynchronized() {
+        return (myTemp == myOldInteger);
     }
 
     private synchronized boolean compareMyTempMyInteger() {
@@ -125,6 +153,7 @@ class MyOwnAtomicInteger {
 
     public void setMyTemp(Integer myTemp) {
         this.myTemp = myTemp;
+
     }
 
 }
@@ -151,7 +180,8 @@ class MyOwnAtomicIntegerRunnable implements Runnable {
     public void run() {
         for (int i = 0; i < schleifenDurchlaeufe; i++) {
 //            System.out.println("ID:" + this.myID);
-            moAI.getAndIncrement();
+//            moAI.getAndIncrement();
+            moAI.getAndIncrementWithMyOwnAtomicWay();
         }
     }
 
