@@ -25,11 +25,11 @@ public class MyOwnAtomicIntegerDemoVsAtomicIntegerDemo {
         int testInteger = 12;
         MyOwnAtomicInteger moAI = new MyOwnAtomicInteger(testInteger);
         moAI.setMyTemp(initalIntValue);
-        System.out.println("Initialwert moAI:                     " + moAI.getMyInteger());
+        System.out.println("Initialwert moAI:                    " + moAI.getMyInteger());
         for (int i = 0; i < 10; ++i) {
             moAI.getAndIncrement();
         }
-        System.out.println("Aktueller Wert moAI (nach Schleifen): " + moAI.getMyInteger());
+        System.out.println("Aktueller Wert moAI (nach Schleife): " + moAI.getMyInteger());
         MyOwnAtomicIntegerRunnable moAIRunnable = new MyOwnAtomicIntegerRunnable();
         moAIRunnable.setIntegerValueOfMyOwnAtomicInteger(2000);
         moAIRunnable.setSchleifenDurchlaeufe(schleifenDurchlaeufe);
