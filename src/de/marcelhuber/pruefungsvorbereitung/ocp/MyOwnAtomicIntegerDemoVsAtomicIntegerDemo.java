@@ -97,29 +97,35 @@ class MyOwnAtomicInteger {
         this.myInteger = myInteger;
     }
 
-    public Integer getAndIncrementWithMyOwnAtomicWay() {
+    public Integer getAndIncrementAtomicWithMyOwnWay() {
+        int tmp;
+        int intToWrite;
 
-        synchronized (this) {
-            myTemp = myInteger;
-            myOldInteger = myInteger;
-            stateSaved = true;
-        }
-
-        while (!compareMyTempMyIntegerWithoutSynchronized());
-        synchronized (this) {
-            if (stateSaved) {
-
-                ++myInteger;
-//        }
-//        
-//        synchronized (this) {
-                stateSaved = false;
+        do {
+            synchronized (this) {
+                tmp = myInteger;
+                intToWrite = tmp + 1;
             }
+        } while (!compareAndWriteMyOwnWay(tmp, intToWrite));
+        synchronized (this) {
             return myInteger;
         }
     }
-    //    public synchronized Integer getAndIncrement() {
 
+//    public synchronized boolean compareAndWriteMyOwnWay(int tmp, int intToWrite) {
+    public boolean compareAndWriteMyOwnWay(int tmp, int intToWrite) {
+//        System.out.println("tmp:       " + tmp);
+//        System.out.println("myInteger: " + myInteger);
+        synchronized (this) {
+            if (tmp == myInteger) {
+                myInteger = intToWrite;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //    public synchronized Integer getAndIncrement() {
     public Integer getAndIncrement() {
 
         synchronized (this) {
@@ -129,10 +135,6 @@ class MyOwnAtomicInteger {
         synchronized (this) {
             return ++myInteger;
         }
-    }
-
-    private boolean compareMyTempMyIntegerWithoutSynchronized() {
-        return (myTemp == myOldInteger);
     }
 
     private synchronized boolean compareMyTempMyInteger() {
@@ -181,7 +183,7 @@ class MyOwnAtomicIntegerRunnable implements Runnable {
         for (int i = 0; i < schleifenDurchlaeufe; i++) {
 //            System.out.println("ID:" + this.myID);
 //            moAI.getAndIncrement();
-            moAI.getAndIncrementWithMyOwnAtomicWay();
+            moAI.getAndIncrementAtomicWithMyOwnWay();
         }
     }
 
