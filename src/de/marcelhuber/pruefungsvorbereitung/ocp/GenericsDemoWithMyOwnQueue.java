@@ -174,7 +174,9 @@ public class GenericsDemoWithMyOwnQueue {
             System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             System.out.println("!!  jetzt zertören wir myCuttedQueue komplett                 !!");
             System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            // Zerstörung von myCuttedQueue
             myCuttedQueue.clearAndDestroyAllNextReferences();
+            // Zerstörung von myCuttedQueue abgeschlossen
             if (myCuttedQueue.peek() != null) {
                 System.out.println("Nächstes Element von peek(): " + myCuttedQueue.peek().getNext());
             } else {
@@ -328,7 +330,7 @@ public class GenericsDemoWithMyOwnQueue {
         System.out.print("Ansicht nach clearAndDestroyAllNextReferences(): ");
         myOwnQueue.clearAndDestroyAllNextReferences();
         showMyQueue(myOwnQueue);
-        System.out.println("xxxxxxxxxx    Zeile 127    xxxxxxxxxx");
+        System.out.println("xxxxxxxxxx    Zeile 333    xxxxxxxxxx");
         myOwnQueue.add(myOwnQueueNodeNr01);
         System.out.println(myOwnQueueNodeNr01 + ", "
                 + myOwnQueueNodeNr01.getValue() + ", "
@@ -364,7 +366,7 @@ public class GenericsDemoWithMyOwnQueue {
         myOwnQueue.add(myOwnQueueNodeNr01);
         myOwnQueue.add(myOwnQueueNodeNr02);
         myOwnQueue.add(myOwnQueueNodeNr04);
-        System.out.println("xxxxxxxxxx    Zeile 163    xxxxxxxxxx");
+        System.out.println("xxxxxxxxxx    Zeile 369    xxxxxxxxxx");
         showMyQueue(myOwnQueue);
         System.out.println("Size: " + myOwnQueue.getSize());
         MyOwnQueue cuttedQueue = myOwnQueue.cutTheQueue(2);
@@ -385,7 +387,7 @@ public class GenericsDemoWithMyOwnQueue {
         // clearAndDestroyNextReference() aufzurufen, weil die letztstehende
         // Methode ja das FirstElement zum Starten braucht!
         myOwnQueue.clearAndDestroyAllNextReferences();
-        System.out.println("xxxxxxxxxx    Zeile 184    xxxxxxxxxx");
+        System.out.println("xxxxxxxxxx    Zeile 390    xxxxxxxxxx");
         System.out.println("myOwnQueue ist nun zerstört!");
         System.out.println("myOwnQueue: ");
         showMyQueue(myOwnQueue);
@@ -402,7 +404,7 @@ public class GenericsDemoWithMyOwnQueue {
         myOwnQueue.add(myOwnQueueNodeNr04);     // Gisela   kann nicht geaddet werden
         System.out.println("5: " + myOwnQueueNodeNr05 + "/" + myOwnQueueNodeNr05.getNext());
         myOwnQueue.add(myOwnQueueNodeNr05);     // Sascha   kann geaddet werden
-        System.out.println("xxxxxxxxxx    Zeile 201    xxxxxxxxxx");
+        System.out.println("xxxxxxxxxx    Zeile 407    xxxxxxxxxx");
         myOwnQueue.add(myOwnQueueNodeNr02);
         myOwnQueue.add(myOwnQueueNodeNr04);
         myOwnQueue.add(myOwnQueueNodeNr03);
