@@ -18,16 +18,22 @@ public class GenericsDemoWithMyOwnQueue {
 //        PressEnter.toContinue();
 //        new GenericsDemo().go(true);
         new GenericsDemoWithMyOwnQueue().timeMeasuring();
+//        new GenericsDemoWithMyOwnQueue().timeMeasuring(false);
     }
 
     private void timeMeasuring() {
-        long anzahlQueueNodes = (long) (8 * Math.pow(10, 6));
+        boolean checkIfNodeIsInAnotherQueue = false;
+        timeMeasuring(checkIfNodeIsInAnotherQueue);
+    }
+
+    private void timeMeasuring(boolean checkIfNodeIsInAnotherQueue) {
+        long anzahlQueueNodes = 10;//(long) (8 * Math.pow(10, 6));
         long time01;
         long time02;
         List<String> list01Nodes = new ArrayList<>();
         List<MyOwnQueueNode<String>> list02Nodes = new ArrayList<>();
         Queue<String> originalQueue = new LinkedList<>();
-        MyOwnQueue<String> myOwnQueue = new MyOwnQueue<>();
+        MyOwnQueue<String> myOwnQueue = new MyOwnQueue<>(checkIfNodeIsInAnotherQueue);
 
         for (int i = 0; i < anzahlQueueNodes; i++) {
             list01Nodes.add("" + (long) (10_000_000 * Math.random() * 1000) / 1000.0);
@@ -108,7 +114,7 @@ public class GenericsDemoWithMyOwnQueue {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("!!  myOwnQueue.add(myCuttedQueue.peek()); bringt nur etwas,   !!");
         System.out.println("!!  wenn myCuttedQueue eh nur aus einem einzigen Element      !!");
-        System.out.println("!!  besteht                                                   !!");
+        System.out.println("!!  besteht und checkIfNodeIsInAnotherQueue = false ist       !!");
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("");
         myOwnQueue.add(myCuttedQueue.peek());
@@ -143,6 +149,78 @@ public class GenericsDemoWithMyOwnQueue {
         System.out.println("LastInsertedElement von myCuttedQueue: " + myCuttedQueue.getLastInsertedElement());
         System.out.println("Jetzige Size von myCuttedQueue:        " + myCuttedQueue.getSize());
         System.out.println("");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!              myOwnQueue.add(myCuttedQueue.peek());                  !!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        myOwnQueue.add(myCuttedQueue.peek());
+        System.out.println("Nächstes Element von peek(): " + myCuttedQueue.peek().getNext());
+        System.out.println("MyOwnQueue:");
+        System.out.println("FirstElement von myOwnQueue:           " + myOwnQueue.peek());
+        System.out.println("LastInsertedElement von myOwnQueue:    " + myOwnQueue.getLastInsertedElement());
+        System.out.println("Jetzige Size von myOwnQueue:           " + myOwnQueue.getSize());
+        System.out.println("");
+        System.out.println("MyCuttedQueue:");
+        System.out.println("FirstElement von myCuttedQueue:        " + myCuttedQueue.peek());
+        System.out.println("LastInsertedElement von myCuttedQueue: " + myCuttedQueue.getLastInsertedElement());
+        System.out.println("Jetzige Size von myCuttedQueue:        " + myCuttedQueue.getSize());
+        System.out.println("");
+        if (!checkIfNodeIsInAnotherQueue) {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println("!!!!!     Hinweis: Das Element der cutted-Queue ist nun dummerweise  !!!!");
+            System.out.println("!!!!!              in zwei Queues enthalten!!                        !!!!");
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println("");
+            myCuttedQueue.poll();
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println("!!  jetzt zertören wir myCuttedQueue komplett                 !!");
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            myCuttedQueue.clearAndDestroyAllNextReferences();
+            if (myCuttedQueue.peek() != null) {
+                System.out.println("Nächstes Element von peek(): " + myCuttedQueue.peek().getNext());
+            } else {
+                System.out.println("");
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!  WARNING  !!!!!!!!!!!!!!!!!!!!!");
+                System.out.println("");
+                System.out.print("Peek() soll auf myCuttedQueue angewendet werden, aber: ");
+                System.out.println("myCuttedQueue.isEmpty(): " + myCuttedQueue.isEmpty());
+            }
+            long time = System.currentTimeMillis();
+            debugger(18);
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!  HINWEIS  !!!!!!!!!!!!!!!!!!!!!");
+            System.out.println("Die Pause dauerte " + (System.currentTimeMillis() - time) / 1000.0 + "s.......");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("MyOwnQueue:");
+            System.out.println("FirstElement von myOwnQueue:           " + myOwnQueue.peek());
+            System.out.println("LastInsertedElement von myOwnQueue:    " + myOwnQueue.getLastInsertedElement());
+            System.out.println("Jetzige Size von myOwnQueue:           " + myOwnQueue.getSize());
+            System.out.println("");
+            System.out.println("MyCuttedQueue:");
+            System.out.println("FirstElement von myCuttedQueue:        " + myCuttedQueue.peek());
+            System.out.println("LastInsertedElement von myCuttedQueue: " + myCuttedQueue.getLastInsertedElement());
+            System.out.println("Jetzige Size von myCuttedQueue:        " + myCuttedQueue.getSize());
+            System.out.println("");
+
+        }
+        System.out.println("");
+        System.out.println("");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!              myOwnQueue.add(myCuttedQueue.poll());                  !!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        myOwnQueue.add(myCuttedQueue.poll());
+        System.out.println("MyOwnQueue:");
+        System.out.println("FirstElement von myOwnQueue:           " + myOwnQueue.peek());
+        System.out.println("LastInsertedElement von myOwnQueue:    " + myOwnQueue.getLastInsertedElement());
+        System.out.println("Jetzige Size von myOwnQueue:           " + myOwnQueue.getSize());
+        System.out.println("");
+        System.out.println("");
+        System.out.println("MyCuttedQueue:");
+        System.out.println("FirstElement von myCuttedQueue:        " + myCuttedQueue.peek());
+        System.out.println("LastInsertedElement von myCuttedQueue: " + myCuttedQueue.getLastInsertedElement());
+        System.out.println("Jetzige Size von myCuttedQueue:        " + myCuttedQueue.getSize());
+        System.out.println("");
+        System.out.println("myOwnQueue.isCheckIfNodeIsInAnotherQueue:    " + myOwnQueue.isCheckIfNodeIsInAnotherQueue());
+        System.out.println("myCuttedQueue.isCheckIfNodeIsInAnotherQueue: " + myCuttedQueue.isCheckIfNodeIsInAnotherQueue());
     }
 
     private void go() {
@@ -385,6 +463,11 @@ public class GenericsDemoWithMyOwnQueue {
         showMyQueue(myOwnQueue);
     }
 
+    private void debugger(long timeBreak) {
+        System.out.println("!!DebuggingPoint!!");
+        Pause.breakInSecondsWithTimer(timeBreak);
+    }
+
     private int calculateMyAge(Calendar myBirthday) {
         Calendar now = Calendar.getInstance();
         int myAge = now.get(Calendar.YEAR) - myBirthday.get(Calendar.YEAR);
@@ -450,16 +533,20 @@ class MyOwnQueue<T> {
         }
         if (element != null & lastInsertedElement != element) {
             if (element.getNext() == null) {
-//                System.out.println("ADDING");
                 if (isEmpty()) {
                     firstElement = element;
                     lastInsertedElement = element;
                 } else {
+//                    System.out.println("ADDING");
                     lastInsertedElement.setNext(element);
                     lastInsertedElement = element;
                 }
+//                System.out.println("Size vorher: " + size);
                 size++;
-                element.setIsInAQueue(true);
+//                System.out.println("Size jetzt:  " + size);
+                if (checkIfNodeIsInAnotherQueue) {
+                    element.setIsInAQueue(true);
+                }
             }
         }
     }
