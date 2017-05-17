@@ -185,7 +185,7 @@ public class GenericsDemoWithMyOwnQueue {
                 System.out.println("myCuttedQueue.isEmpty(): " + myCuttedQueue.isEmpty());
             }
             long time = System.currentTimeMillis();
-            debugger(18);
+            debugger(7);
             System.out.println("!!!!!!!!!!!!!!!!!!!!!  HINWEIS  !!!!!!!!!!!!!!!!!!!!!");
             System.out.println("Die Pause dauerte " + (System.currentTimeMillis() - time) / 1000.0 + "s.......");
             System.out.println("");
