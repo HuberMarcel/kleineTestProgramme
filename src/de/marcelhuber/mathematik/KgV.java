@@ -128,6 +128,8 @@ public class KgV {
         long ggT = new GgT().ggTEuclid(a, b);
         assert (ggT != 0) : "Fehler: ggT=0 ist doch passiert!";
         System.out.println("ggT: " + ggT);
-        return a * b / ggT;
+        return Math.min(a, b) * (Math.max(a, b) / ggT); 
+        // kleine Änderung in der Reihenfolge der Operationen, da der kgV so effizienter berechnet
+        // sollte, da die größere Zahl vor der Multiplikation erstmal verkleiner wird
     }
 }
