@@ -1,5 +1,7 @@
 package de.marcelhuber.mathematik;
 
+import de.marcelhuber.systemtools.Marker;
+import de.marcelhuber.systemtools.Pause;
 import de.marcelhuber.systemtools.PressEnter;
 import de.marcelhuber.systemtools.ReadInput;
 
@@ -34,6 +36,17 @@ public class KgV {
         System.out.println("\nIhre Eingaben waren a=" + a + " ("
                 + Long.toString(a).length() + " Stellen) und "
                 + "b=" + b + " (" + Long.toString(b).length() + " Stellen)");
+        /* hier testen wir jetzt die neu implementierte kgV-Methode */
+        Marker.marker();
+        Marker.marker();
+        // Hinweis: Da ist wohl noch ein Bug: 32 und 234 --> Blockade
+        long kgV01 = kgVAnotherCalculationWay(a, b);
+        System.out.println("Nach der neuen Methode hat der gesuchte kgV den"
+                + "Wert: " + kgV01);
+        Marker.marker();
+        Marker.marker();
+        Pause.breakInSeconds(3);
+        /* Ende des Tests der neu implementierten kgV-Methode */
         long kgV = kgVNaiv(a, b);
         System.out.println("Der kgV von a=" + a + " und b=" + b
                 + " ist: " + kgV);
@@ -71,18 +84,64 @@ public class KgV {
         long ggT = ggTRechenObjekt.ggTNaiv(a, b);
         timeggTNaiv = System.nanoTime() - time;
         System.out.printf("Berechnung dauerte %3.9f", timeggTNaiv / Math.pow(10, 9));
-        System.out.println(" Sekunden und kgV-Wert: " + ggT);
+        System.out.println(" Sekunden und ggT-Wert: " + ggT);
         time = System.nanoTime();
         ggT = ggTRechenObjekt.ggTEuclid(a, b);
         timeggTEuclid = System.nanoTime() - time;
         System.out.printf("Berechnung dauerte %3.9f", timeggTEuclid / Math.pow(10, 9));
-        System.out.println(" Sekunden und kgV-Wert: " + ggT);
+        System.out.println(" Sekunden und ggT-Wert: " + ggT);
         System.out.println("");
         System.out.println("");
         System.out.println("Interessant ist das Verhältnis der schnellen kgV-"
                 + "Berechnung zur ggT-Euklid-Berechnung:");
         System.out.println(((double) timeKgVFaster / timeggTEuclid));
         System.out.println("kgV mit ggT berechnet: " + new KgV().kgVWithGgT(a, b));
+    }
+
+    public long kgVAnotherCalculationWay(long a, long b) {
+        long helper;
+        a = Math.abs(a);
+        b = Math.abs(b);
+        // ohne den helper würde ich bei a = Math.max(a,b) ja eventuell a einen
+        // neuen Wert zuweisen, woraufhin dann b = Math.min(a,b) einfach a ergeben würde
+        // Beispiel: a=3, b=4; dann wäre nach a = Math.max(a,b) ja a==b==4...
+        //           mit dem helper unten: helper = 3 --> a = 4 --> b = helper == 3; 
+        helper = Math.min(a, b);
+        a = Math.max(a, b);
+        b = helper;
+        if (b == 0) {
+            return kgV = 0;
+        }
+        long rest = a % b;
+        if (rest == 0) {
+            return kgV = a;
+        }
+        // Aufgabe:    Finde x aus {2,..., b-1, b} minimal mit (x*rest) kongruent 0 mod b
+        //             dann ist x*a der gesuchte kgV: kgV = x*a
+        // Erkenntnis: Damit obiges x aus {2,...,b-1} sein kann, muss ggT(rest,b) > 1 sein
+        long hilfsGgT = new GgT().ggTEuclid(rest, b);
+        if (hilfsGgT == 1) {
+            return kgV = a * b;
+        }
+        // ansonsten berechne x aus {2,...,b-1} minimal mit (x*rest) kongruent 0 mod b
+        long faktorGesamt = 0;
+        helper = b % rest;
+        Marker.marker();
+        System.out.println("a     : " + a);
+        System.out.println("b     : " + b);
+        System.out.println("helper: " + helper);
+        // hier besteht auf jeden Fall noch Behandlungs- und Korrekturbedarf, Test mit a=432 und b=234
+        while (helper > 0) {
+            faktorGesamt += 1 + b / helper;
+            helper = (faktorGesamt * rest) % b;
+            System.out.println("faktorGesamt: " + faktorGesamt);
+            System.out.println("b/rest:       " + b / rest);
+            System.out.println("helper:       " + helper);
+            PressEnter.toContinue();
+        }
+        faktorGesamt += (b - (helper % b)) / rest;
+        System.out.println("faktorGesamt: " + faktorGesamt);  // vgl. mit ggT(a,b)
+        return kgV = faktorGesamt * a;
     }
 
     public long kgVNaiv(long a, long b) {
@@ -99,7 +158,8 @@ public class KgV {
                 y += Math.abs(b);
             }
         }
-        return x;
+        kgV = x;
+        return kgV;
     }
 
     public long kgVNaivFaster(long a, long b) {
@@ -118,7 +178,8 @@ public class KgV {
 //            System.out.println("y: " + y);
 //            PressEnter.toContinue();
         }
-        return Math.max(x, y);
+        kgV = Math.max(x, y);
+        return kgV;
     }
 
     public long kgVWithGgT(long a, long b) {
@@ -128,8 +189,13 @@ public class KgV {
         long ggT = new GgT().ggTEuclid(a, b);
         assert (ggT != 0) : "Fehler: ggT=0 ist doch passiert!";
         System.out.println("ggT: " + ggT);
-        return Math.min(a, b) * (Math.max(a, b) / ggT); 
+        kgV = Math.min(a, b) * (Math.max(a, b) / ggT);
+        return kgV;
         // kleine Änderung in der Reihenfolge der Operationen, da der kgV so effizienter berechnet
         // sollte, da die größere Zahl vor der Multiplikation erstmal verkleiner wird
+    }
+
+    public long getKgV() {
+        return kgV;
     }
 }

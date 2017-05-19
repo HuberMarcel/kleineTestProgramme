@@ -3,6 +3,8 @@ package de.marcelhuber.mathematik;
 import de.marcelhuber.mathematischeHilfsprogramme.*;
 import de.marcelhuber.systemtools.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,6 +19,7 @@ public class PrimzahlTest {
     private boolean isPossiblePrim;
     private boolean isPrim;
     private List<Long> primzahlListe = new ArrayList<>();
+
     private long teiler = 0; // potentieller Teiler
 
     public static void main(String[] args) {
@@ -30,6 +33,16 @@ public class PrimzahlTest {
         PrimzahlTest dummyObjekt = new PrimzahlTest();
 //        dummyObjekt.goTestePrimAusscheidungsverfahren();
 //        PressEnter.toContinue();
+        Marker.marker();
+        Marker.marker();
+        int zahl = 53;    // das Produkt der Primzahlen bis zur 55en ist schon zu anspruchsvoll: Error
+                          // hier wird im Produkt der Faktor 53 noch nicht eingehen, daher noch kein Error
+        System.out.println("Ist " + zahl + " prim? Hier die Antwort: "
+                + dummyObjekt.primZahlTestMitProduktUndGgT(zahl));
+        System.out.println("PimzahlListe: " + dummyObjekt.primzahlListe);
+        Marker.marker();
+        Marker.marker();
+        Pause.breakInSeconds(3);
         dummyObjekt.goPrimzahlTestMitSiebErastothenes();
         dummyObjekt.go();
     }
@@ -96,25 +109,25 @@ public class PrimzahlTest {
         long readLong = -99;
         readLong = ReadInput.readLong();
 //        do {
-            primzahlTestMitSiebErastothenes(readLong);
-            System.out.print("Die Zahl " + readLong + " ist ");
-            if (getIsPrim()) {
-                System.out.print("prim!");
+        primzahlTestMitSiebErastothenes(readLong);
+        System.out.print("Die Zahl " + readLong + " ist ");
+        if (getIsPrim()) {
+            System.out.print("prim!");
 //                if (Math.abs(readLong) > 2) {
 //                    System.out.println("    Teiler-Status: " + getTeiler());
 //                } else {
 //                    System.out.println("");
 //                }
-                System.out.println("");
+            System.out.println("");
+        } else {
+            System.out.print("nicht prim");
+            if (Math.abs(readLong) == 1) {
+                System.out.println("!");
             } else {
-                System.out.print("nicht prim");
-                if (Math.abs(readLong) == 1) {
-                    System.out.println("!");
-                } else {
-                    System.out.println(", sie hat den Teiler "
-                            + getTeiler() + "!");
-                }
+                System.out.println(", sie hat den Teiler "
+                        + getTeiler() + "!");
             }
+        }
 //        } while (readLong++ < 120);
     }
 
@@ -292,7 +305,65 @@ public class PrimzahlTest {
         }
         return ergebnis;
     }
-  
+
+    public boolean primZahlTestMitProduktUndGgT(long zahl) {
+        // eine sehr lustige, aber wohl uneffiziente, Art eines Primzahltests
+        // am besten vor der Verwendung primzahlListe.clear(); durchführen
+        zahl = Math.abs(zahl);
+        if (zahl < 2) {
+            return false;
+        }
+        if (zahl == 2) {
+            primzahlListe.add(2L);
+            return true;
+        }
+        if (zahl == 3) {
+            primzahlListe.add(3L);
+            return true;
+        }
+        if (primzahlListe.size() == 0) {
+            primzahlListe.add(2L);
+        }
+        if (primzahlListe.size() == 1) {
+            primzahlListe.add(3L);
+        }
+
+        if (zahl > 2 + primzahlListe.get(primzahlListe.size() - 1)) {
+            primZahlTestMitProduktUndGgT(zahl - 1);
+        }
+
+        long produktOfPrimes = 1;
+        for (Long primzahl : primzahlListe) {
+            produktOfPrimes *= primzahl;
+//            Marker.marker();
+//            System.out.println("Zahl:               " + zahl);
+//            System.out.println("primzahl:           " + primzahl);
+//            System.out.println("momentanes Produkt: " + produktOfPrimes);
+//            Marker.marker();
+        }
+
+        if (produktOfPrimes < 0) {
+            throw new Error("Das Produkt ist in "
+                    + "unsinniger Weise < 0, aktueller Wert: " + produktOfPrimes) {
+            };
+        }
+
+        if (new GgT().ggTEuclid(zahl, produktOfPrimes) == 1) {
+//            System.out.println("GgT(" + zahl + "," + produktOfPrimes + "): "
+//                    + new GgT().ggTEuclid(zahl, produktOfPrimes));
+            primzahlListe.add(zahl);
+            isPrim = true;
+        } else {
+            isPrim = false;
+        }
+//        if (isPrim) {
+//            System.out.println("Produkt:       " + produktOfPrimes);
+//            System.out.println("Long-MaxValue: " + Long.MAX_VALUE);
+//            System.out.println("Zahl:          " + zahl);
+//        }
+        return isPrim;
+    }
+
     public long getPruefZahl() {
         return pruefZahl;
     }
@@ -315,5 +386,13 @@ public class PrimzahlTest {
 
     public void setHilfsAnzeige(boolean bool) {
         hilfsAnzeige = bool;
+    }
+
+    public boolean isIsPrim() {
+        return isPrim;
+    }
+
+    public List<Long> getPrimzahlListe() {
+        return primzahlListe;
     }
 }
