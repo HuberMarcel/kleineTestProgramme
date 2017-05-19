@@ -39,7 +39,7 @@ public class KgV {
         /* hier testen wir jetzt die neu implementierte kgV-Methode */
         Marker.marker();
         Marker.marker();
-        // Hinweis: Da ist wohl noch ein Bug: 32 und 234 --> Blockade
+        /* Ende des Tests der neu implementierten kgV-Methode       */
         long kgV01 = kgVAnotherCalculationWay(a, b);
         System.out.println("Nach der neuen Methode hat der gesuchte kgV den"
                 + "Wert: " + kgV01);
@@ -124,24 +124,12 @@ public class KgV {
             return kgV = a * b;
         }
         // ansonsten berechne x aus {2,...,b-1} minimal mit (x*rest) kongruent 0 mod b
-        long faktorGesamt = 0;
-        helper = b % rest;
-        Marker.marker();
-        System.out.println("a     : " + a);
-        System.out.println("b     : " + b);
-        System.out.println("helper: " + helper);
-        // hier besteht auf jeden Fall noch Behandlungs- und Korrekturbedarf, Test mit a=432 und b=234
-        while (helper > 0) {
-            faktorGesamt += 1 + b / helper;
-            helper = (faktorGesamt * rest) % b;
-            System.out.println("faktorGesamt: " + faktorGesamt);
-            System.out.println("b/rest:       " + b / rest);
-            System.out.println("helper:       " + helper);
-            PressEnter.toContinue();
+        // wir benutzen unten wieder helper anstatt einer neuen Variablen x
+        helper = b / rest;
+        while ((helper * rest) % b > 0) {
+            helper++;
         }
-        faktorGesamt += (b - (helper % b)) / rest;
-        System.out.println("faktorGesamt: " + faktorGesamt);  // vgl. mit ggT(a,b)
-        return kgV = faktorGesamt * a;
+        return kgV = helper * a;
     }
 
     public long kgVNaiv(long a, long b) {
