@@ -2,6 +2,7 @@ package de.marcelhuber.mathematik;
 
 import de.marcelhuber.systemtools.Marker;
 import de.marcelhuber.systemtools.Pause;
+import de.marcelhuber.systemtools.PressEnter;
 import de.marcelhuber.systemtools.ReadInput;
 
 /**
@@ -106,6 +107,8 @@ public class KgV {
         // Beispiel: a=3, b=4; dann wäre nach a = Math.max(a,b) ja a==b==4...
         //           mit dem helper unten: helper = 3 --> a = 4 --> b = helper == 3; 
         helper = Math.min(a, b);
+        System.out.println("Hinweis: Hier wird automatisch a auf den größeren "
+                + "Betrag der Zahlen gesetzt\nund b auf den kleineren!");
         a = Math.max(a, b);
         b = helper;
         if (b == 0) {
@@ -124,10 +127,56 @@ public class KgV {
         }
         // ansonsten berechne x aus {2,...,b-1} minimal mit (x*rest) kongruent 0 mod b
         // wir benutzen unten wieder helper anstatt einer neuen Variablen x
+        // 1. Möglichkeit: Naiv...
         helper = b / rest;
         while ((helper * rest) % b > 0) {
             helper++;
         }
+        // Kommentar: die folgenden Ansätze waren Ideen, um eine schnellere Berechnung
+        //            zu bekommen. Leider zeigt ein Beispiel, dass sie beide anscheinend
+        //            auf dem gleichen Denkfehler beruhen - d.h., man muss diese Ideen erst
+        //            nochmal korrigieren.... Momentan sind sie nicht sinnvoll einsetzbar
+//
+////        // 2. Ansatz, der so aber noch nicht ausgereift sein kann, wie das
+////        // Beispiel mit a=54 und b=4234 zeigt; daher:
+////        // /* TODO: nicht fertig - 20.05.2017 
+////        // Nochmal überarbeiten und nicht verwenden, solange das TODO nicht
+////        // gelöscht wurde!! */
+//        helper = b / rest;
+//        long r_neu = rest;
+//        while ((helper * r_neu) % b != 0) {
+////            System.out.println("1. r_neu: " + r_neu);
+//            r_neu = ((helper + 1) * r_neu) % b;
+////            System.out.println("2. r_neu: " + r_neu);
+//            helper = b / r_neu;
+////            System.out.println("helper: " + helper);
+//        }
+//
+//        // 3. Ansatz, der so aber noch nicht ausgereift sein kann, wie das
+//        // Beispiel mit a=54 und b=4234 zeigt; daher:
+//        // /* TODO: nicht fertig - 20.05.2017 
+//        // Nochmal überarbeiten und nicht verwenden, solange das TODO nicht
+//        // gelöscht wurde!! */
+//        // 
+//        long x = rest;       // beachte, dass hier rest > 0 gelten wird; s.o.
+//        // es gilt ja nun:        rest  kongruent   x mod b
+//        // also folgt:            t*rest  kongruent t*x mod b
+//        // naheliegender Versuch: t = floor(b/x)
+//        // falls b % x == 0 ==> fertig, sonst 
+//        //                      ersetze x durch x' = ((floor(b / x) + 1) * rest) % b; 
+//        // beachte: dann ist x' < x
+//        // nun also: (t+1)*x = (t+1)*x = t'*x'  mod b  und das gesuchte t' hat die Rolle des vorherigen t's
+//        // also: Ansatz ist t' = floor(b/x'), falls b%x' == 0, sonst t' = floor(b/x')+1
+//        // usw. usf.
+//        // am Ende haben wir also x^(n) mit n aus IN_0 so, dass b % x^(n) == 0
+//        while (b % x > 0) {
+//            if (((b / x) + 1) * rest % b > 0) {
+//                x = (((b / x) + 1) * x) % b;
+////                System.out.println("x: " + x);
+//            }
+//        }
+//        helper = b / x;
+////        System.out.println("helper: " + helper);
         return kgV = helper * a;
     }
 

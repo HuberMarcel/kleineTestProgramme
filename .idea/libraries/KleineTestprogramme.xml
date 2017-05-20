@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="KleineTestprogramme">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/KleineTestprogramme.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
