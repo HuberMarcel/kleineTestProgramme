@@ -33,7 +33,10 @@ public class GgTDemo {
         System.out.println("x = " + x);
         System.out.println("y = " + y);
         System.out.println("ggT = " + ggTRechenObjekt.getGgT());
+        System.out.println("Kontrollrechnung:");
         System.out.println(x + " * (" + a + ") + (" + y + ") * (" + b + ") = "
                 + (x * a + y * b));
+//        System.out.println(Long.MIN_VALUE);
+//        System.out.println(Long.MAX_VALUE);
     }
 }
