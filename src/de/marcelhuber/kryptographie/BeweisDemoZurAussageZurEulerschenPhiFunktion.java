@@ -12,6 +12,7 @@ package de.marcelhuber.kryptographie;
 import de.marcelhuber.mathematik.GgT;
 import de.marcelhuber.mathematik.TeilerMengeBerechnen;
 import de.marcelhuber.systemtools.Marker;
+import de.marcelhuber.systemtools.PressEnter;
 import de.marcelhuber.systemtools.ReadInput;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class BeweisDemoZurAussageZurEulerschenPhiFunktion {
                 + "die_Mengen_M(t);\ndabei M(t) = M_" + zahl + "(t) := {b: 1 <= b <= " + zahl + " "
                 + "und ggT(b," + zahl + ") = t }");
         System.out.println("");
-        System.out.println("Wir berechnen zunächst die Menge T der Teiler der Zahl " + zahl);
+        System.out.println("Wir berechnen zunächst die Menge T der Teiler der Zahl " + zahl + ":");
 //        TeilerMengeBerechnen teilerMengeBerechnen = new TeilerMengeBerechnen();
 //        teilerMengeBerechnen.setZahl(zahl);
 //        teilerMengeBerechnen.berechneTeilerDerZahl();
@@ -74,6 +75,7 @@ public class BeweisDemoZurAussageZurEulerschenPhiFunktion {
     }
 
     public void goBeweisschritt01b() {
+        PressEnter.toContinue();
         System.out.println("");
         Marker.marker();
         System.out.println("Beweisschritt 01".toUpperCase() + "b");
