@@ -1,5 +1,11 @@
 // Siehe Buchmann, Einführung in die Kryptographie: 
 // Theorem 3.8.4 auf Seite 34
+//     Das ist die Aussage, dass
+//     die Summe der Teiler von m über die Werte phi(t) gerade wieder m
+//     ergibt:
+//     m = summe_{t|m} phi(t) mit der Eulerschen phi-Funktion, die definiert
+//     ist als 
+//         phi(t) = |{b aus IN: ggT(b,t)==1}|.
 // TODO: Die restlichen Beweisschritte ...
 package de.marcelhuber.kryptographie;
 
