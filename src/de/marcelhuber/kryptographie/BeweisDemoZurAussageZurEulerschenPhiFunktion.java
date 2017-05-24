@@ -100,7 +100,7 @@ public class BeweisDemoZurAussageZurEulerschenPhiFunktion {
             mySetsMapped.put(t, mySet);
         }
         for (Long t : mySetsMapped.keySet()) {
-            System.out.printf("arrayM" + zahl + "(%1$" + ("" + zahl).length() + "d) = "
+            System.out.printf("arrayM_" + zahl + "(%1$" + ("" + zahl).length() + "d) = "
                     + mySetsMapped.get(t) + "%n", t);
         }
     }
