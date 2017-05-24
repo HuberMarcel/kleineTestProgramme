@@ -25,9 +25,9 @@ public class BubbleSort {
         unsortiertesFeld = new Long[feldLaenge];
         Long[] teilFeld = new Long[feldLaenge / 2];
 //        do {                                                   // Z1
-            for (int i = 0; i < feldLaenge; i++) {
-                unsortiertesFeld[i] = (long) (Math.random() * 10_000);
-            }
+        for (int i = 0; i < feldLaenge; i++) {
+            unsortiertesFeld[i] = (long) (Math.random() * 10_000);
+        }
 //            for (int i = 0; i < teilFeld.length; i++) {        // Z2
 //                teilFeld[i] = unsortiertesFeld[feldLaenge/2+i];// Z3 
 //            }                                                  // Z4
@@ -54,7 +54,7 @@ public class BubbleSort {
     public Long[] sortiereMitBubbleSort(int untereGrenze, Long[] feld) {
         arrayIsSorted = true;
         /* wenn kein Tausch in der nächsten Schleife notwendig ist,
-        dann ist das Feld bereits sortiert */
+         dann ist das Feld bereits sortiert */
         for (int i = feld.length - 1; i > untereGrenze; --i) {
             vergleichsZaehler++;
             if (feld[i] < feld[i - 1]) {  // doch Tausch notwendig
@@ -82,5 +82,4 @@ public class BubbleSort {
         }
         return true;
     }
-
 }

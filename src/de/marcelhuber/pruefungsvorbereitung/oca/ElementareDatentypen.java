@@ -56,5 +56,4 @@ public class ElementareDatentypen {
     private void wertebereichAnzeige(String typ, String min, String max) {
         System.out.println(typ + "     von " + min + " bis " + max);
     }
-
 }
