@@ -21,7 +21,7 @@ import java.util.TreeMap;
 
 /**
  *
- * @author Marcel
+ * @author Marcel Huber
  */
 public class BeweisDemoZurAussageZurEulerschenPhiFunktion {
 
