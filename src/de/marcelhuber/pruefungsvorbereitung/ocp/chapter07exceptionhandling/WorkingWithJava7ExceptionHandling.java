@@ -1,10 +1,9 @@
-package Chapter07ExceptionHandling;
+package de.marcelhuber.pruefungsvorbereitung.ocp.chapter07exceptionhandling;
 
 import de.marcelhuber.systemtools.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.logging.*;
-import jdk.jfr.events.*;
 
 /**
  *
@@ -70,6 +69,7 @@ public class WorkingWithJava7ExceptionHandling {
                 for (char charOfFile : charactersOfFile) {
                     System.out.print(charOfFile);
                 }
+                System.out.println("");
                 fr.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(WorkingWithJava7ExceptionHandling.class.getName()).log(Level.SEVERE, null, ex);
