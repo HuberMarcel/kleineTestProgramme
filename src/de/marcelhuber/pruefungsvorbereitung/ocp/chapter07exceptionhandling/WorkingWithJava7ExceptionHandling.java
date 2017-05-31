@@ -2,7 +2,9 @@ package de.marcelhuber.pruefungsvorbereitung.ocp.chapter07exceptionhandling;
 
 import de.marcelhuber.systemtools.*;
 import java.io.*;
+import java.nio.channels.*;
 import java.nio.file.*;
+import java.sql.*;
 import java.util.logging.*;
 
 /**
@@ -73,9 +75,35 @@ public class WorkingWithJava7ExceptionHandling {
                 fr.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(WorkingWithJava7ExceptionHandling.class.getName()).log(Level.SEVERE, null, ex);
+                ex = new FileNotFoundException(); // das funktioniert
             } catch (IOException ex) {
-                System.out.println("IOException...");
+                System.out.println("IOException...: " + ex);
+            }
+            try {
+                couldThrowAnException();   // wegen "throws IOException, SQLException" an der Methodendeklaration gehört das in einen try-catch
+            } catch (IOException | SQLException ex) {
+//                ex = new Exception();  // nicht erlaubt
+                System.out.println("Exception: " + ex);
+            } catch (AlreadyBoundException ex) {
+                ex = new AlreadyBoundException();
+                System.out.println("Exception AlreadyBound: " + ex );
             }
         }
+//        if (Files.exists(file.toPath())) {
+//            try {
+//                FileReader fr = new FileReader(file);
+//                char[] charactersOfFile = new char[20]; // einfach mal 2 etc. testen
+//                fr.read(charactersOfFile);
+//                for (char charOfFile : charactersOfFile) {
+//                    System.out.print(charOfFile);
+//                }
+//            } catch (IOException | ObjectStreamException ex) {   // nicht mögliche checked-Exceptions dürfen nicht auftauchen
+//                ex = new IOException();                          // dürfte auch nicht gehen, da implizit final
+//            }
+//        }
     }
+
+    public void couldThrowAnException() throws IOException, SQLException, AlreadyBoundException {
+    }
+
 }

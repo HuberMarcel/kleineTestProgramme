@@ -36,14 +36,14 @@ public class FileDemo {
             FileWriter fw = new FileWriter(file);
             fw.write("howdy\nfolks\n");
             fw.close();
-            System.out.println(file.getName()+" wird gelöscht in "+sec+" Sekunden:");
+            System.out.println(file.getName() + " wird gelöscht in " + sec + " Sekunden:");
             for (int i = 0; i < sec; i++) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(FileDemo.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println((i+1) + ". Sekunde");
+                System.out.println((i + 1) + ". Sekunde");
             }
             file.delete();
         } catch (IOException e) {
