@@ -25,7 +25,7 @@ package de.marcelhuber.mathematik;
 
 import de.marcelhuber.systemtools.Marker;
 import de.marcelhuber.systemtools.Pause;
-import de.marcelhuber.systemtools.PressEnter;
+//import de.marcelhuber.systemtools.PressEnter;
 import de.marcelhuber.systemtools.ReadInput;
 import java.util.List;
 
@@ -40,10 +40,12 @@ public class SchnelleExponentiation {
     private long m;            // modul
     private long ergebnis;     // hier wollen wir g^{exp} mod m speichern! 
     private long kontrollErgebnis;
+    private long result;       // nur zur Differenz zur Pseudocode-Nachimplementierung 
     private long g_Potenz;
     private boolean zeigeHinweise;
     private long timeSchnelleExponentiation;
     private long timeNaiveExpontiation;
+    private long timeSchnelleExponentiationNachPseudocode;
 
     public static void main(String[] args) {
         new SchnelleExponentiation().go();
@@ -54,26 +56,29 @@ public class SchnelleExponentiation {
         while (wdh) {
             g = 0;
             exp = -1;
-            m = 0;
+            m = -1;
             while (g < 2) {
-                System.out.print("Geben Sie die Basis g > 1 ein:               ");
+                System.out.print("Geben Sie die Basis g > 1 ein:               "
+                        + "                 ");
                 g = ReadInput.readLong();
                 if (g < 2) {
                     System.out.println("Es soll g > 1 sein... NEUER VERSUCH!\n");
                 }
             }
             while (exp < 0) {
-                System.out.print("Geben Sie den Exponenten exp >= 0 ein:       ");
+                System.out.print("Geben Sie den Exponenten exp >= 0 ein:       "
+                        + "                 ");
                 exp = ReadInput.readLong();
                 if (exp < 0) {
                     System.out.println("Es soll exp >= 0 sein... NEUER VERSUCH!\n");
                 }
             }
-            while (m < 1) {
-                System.out.print("Geben Sie das Modul m aus IN = IN \\{0} ein:  ");
+            while (m < 0) {
+                System.out.print("Geben Sie das Modul m aus IN = IN \\{0} ein "
+                        + "oder 0 für keins:  ");
                 m = ReadInput.readLong();
                 if (m < 1) {
-                    System.out.println("Es soll m > 0 sein... NEUER VERSUCH!\n");
+                    System.out.println("Es soll m >= 0 sein... NEUER VERSUCH!\n");
                 }
             }
             //
@@ -89,21 +94,38 @@ public class SchnelleExponentiation {
             timeNaiveExpontiation = System.nanoTime() - timeNaiveExpontiation;
             System.out.println("Kontrollrechnung (naiv/aufwändig) liefert das Ergebnis:\n"
                     + kontrollErgebnis);
-            if (ergebnis != kontrollErgebnis) {
+            //
+            timeSchnelleExponentiationNachPseudocode = System.nanoTime();
+            calcSchnelleExponentiationNachPseudocode(g, exp, m);
+            timeSchnelleExponentiationNachPseudocode = System.nanoTime() - timeSchnelleExponentiationNachPseudocode;
+            System.out.println("result:\n" + result);
+            //
+            if (ergebnis != kontrollErgebnis || kontrollErgebnis != result) {
                 Pause.breakInSeconds(3);
                 System.err.println("DA IST WAS SCHIEFGELAUFEN!");
             } else {
-                System.out.println("WUNDERBAR:\nBeide Ergebnisse sind "
+                System.out.println("WUNDERBAR:\nAlle Ergebnisse sind "
                         + "IDENTISCH!! :) :) :)");
                 Pause.breakInSeconds(2);
             }
             System.out.println("");
-            System.out.println("Zeit [s] für die schnelle Exponentiation: "
+            System.out.println("Zeit [s] für die schnelle Exponentiation:     "
+                    + "            "
                     + (1.0 * timeSchnelleExponentiation) / 1_000_000_000);
-            System.out.println("Zeit [s] für die naive Exponentiation:    "
+            System.out.println("Zeit [s] für die schnelle Exponentiation nach "
+                    + "Pseudocode: "
+                    + (1.0 * timeSchnelleExponentiationNachPseudocode) / 1_000_000_000);
+            System.out.println("Zeit [s] für die naive Exponentiation:        "
+                    + "            "
                     + (1.0 * timeNaiveExpontiation) / 1_000_000_000);
-            System.out.println("Verhältnis schnell/naiv:                  "
+            System.out.println("");
+            System.out.println("Verhältnis schnell/naiv:                      "
+                    + "                                    "
                     + (timeSchnelleExponentiation * 1.0 / timeNaiveExpontiation));
+            System.out.println("Verhältnis schnelle Exponentiation (selbst)/"
+                    + "schnelle Exponentiation (Pseudocode): "
+                    + (timeSchnelleExponentiation * 1.0 / timeSchnelleExponentiationNachPseudocode));
+
             System.out.println("");
             System.out.println("");
             Marker.marker();
@@ -117,8 +139,9 @@ public class SchnelleExponentiation {
     }
 
     private long calcSchnelleExponentiation(long g, long exp, long m) {
+        g = checkAndCalcZmodM(g, m);
         if (exp == 0) {
-            return ergebnis = 1 % m;
+            return ergebnis = checkAndCalcZmodM(1, m);
         }
         List<List<Long>> expInBinaerdarstellungExponentenZiffern
                 = new DecTogAddisch().calculateDecTogAddisch(exp, 2);
@@ -144,31 +167,60 @@ public class SchnelleExponentiation {
         //
         // Berechne nun g^{exp} mod m effizient!
         List<Long> exponenten = expInBinaerdarstellungExponenten;
+        System.out.println("Exponenten: " + exponenten);
         // TODO: Morgen hier mal weitermachen...!!!
-        g_Potenz = g % m;
-        ergebnis = 1;
+        g_Potenz = checkAndCalcZmodM(g, m);
+        System.out.println(g_Potenz);
+        ergebnis = checkAndCalcZmodM(1, m);
         long letztePosition = 0;
         for (int j = 0; j < exponenten.size(); j++) {
             for (long k = letztePosition; k < exponenten.get(j); k++) {
                 g_Potenz *= g_Potenz;
-                g_Potenz %= m;
+                g_Potenz = checkAndCalcZmodM(g_Potenz, m);
+//                System.out.println("j: " + j + ", k: " + k + " --- g_Potenz: " + g_Potenz);
+//                PressEnter.toContinue();
             }
             ergebnis *= g_Potenz;
-            ergebnis %= m;
+            ergebnis = checkAndCalcZmodM(ergebnis, m);
             letztePosition = exponenten.get(j);
         }
         return ergebnis;
     }
 
     private long calcNaiveExponentiation(long g, long exp, long m) {
-        kontrollErgebnis = 1 % m;
+        g = checkAndCalcZmodM(g, m);
+        kontrollErgebnis = checkAndCalcZmodM(1, m);
         for (int k = 0; k < exp; k++) {
             kontrollErgebnis *= g;
-            kontrollErgebnis %= m;
+            kontrollErgebnis = checkAndCalcZmodM(kontrollErgebnis, m);
 //            System.out.println("k=" + k
 //                    + "  --  kontrollErgebnis=" + kontrollErgebnis);
 //            PressEnter.toContinue();
         }
         return kontrollErgebnis;
+    }
+
+    private long calcSchnelleExponentiationNachPseudocode(long g, long exp, long m) {
+        g = checkAndCalcZmodM(g, m);
+        result = 1;
+        while (exp > 0) {
+            if (exp % 2 != 0) {
+                result *= checkAndCalcZmodM(g, m);
+                result = checkAndCalcZmodM(result, m);
+            }
+            g *= g;
+            g = checkAndCalcZmodM(g, m);
+            exp /= 2;
+        }
+        return result;
+    }
+
+    private long checkAndCalcZmodM(long z, long modul) {
+        if (modul == 0) {
+            return z;
+        } else {
+            return z % m;
+        }
+
     }
 }
