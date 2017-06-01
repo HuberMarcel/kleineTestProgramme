@@ -9,7 +9,7 @@
 //
 // Vergleiche: Buchmann, Einführung in die Kryptographie, 5. Auflage
 // S. 38 / Kapitel 3.12
-// TODO: Implementierung wie im Pseudo-Code auf Seite 39
+// Implementierung wie im Pseudo-Code auf Seite 39 erledigt
 //
 //       pow(groupElement base, int exponent, groupElement result)
 //       begin
