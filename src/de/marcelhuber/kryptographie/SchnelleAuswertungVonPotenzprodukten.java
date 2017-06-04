@@ -1,7 +1,7 @@
 // Siehe "Buchmann, Einführung in die Kryptographie; 3.13: "Schnelle 
 // Auswertung von Potenzprodukten" 
 // TODO: REST - bisher nur alle Vorbereitungen bis zur Berechnung der
-//       Matrix B realisiert 
+//       Matrix B realisiert... 
 //       Die Zeilen der Matrix B sind die Exponenten in Binärdarstellung, 
 //       wobei ich diese von links nach rechts ausgebe. D.h. bspw., 
 //       matrixB[0][0] ist die Ziffer, die vor 2^{matrixB[0].length-1} steht
