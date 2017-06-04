@@ -5,7 +5,6 @@
 //       Die Zeilen der Matrix B sind die Exponenten in Binärdarstellung, 
 //       wobei ich diese von links nach rechts ausgebe. D.h. bspw., 
 //       matrixB[0][0] ist die Ziffer, die vor 2^{matrixB[0].length-1} steht
-
 package de.marcelhuber.kryptographie;
 
 import de.marcelhuber.mathematik.DecTogAddisch;
@@ -23,7 +22,7 @@ public class SchnelleAuswertungVonPotenzprodukten {
     private List<Long> exponenten = new ArrayList<>();
     private List<List<Long>> exponentenBinaer = new ArrayList<>();
     private int n;
-    private Long[][] matrixB;
+    private long[][] matrixB;
 
     public static void main(String[] args) {
         new SchnelleAuswertungVonPotenzprodukten().go();
@@ -47,7 +46,7 @@ public class SchnelleAuswertungVonPotenzprodukten {
         System.out.print("Die (auf Spaltenlänge " + n + " normierte) "
                 + "Matrix B: ");
         System.out.println(Arrays.deepToString(matrixB));
-
+        //
     }
 
     private void initBasiselementeAndExponenten() {
@@ -86,7 +85,7 @@ public class SchnelleAuswertungVonPotenzprodukten {
     }
 
     private void initMatrixB() {
-        matrixB = new Long[exponentenBinaer.size()][n];
+        matrixB = new long[exponentenBinaer.size()][n];
 //        System.out.println(Arrays.deepToString(matrixB));
         int zeile = 0;
         for (List<Long> expBin : exponentenBinaer) {
@@ -106,5 +105,18 @@ public class SchnelleAuswertungVonPotenzprodukten {
             ++zeile;
         }
 //        System.out.println(Arrays.deepToString(matrixB));
+    }
+
+    private long[] binaerMitLetztenStellenABgeschnitten(long[] binaerZahl, int j) {
+        long[] binaerCutted;
+        if (j > binaerZahl.length - 1) {
+            binaerCutted = new long[0];
+            return binaerCutted;
+        }
+        binaerCutted = new long[binaerZahl.length - j];
+        for (int k = 0; k < binaerCutted.length; k++) {
+            binaerCutted[k] = binaerZahl[k];
+        }
+        return binaerCutted;
     }
 }
