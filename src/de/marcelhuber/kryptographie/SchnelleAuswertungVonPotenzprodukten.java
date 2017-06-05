@@ -1,13 +1,11 @@
 // Siehe "Buchmann, Einführung in die Kryptographie; 3.13: "Schnelle 
 // Auswertung von Potenzprodukten" 
-// TODO: REST - bisher nur alle Vorbereitungen bis zur Berechnung der
-//       Matrix B realisiert... 
-//       Die Zeilen der Matrix B sind die Exponenten in Binärdarstellung, 
-//       wobei ich diese von links nach rechts ausgebe. D.h. bspw., 
-//       matrixB[0][0] ist die Ziffer, die vor 2^{matrixB[0].length-1} steht
+// TODO: REST - bisher alles bis zur Berechnung des Vektors G realisiert
+//       siehe initVectorg()-Methode
 package de.marcelhuber.kryptographie;
 
 import de.marcelhuber.mathematik.DecTogAddisch;
+import de.marcelhuber.systemtools.Marker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,8 +19,10 @@ public class SchnelleAuswertungVonPotenzprodukten {
     private List<Long> basiselemente = new ArrayList<>();
     private List<Long> exponenten = new ArrayList<>();
     private List<List<Long>> exponentenBinaer = new ArrayList<>();
+    private int k;
     private int n;
     private long[][] matrixB;
+    private long[] vectorG;
 
     public static void main(String[] args) {
         new SchnelleAuswertungVonPotenzprodukten().go();
@@ -47,6 +47,8 @@ public class SchnelleAuswertungVonPotenzprodukten {
                 + "Matrix B: ");
         System.out.println(Arrays.deepToString(matrixB));
         //
+        initVectorG();
+
     }
 
     private void initBasiselementeAndExponenten() {
@@ -57,9 +59,10 @@ public class SchnelleAuswertungVonPotenzprodukten {
         exponenten.add(13L);
         basiselemente.add(14L);
         exponenten.add(19L);
+        k = basiselemente.size();
     }
 
-    private void initExponentenBinaer() {
+    private List<List<Long>> initExponentenBinaer() {
         // hier wird n auch mit initialisiert
         DecTogAddisch dec2gaddDummy = new DecTogAddisch();
         List<Long> dummy = new ArrayList<>();
@@ -82,9 +85,10 @@ public class SchnelleAuswertungVonPotenzprodukten {
 //            System.out.println("exp: " + exp + " --- in binärer Darstellung: "
 //                    + exponentenBinaer.get(counter++));
         }
+        return exponentenBinaer;
     }
 
-    private void initMatrixB() {
+    private long[][] initMatrixB() {
         matrixB = new long[exponentenBinaer.size()][n];
 //        System.out.println(Arrays.deepToString(matrixB));
         int zeile = 0;
@@ -105,6 +109,7 @@ public class SchnelleAuswertungVonPotenzprodukten {
             ++zeile;
         }
 //        System.out.println(Arrays.deepToString(matrixB));
+        return matrixB;
     }
 
     private long[] binaerMitLetztenStellenABgeschnitten(long[] binaerZahl, int j) {
@@ -118,5 +123,58 @@ public class SchnelleAuswertungVonPotenzprodukten {
             binaerCutted[k] = binaerZahl[k];
         }
         return binaerCutted;
+    }
+
+    private long[] initVectorG() {
+        vectorG = new long[(int) (Math.pow(2, k))];
+        vectorG[0] = 1;
+        long[] kombinationsFeld = new long[]{0, 0, 0};
+        DecTogAddisch dec2gaddDummy = new DecTogAddisch();
+        for (long m = 1; m < (long) Math.pow(2, k); m++) {
+            for (int r = 0; r < kombinationsFeld.length; r++) {
+                kombinationsFeld[r] = 0;
+            }
+//            System.out.println(Arrays.toString(kombinationsFeld));
+//            Marker.marker();
+//            System.out.println(Arrays.toString(dec2gaddDummy.calculateDecTogAddischAsArray(m, 2)[0]));
+//            System.out.println(Arrays.toString(dec2gaddDummy.calculateDecTogAddischAsArray(m, 2)[1]));
+            for (long eintrag : dec2gaddDummy.calculateDecTogAddischAsArray(m, 2)[0]) {
+                kombinationsFeld[kombinationsFeld.length - 1 - (int) eintrag] = 1L;
+            }
+//            System.out.println(Arrays.toString(kombinationsFeld));
+            // den Fall m==0 hätten wir separat behandeln müssen, da dieser als 0*2^0 dargestellt wird
+            vectorG[(int) m] = 1L;
+            for (int r = 0; r < k; r++) {
+                if (kombinationsFeld[r] == 1L) {
+                    vectorG[(int) m] *= basiselemente.get(k - 1 - r);
+                }
+            }
+        }
+        System.out.println(Arrays.toString(vectorG));
+        return vectorG;
+    }
+
+    private long calcSchnelleExponentiationWithBinaerexponent(long g, long[] binaerexp, long m) {
+        long result = 1;
+        if (m == 0) {
+            for (int k = binaerexp.length - 1; k >= 0; k--) {
+                if (binaerexp[k] == 1) {
+                    result *= g;
+                }
+                g *= g;
+            }
+        } else if (m > 0) {
+            result %= m;
+            g %= m;
+            for (int k = binaerexp.length - 1; k >= 0; k--) {
+                if (binaerexp[k] == 1) {
+                    result *= g;
+                    result %= m;
+                }
+                g *= g;
+                g %= m;
+            }
+        }
+        return result;
     }
 }
