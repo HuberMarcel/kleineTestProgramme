@@ -92,7 +92,7 @@ public class BeweisDemoZurAussageZurEulerschenPhiFunktion {
         System.out.println("");
 
         System.out.println("Für t1 != t2 sind M(t1) = M_" + zahl + "(t1) und M(t2) = M_" + zahl + "(t2) "
-                + " paarweise dijunkt: Seien t1, t2 ganze Zahlen > 0 und t1 < t2.");
+                + " paarweise disjunkt: Seien t1, t2 ganze Zahlen > 0 und t1 < t2.");
         System.out.println("Angenommen, es gäbe ein Element x mit 1 <= x <= " + zahl + " so, dass "
                 + "ggT(x," + zahl + ") = t1\nund ggT(x," + zahl + ") = t2.");
         System.out.print("Dann folgte t1 | t2 und t2 | t1, also wären t1 und t2 einander assoziiert.");
@@ -190,8 +190,8 @@ public class BeweisDemoZurAussageZurEulerschenPhiFunktion {
         System.out.println("Hierbei beachte man, dass die Reihenfolge der Summation keine Rolle spielt, d.h. wir "
                 + "denken\nan die Kommutativität der Addition! (Im Vergleich zum " + "Beweisschritt 01".toUpperCase()
                 + "a addieren wir ja nun\nrückwärts über das Feld " + arrayT + "!).");
-        System.out.println("Aus " + "Beweisschritt 02".toUpperCase() + " folgt, dass  | M(zahl/t) | = phi(zahl/t) gilt. Damit"
-                + "ergibt sich sodann ganzlich die Behauptung. %%");
+        System.out.println("Aus " + "Beweisschritt 02".toUpperCase() + " folgt, dass  | M(zahl/t) | = phi(zahl/t) gilt. Damit "
+                + "ergibt sich sodann gänzlich die Behauptung. %%");
     }
 
     private List<Long> calculateSetM(long t, long zahl) {
