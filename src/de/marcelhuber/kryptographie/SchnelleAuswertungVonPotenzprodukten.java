@@ -1,14 +1,18 @@
 // Siehe "Buchmann, Einführung in die Kryptographie; 3.13: "Schnelle 
 // Auswertung von Potenzprodukten" 
-// TODO: REST - bisher alles bis zur Berechnung des Vektors G realisiert
-//       siehe initVectorG()-Methode
+// TODO: Das Ganze noch so anpassen, dass die Multiplikationen bzw.
+//       Potenzen modulo m für ein Modul m aus IN passen
 package de.marcelhuber.kryptographie;
 
 import de.marcelhuber.mathematik.DecTogAddisch;
 import de.marcelhuber.systemtools.Marker;
+import de.marcelhuber.systemtools.Pause;
+import de.marcelhuber.systemtools.PressEnter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,9 +27,75 @@ public class SchnelleAuswertungVonPotenzprodukten {
     private int n;
     private long[][] matrixB;
     private long[] vectorG;
+    private long produktA;
+
+    private class InappropriateArrayLengthsException extends Exception {
+
+        public String toString() {
+            return "Die Arrays haben verschiedene Längen!";
+        }
+    }
+
+    public SchnelleAuswertungVonPotenzprodukten() {
+    }
+
+    public SchnelleAuswertungVonPotenzprodukten(List<Long> basiselemente, List<Long> exponenten) {
+        this.basiselemente = basiselemente;
+        this.exponenten = exponenten;
+    }
 
     public static void main(String[] args) {
-        new SchnelleAuswertungVonPotenzprodukten().go();
+        SchnelleAuswertungVonPotenzprodukten dummy = new SchnelleAuswertungVonPotenzprodukten();
+        dummy.go();
+        dummy.go02();
+    }
+
+    private void go02() {
+        List<Long> basen = new ArrayList<>();
+        List<Long> expo = new ArrayList<>();
+        basen.add(2L);
+        expo.add(3L);
+        basen.add(5L);
+        expo.add(4L);
+        basen.add(11L);
+        expo.add(3L);
+        System.out.println(basen);
+        System.out.println(expo);
+        long result = calcSchnelleAuswertungDerPotenzprodukte(basen, expo);
+        System.out.println("Das Ergebnis lautet: "
+                + result);
+    }
+
+    public long calcSchnelleAuswertungDerPotenzprodukte(
+            List<Long> basiselemente, List<Long> exponenten) {
+        this.basiselemente.clear();
+        this.exponenten.clear();
+        this.basiselemente = basiselemente;
+        this.exponenten = exponenten;
+        if (basiselemente.size() != exponenten.size()) {
+            try {
+                throw new InappropriateArrayLengthsException();
+            } catch (InappropriateArrayLengthsException ex) {
+                Pause.breakInSeconds(1);
+                System.err.println("Fehler: " + ex);
+            }
+            return 0;
+        } else {
+            k = basiselemente.size();
+            produktA = 1L;
+            initExponentenBinaer();
+            initMatrixB();
+            initVectorG();
+            int indexOfVectorG;
+            for (int j = 0; j < n; j++) {
+                indexOfVectorG = 0;
+                for (int z = 0; z < k; z++) {
+                    indexOfVectorG += matrixB[z][j] * (int) Math.pow(2, z);
+                }
+                produktA = (produktA * produktA) * vectorG[indexOfVectorG];
+            }
+        }
+        return produktA;
     }
 
     private void go() {
@@ -36,6 +106,7 @@ public class SchnelleAuswertungVonPotenzprodukten {
         System.out.print("Die Exponenten:                              ");
         System.out.println(exponenten);
         //
+        produktA = 1L;
         initExponentenBinaer();
         //
         System.out.print("Die Exponenten in Binärdarstellung:          ");
@@ -48,22 +119,39 @@ public class SchnelleAuswertungVonPotenzprodukten {
         System.out.println(Arrays.deepToString(matrixB));
         //
         initVectorG();
-
+        int indexOfVectorG;
+        for (int j = 0; j < n; j++) {
+            indexOfVectorG = 0;
+            for (int z = 0; z < k; z++) {
+                indexOfVectorG += matrixB[z][j] * (int) Math.pow(2, z);
+            }
+            produktA = (produktA * produktA) * vectorG[indexOfVectorG];
+        }
+        System.out.println("Das Ergebnis ist: " + produktA);
+//        exponenten.remove(0); // zum Test der Fehlermeldung
     }
 
     private void initBasiselementeAndExponenten() {
         // TODO: Später --> automatisches Einlesen
         basiselemente.add(5L);
-        exponenten.add(7L);
+        exponenten.add(2L);
+        basiselemente.add(7L);
+        exponenten.add(3L);
         basiselemente.add(11L);
-        exponenten.add(13L);
-        basiselemente.add(14L);
-        exponenten.add(19L);
+        exponenten.add(5L);
         k = basiselemente.size();
+//        basiselemente.add(2L);
+//        exponenten.add(3L);
+//        basiselemente.add(5L);
+//        exponenten.add(7L);
+//        basiselemente.add(11L);
+//        exponenten.add(3L);
+//        r = basiselemente.size();
     }
 
     private List<List<Long>> initExponentenBinaer() {
-        // hier wird n auch mit initialisiert
+        // hier wird auch n mit initialisiert
+        exponentenBinaer.clear();
         DecTogAddisch dec2gaddDummy = new DecTogAddisch();
         List<Long> dummy = new ArrayList<>();
         List<Long> dummyTwo;
@@ -75,7 +163,7 @@ public class SchnelleAuswertungVonPotenzprodukten {
             }
             for (long k = dummy.get(dummy.size() - 1); k >= 0; k--) {
                 if (dummy.contains(k)) {
-//                    System.out.println("k=" + k + " gehört dazu");
+//                    System.out.println("r=" + r + " gehört dazu");
                     dummyTwo.add(1L);
                 } else {
                     dummyTwo.add(0L);
@@ -93,18 +181,18 @@ public class SchnelleAuswertungVonPotenzprodukten {
 //        System.out.println(Arrays.deepToString(matrixB));
         int zeile = 0;
         for (List<Long> expBin : exponentenBinaer) {
-//            for (int k = 0; k < n; k++) {
-//                if (k < n - expBin.size()) {
-//                    matrixB[zeile][k] = 0L;
+//            for (int r = 0; r < n; r++) {
+//                if (r < n - expBin.size()) {
+//                    matrixB[zeile][r] = 0L;
 //                } else {
-//                    matrixB[zeile][k] = expBin.get(k - n + expBin.size());
+//                    matrixB[zeile][r] = expBin.get(r - n + expBin.size());
 //                }
 //            }
-            for (int k = 0; k < n - expBin.size(); k++) {
-                matrixB[zeile][k] = 0L;
+            for (int r = 0; r < n - expBin.size(); r++) {
+                matrixB[zeile][r] = 0L;
             }
-            for (int k = n - expBin.size(); k < n; k++) {
-                matrixB[zeile][k] = expBin.get(k - n + expBin.size());
+            for (int r = n - expBin.size(); r < n; r++) {
+                matrixB[zeile][r] = expBin.get(r - n + expBin.size());
             }
             ++zeile;
         }
@@ -119,16 +207,19 @@ public class SchnelleAuswertungVonPotenzprodukten {
             return binaerCutted;
         }
         binaerCutted = new long[binaerZahl.length - j];
-        for (int k = 0; k < binaerCutted.length; k++) {
-            binaerCutted[k] = binaerZahl[k];
+        for (int r = 0; r < binaerCutted.length; r++) {
+            binaerCutted[r] = binaerZahl[r];
         }
         return binaerCutted;
     }
 
     private long[] initVectorG() {
         vectorG = new long[(int) (Math.pow(2, k))];
-        vectorG[0] = 1;
-        long[] kombinationsFeld = new long[]{0, 0, 0};
+        vectorG[0] = 1L;
+        long[] kombinationsFeld = new long[k];
+        for (int s = 0; s < k; s++) {
+            kombinationsFeld[s] = 0L;
+        }
         DecTogAddisch dec2gaddDummy = new DecTogAddisch();
         for (long m = 1; m < (long) Math.pow(2, k); m++) {
             for (int r = 0; r < kombinationsFeld.length; r++) {
@@ -150,15 +241,15 @@ public class SchnelleAuswertungVonPotenzprodukten {
                 }
             }
         }
-        System.out.println(Arrays.toString(vectorG));
+//        System.out.println(Arrays.toString(vectorG));
         return vectorG;
     }
 
     private long calcSchnelleExponentiationWithBinaerexponent(long g, long[] binaerexp, long m) {
         long result = 1;
         if (m == 0) {
-            for (int k = binaerexp.length - 1; k >= 0; k--) {
-                if (binaerexp[k] == 1) {
+            for (int r = binaerexp.length - 1; r >= 0; r--) {
+                if (binaerexp[r] == 1) {
                     result *= g;
                 }
                 g *= g;
@@ -166,8 +257,8 @@ public class SchnelleAuswertungVonPotenzprodukten {
         } else if (m > 0) {
             result %= m;
             g %= m;
-            for (int k = binaerexp.length - 1; k >= 0; k--) {
-                if (binaerexp[k] == 1) {
+            for (int s = binaerexp.length - 1; s >= 0; s--) {
+                if (binaerexp[s] == 1) {
                     result *= g;
                     result %= m;
                 }
