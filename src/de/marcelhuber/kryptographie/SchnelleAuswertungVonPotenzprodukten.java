@@ -1,7 +1,7 @@
 // Siehe "Buchmann, Einführung in die Kryptographie; 3.13: "Schnelle 
 // Auswertung von Potenzprodukten" 
 // TODO: REST - bisher alles bis zur Berechnung des Vektors G realisiert
-//       siehe initVectorg()-Methode
+//       siehe initVectorG()-Methode
 package de.marcelhuber.kryptographie;
 
 import de.marcelhuber.mathematik.DecTogAddisch;
