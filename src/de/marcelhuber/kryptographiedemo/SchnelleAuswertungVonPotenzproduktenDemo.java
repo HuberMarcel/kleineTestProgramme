@@ -13,12 +13,12 @@ public class SchnelleAuswertungVonPotenzproduktenDemo {
 
     private List<Long> b = new ArrayList<>();                 // die Basen
     private List<Long> e = new ArrayList<>();                 // die Exponenten
-    private long result;
+    private long result;                                      // das Ergebnis 
     private long result02;
     private long resultKontrolle;
     private long timeSchnelleBerechnung;
     private long time;
-    private long m;
+    private long m;                                           // das Modul m > 0
 
     public static void main(String[] args) {
         boolean assertionEnabled = false;
