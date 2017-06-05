@@ -1,7 +1,5 @@
 // Siehe "Buchmann, Einführung in die Kryptographie; 3.13: "Schnelle 
 // Auswertung von Potenzprodukten" 
-// TODO: Das Ganze noch so anpassen, dass die Multiplikationen bzw.
-//       Potenzen modulo m für ein Modul m aus IN passen
 package de.marcelhuber.kryptographie;
 
 import de.marcelhuber.mathematik.DecTogAddisch;
@@ -28,6 +26,8 @@ public class SchnelleAuswertungVonPotenzprodukten {
     private long[][] matrixB;
     private long[] vectorG;
     private long produktA;
+    private boolean calcWithModul;
+    private long modul;
 
     private class InappropriateArrayLengthsException extends Exception {
 
@@ -42,6 +42,16 @@ public class SchnelleAuswertungVonPotenzprodukten {
     public SchnelleAuswertungVonPotenzprodukten(List<Long> basiselemente, List<Long> exponenten) {
         this.basiselemente = basiselemente;
         this.exponenten = exponenten;
+    }
+
+    public SchnelleAuswertungVonPotenzprodukten(List<Long> basiselemente, List<Long> exponenten, long modul) {
+        this(basiselemente, exponenten);
+        if (modul > 0) {
+            calcWithModul = true;
+            this.modul = modul;
+        } else {
+            calcWithModul = false;
+        }
     }
 
     public static void main(String[] args) {
@@ -66,6 +76,16 @@ public class SchnelleAuswertungVonPotenzprodukten {
                 + result);
     }
 
+    public long calcSchnelleAuswertungDerPotenzProdukte() {
+        List<Long> basiselementeCopy = new ArrayList<>();
+        List<Long> exponentenCopy = new ArrayList<>();
+        for (int s = 0; s < basiselemente.size(); s++) {
+            basiselementeCopy.add(basiselemente.get(s));
+            exponentenCopy.add(exponenten.get(s));
+        }
+        return calcSchnelleAuswertungDerPotenzprodukte(basiselementeCopy, exponentenCopy);
+    }
+
     public long calcSchnelleAuswertungDerPotenzprodukte(
             List<Long> basiselemente, List<Long> exponenten) {
         this.basiselemente.clear();
@@ -83,6 +103,11 @@ public class SchnelleAuswertungVonPotenzprodukten {
         } else {
             k = basiselemente.size();
             produktA = 1L;
+            if (calcWithModul) {
+                if (modul > 0) {
+                    produktA = 1L % modul;
+                }
+            }
             initExponentenBinaer();
             initMatrixB();
             initVectorG();
@@ -92,7 +117,16 @@ public class SchnelleAuswertungVonPotenzprodukten {
                 for (int z = 0; z < k; z++) {
                     indexOfVectorG += matrixB[z][j] * (int) Math.pow(2, z);
                 }
-                produktA = (produktA * produktA) * vectorG[indexOfVectorG];
+                if (calcWithModul) {
+                    if (modul > 0) {
+                        produktA = ((((produktA % modul) * (produktA % modul)) % modul)
+                                * vectorG[indexOfVectorG]) % modul;
+                    } else {
+                        produktA = (produktA * produktA) * vectorG[indexOfVectorG];
+                    }
+                } else {
+                    produktA = (produktA * produktA) * vectorG[indexOfVectorG];
+                }
             }
         }
         return produktA;
@@ -107,6 +141,11 @@ public class SchnelleAuswertungVonPotenzprodukten {
         System.out.println(exponenten);
         //
         produktA = 1L;
+        if (calcWithModul) {
+            if (modul > 0) {
+                produktA = 1L % modul;
+            }
+        }
         initExponentenBinaer();
         //
         System.out.print("Die Exponenten in Binärdarstellung:          ");
@@ -125,7 +164,16 @@ public class SchnelleAuswertungVonPotenzprodukten {
             for (int z = 0; z < k; z++) {
                 indexOfVectorG += matrixB[z][j] * (int) Math.pow(2, z);
             }
-            produktA = (produktA * produktA) * vectorG[indexOfVectorG];
+            if (calcWithModul) {
+                if (modul > 0) {
+                    produktA = ((((produktA % modul) * (produktA % modul)) % modul)
+                            * vectorG[indexOfVectorG]) % modul;
+                } else {
+                    produktA = (produktA * produktA) * vectorG[indexOfVectorG];
+                }
+            } else {
+                produktA = (produktA * produktA) * vectorG[indexOfVectorG];
+            }
         }
         System.out.println("Das Ergebnis ist: " + produktA);
 //        exponenten.remove(0); // zum Test der Fehlermeldung
@@ -216,6 +264,11 @@ public class SchnelleAuswertungVonPotenzprodukten {
     private long[] initVectorG() {
         vectorG = new long[(int) (Math.pow(2, k))];
         vectorG[0] = 1L;
+        if (calcWithModul) {
+            if (modul > 0) {
+                vectorG[0] = 1L % modul;
+            }
+        }
         long[] kombinationsFeld = new long[k];
         for (int s = 0; s < k; s++) {
             kombinationsFeld[s] = 0L;
@@ -235,9 +288,23 @@ public class SchnelleAuswertungVonPotenzprodukten {
 //            System.out.println(Arrays.toString(kombinationsFeld));
             // den Fall m==0 hätten wir separat behandeln müssen, da dieser als 0*2^0 dargestellt wird
             vectorG[(int) m] = 1L;
+            if (calcWithModul) {
+                if (modul > 0) {
+                    vectorG[(int) m] = 1L % modul;
+                }
+            }
             for (int r = 0; r < k; r++) {
                 if (kombinationsFeld[r] == 1L) {
-                    vectorG[(int) m] *= basiselemente.get(k - 1 - r);
+                    if (calcWithModul) {
+                        if (modul > 0) {
+                            vectorG[(int) m] *= (basiselemente.get(k - 1 - r)) % modul;
+                            vectorG[(int) m] %= modul;
+                        } else {
+                            vectorG[(int) m] *= basiselemente.get(k - 1 - r);
+                        }
+                    } else {
+                        vectorG[(int) m] *= basiselemente.get(k - 1 - r);
+                    }
                 }
             }
         }
@@ -267,5 +334,21 @@ public class SchnelleAuswertungVonPotenzprodukten {
             }
         }
         return result;
+    }
+
+    public boolean isCalcWithModul() {
+        return calcWithModul;
+    }
+
+    public void setCalcWithModul(boolean calcWithModul) {
+        this.calcWithModul = calcWithModul;
+    }
+
+    public long getModul() {
+        return modul;
+    }
+
+    public void setModul(long modul) {
+        this.modul = modul;
     }
 }
