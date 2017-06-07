@@ -1,7 +1,7 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.jdbc;
 
 //import com.mysql.jdbc.Driver;
-import de.marcelhuber.systemtools.PressEnter;
+import de.marcelhuber.systemtools.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,6 +20,29 @@ public class DatenbankVerbindung {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
+
+    private Connection bekommeVerbindungSeparat() {
+        Connection connectionSeparat = null;
+
+        String host = "localhost";
+        String user = "root";
+        String pass = "drow";
+        String datenBank = "test";
+
+        String url = "jdbc:mysql://" + host + "/" + datenBank;
+        System.out.println("Verbindung:");
+        System.out.println(url);
+
+        try {
+            connectionSeparat = DriverManager.getConnection(url, user, pass);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            System.exit(0);
+        }
+
+        System.out.println(connectionSeparat);
+        return connectionSeparat;
+    }
 
     private Connection bekommeVerbindung() {
         String host = "localhost";
@@ -109,6 +132,17 @@ public class DatenbankVerbindung {
             PressEnter.toContinue();
             System.out.println(statement.executeUpdate(deleteSQL) + " Datensatz / Datensätze gelöscht!");
             // END:   Den letzten Datensatz löschen
+            ResultSet resultSetLokal = createResultSetWithUID(26);
+            // Hinweis: resultSet lokal steht noch VOR dem ersten Datensatz; entweder resultSetLokal.first(); oder
+            resultSetLokal.next();
+            System.out.println(resultSetLokal.getString(1));
+            int spaltenZaehler;
+            ResultSetMetaData resultSetMd = resultSetLokal.getMetaData();
+            spaltenZaehler = resultSetMd.getColumnCount();
+            for (int spaltenNummer = 1; spaltenNummer < spaltenZaehler; spaltenNummer++) {
+                System.out.print(resultSetLokal.getString(spaltenNummer) + " | ");
+            }
+            System.out.println(resultSetLokal.getString(spaltenZaehler));
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex);
         }
@@ -137,6 +171,26 @@ public class DatenbankVerbindung {
 
         System.out.println("\nStatement.executeQuery mit " + sql + " ausgeführt!");
         System.out.println(resultSet);
+    }
+
+    private ResultSet createResultSetWithUID(int uid) {
+//        ResultSet resultSet02 = null;
+        String sql = "Select * FROM `test`.`kontakt` WHERE `uid`='" + uid + "'";
+        System.out.println("Sql-Befehl:");
+        System.out.println(sql);
+        try {
+//            Connection connection02 = bekommeVerbindungSeparat();
+//            Statement statement02 = connection02.createStatement();
+//            resultSet02 = statement02.executeQuery(sql);
+//            System.out.println(resultSet02);
+//            resultSet02 = statement.executeQuery(sql);
+            resultSet = statement.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            System.exit(0);
+        }
+//        return resultSet02;
+        return resultSet;
     }
 
     private int zeilenZaehler() {
