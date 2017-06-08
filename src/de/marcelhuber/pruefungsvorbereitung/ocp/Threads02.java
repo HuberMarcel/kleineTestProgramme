@@ -19,7 +19,7 @@ public class Threads02 {
     }
 
     void go() {
-        long endNumber = 1_000;
+        final long endNumber = 1_000;   // in Java 7 sollte diese Variable final sein
         Thread thread01 = new Thread(new Runnable() {
 
             @Override
