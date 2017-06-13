@@ -2,7 +2,7 @@ package de.marcelhuber.konsolenausgaben;
 // dieses Programm auch mal auf der Windows-Konsole ausführen!!
 //
 // java de.marcelhuber.konsolenausgaben.KonsolenAusgaben vom classes-Ordner
-// ausgehend aufrufen
+// ausgehend aufrufen 
 
 import java.io.Console;
 
