@@ -42,5 +42,8 @@ public class WorkingWithDateAndCalendar {
         c = Calendar.getInstance(loc);
         d = c.getTime();
         System.out.println("Zeit: " + d);
+        c = Calendar.getInstance(Locale.GERMAN);
+        d = c.getTime();
+        System.out.println("Zeit: " + d);
     }
 }
