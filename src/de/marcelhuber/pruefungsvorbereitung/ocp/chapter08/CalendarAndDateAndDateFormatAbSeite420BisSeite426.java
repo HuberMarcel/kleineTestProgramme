@@ -13,23 +13,23 @@ public class CalendarAndDateAndDateFormatAbSeite420BisSeite426 {
 
     Calendar calendarDeDE;
     Calendar calendarEnUS;
-    Calendar calendarEnUK;
+    Calendar calendarEnGB;
     Date d;
     DateFormat dfDeDELONGLONGWithTime;
     DateFormat dfDeDELONGMEDIUMWithTime;
     DateFormat dfDeDELONGSHORTWithTime;
     DateFormat dfDeDELONG;
     DateFormat dfEnUSLONG;
-    DateFormat dfEnUKLONG;
+    DateFormat dfEnGBLONG;
     DateFormat dfDeDEMEDIUM;
     DateFormat dfEnUSMEDIUM;
-    DateFormat dfEnUKMEDIUM;
+    DateFormat dfEnGBMEDIUM;
     DateFormat dfDeDESHORT;
     DateFormat dfEnUSSHORT;
-    DateFormat dfEnUKSHORT;
+    DateFormat dfEnGBSHORT;
     Locale locDeDE;
     Locale locEnUS;
-    Locale locEnUK;
+    Locale locEnGB;
 
     public static void main(String[] args) {
         new CalendarAndDateAndDateFormatAbSeite420BisSeite426().go();
@@ -38,23 +38,23 @@ public class CalendarAndDateAndDateFormatAbSeite420BisSeite426 {
     private void go() {
         locDeDE = new Locale("de", "DE");
         locEnUS = new Locale("en", "US");
-        locEnUK = new Locale("en", "UK");
+        locEnGB = new Locale("en", "GB");
         d = new Date();        // aktuelle Zeit in Millisekunden seit 1.1.1970
         calendarDeDE = Calendar.getInstance(locDeDE);
         calendarEnUS = Calendar.getInstance(locEnUS);
-        calendarEnUK = Calendar.getInstance(locEnUK);
+        calendarEnGB = Calendar.getInstance(locEnGB);
         byte firstDayOfWeekDeDE = (byte) calendarDeDE.getFirstDayOfWeek();
         byte firstDayOfWeekEnUS = (byte) calendarEnUS.getFirstDayOfWeek();
-        byte firstDayOfWeekEnUK = (byte) calendarEnUK.getFirstDayOfWeek();
+        byte firstDayOfWeekEnGB = (byte) calendarEnGB.getFirstDayOfWeek();
         System.out.print("deDE - FirstDayOfWeek: " + firstDayOfWeekDeDE);
         System.out.println(" - das ist ein "
                 + findOutTheDayName(firstDayOfWeekDeDE).toUpperCase());
         System.out.print("enUS - FirstDayOfWeek: " + firstDayOfWeekEnUS);
         System.out.println(" - das ist ein "
                 + findOutTheDayName(firstDayOfWeekEnUS).toUpperCase());
-        System.out.print("enUK - FirstDayOfWeek: " + firstDayOfWeekEnUK);
+        System.out.print("enGB - FirstDayOfWeek: " + firstDayOfWeekEnGB);
         System.out.println(" - das ist ein "
-                + findOutTheDayName(firstDayOfWeekEnUK).toUpperCase());
+                + findOutTheDayName(firstDayOfWeekEnGB).toUpperCase());
         System.out.println("Hinweis: Lokale Systemkonfiguration: "
                 + Locale.getDefault());
         System.out.println("\n\n");
@@ -71,9 +71,9 @@ public class CalendarAndDateAndDateFormatAbSeite420BisSeite426 {
         dfEnUSLONG = DateFormat.getDateInstance(DateFormat.LONG, locEnUS);
         dfEnUSMEDIUM = DateFormat.getDateInstance(DateFormat.MEDIUM, locEnUS);
         dfEnUSSHORT = DateFormat.getDateInstance(DateFormat.SHORT, locEnUS);
-        dfEnUKLONG = DateFormat.getDateInstance(DateFormat.LONG, locEnUK);
-        dfEnUKMEDIUM = DateFormat.getDateInstance(DateFormat.MEDIUM, locEnUK);
-        dfEnUKSHORT = DateFormat.getDateInstance(DateFormat.SHORT, locEnUK);
+        dfEnGBLONG = DateFormat.getDateInstance(DateFormat.LONG, locEnGB);
+        dfEnGBMEDIUM = DateFormat.getDateInstance(DateFormat.MEDIUM, locEnGB);
+        dfEnGBSHORT = DateFormat.getDateInstance(DateFormat.SHORT, locEnGB);
         System.out.println("Ausgabe des Date-Objektes in mehreren Versionen:");
         System.out.println("deDE, LONG:                  " + dfDeDELONG.format(d));
         System.out.println("deDE, MEDIUM:                " + dfDeDEMEDIUM.format(d));
@@ -81,9 +81,9 @@ public class CalendarAndDateAndDateFormatAbSeite420BisSeite426 {
         System.out.println("enUS, LONG:                  " + dfEnUSLONG.format(d));
         System.out.println("enUS, MEDIUM:                " + dfEnUSMEDIUM.format(d));
         System.out.println("enUS, SHORT:                 " + dfEnUSSHORT.format(d));
-        System.out.println("enUK, LONG:                  " + dfEnUKLONG.format(d));
-        System.out.println("enUK, MEDIUm:                " + dfEnUKMEDIUM.format(d));
-        System.out.println("enUK, SHORT:                 " + dfEnUKSHORT.format(d));
+        System.out.println("enGB, LONG:                  " + dfEnGBLONG.format(d));
+        System.out.println("enGB, MEDIUm:                " + dfEnGBMEDIUM.format(d));
+        System.out.println("enGB, SHORT:                 " + dfEnGBSHORT.format(d));
         System.out.println("\n\n");
         //// ZUSATZ, für Prüfung IRRELEVANT
         System.out.println("Zusatz:".toUpperCase());
