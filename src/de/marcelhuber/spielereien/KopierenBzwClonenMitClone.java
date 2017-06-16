@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Marcel Huber
+ * @author Marcel B. Huber
  */
 public class KopierenBzwClonenMitClone {
 
