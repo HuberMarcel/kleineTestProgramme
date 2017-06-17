@@ -19,16 +19,17 @@ public class ReadInput {
     }
 
     public static boolean readBooleanWithExceptionHandling() {
+        boolean returnWert = false;
         try {
-            boolean boolRead = Boolean.parseBoolean(readString());
+            returnWert = Boolean.parseBoolean(readString());
             System.out.println("Boolean.parseBoolean(readString()) gibt nur bei "
-                    + "String \"true\".toLowerCase()==true auch true zurück: " + boolRead);
-            return boolRead;
+                    + "String \"true\".toLowerCase()==true auch true zurück: " 
+                    + returnWert);
         } catch (Throwable throwObj) {
             System.out.println("Fehleingabe, neuer Versuch; Fehlermeldung: " + throwObj);
             readBooleanWithExceptionHandling();
         }
-        return true;
+        return returnWert;
     }
 
     public static double readDouble() {
@@ -40,13 +41,14 @@ public class ReadInput {
     }
 
     public static double readDoubleWithExceptionHandling() {
+        double returnWert = 0.0;
         try {
-            return Double.parseDouble(readString());
+            returnWert = Double.parseDouble(readString());
         } catch (Throwable throwObj) {
             System.out.println("Fehleingabe, neuer Versuch; Fehlermeldung: " + throwObj);
             readDoubleWithExceptionHandling();
         }
-        return 0.0;
+        return returnWert;
     }
 
     public static int readInt() {
@@ -58,13 +60,14 @@ public class ReadInput {
     }
 
     public static int readIntWithExceptionHandling() {
+        int returnWert = 0;
         try {
-            return Integer.parseInt(readString());
+            returnWert = Integer.parseInt(readString());
         } catch (Throwable throwObj) {
             System.out.println("Fehleingabe, neuer Versuch; Fehlermeldung: " + throwObj);
-            readIntWithExceptionHandling();
+            returnWert = readIntWithExceptionHandling();
         }
-        return 0;
+        return returnWert;
     }
 
     public static long readLong() {
@@ -76,13 +79,14 @@ public class ReadInput {
     }
 
     public static long readLongWithExceptionHandling() {
+        long returnWert = 0;
         try {
-            return Long.parseLong(readString());
+            returnWert = Long.parseLong(readString());
         } catch (Throwable throwObj) {
             System.out.println("Fehleingabe, neuer Versuch; Fehlermeldung: " + throwObj);
-            readLongWithExceptionHandling();
+            returnWert = readLongWithExceptionHandling();
         }
-        return 0;
+        return returnWert;
     }
 
     public static String readString() {
