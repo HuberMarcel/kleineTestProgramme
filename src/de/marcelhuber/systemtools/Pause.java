@@ -20,6 +20,13 @@ public class Pause {
     static public void breakInSeconds(long timeOut) {
         breakInMillis(1000 * timeOut);
     }
+    
+    static public void breakInSecondsWithPoints(long timeOut){
+        for (long k = 0; k < timeOut; k++) {
+            breakInSeconds(1);
+            System.out.print(". ");
+        }
+    }
 
     static public void breakInSecondsWithTimer(long timeOut) {
         System.out.print("Counter gestartet ---- Dauer = " + timeOut + "s : ");
