@@ -39,7 +39,7 @@ public class ElementareUndAlgebraischeZahlentheorieSeite21Axkongrbmodn {
             System.out.println("(Eine weitere Lösung wäre also bspw. x = "
                     + (xKlassenGlobal + (n / d)) + ").");
         }
-        if (b > n) {
+        if (Math.abs(b) > n) {
             System.out.println("[Hinweis: ".toUpperCase()
                     + "Sie sollten b = " + b + " durch (b % n) = "
                     + b + " % " + n + " = " + (b % n)
