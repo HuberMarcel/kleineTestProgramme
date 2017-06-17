@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  * @author Marcel Huber
  */
-public class ArraysMitEqualsVergleichen {
+public class ArraysMitEqualsVergleichenUndInhaltlichVergleichen {
 
     static byte counterVergleicheFelderInhaltlich;
     Long[] arrayOriginalLong = new Long[]{1L, 2L, 4L, 7L, 15L};
@@ -21,7 +21,7 @@ public class ArraysMitEqualsVergleichen {
     int[] intArray = new int[]{1, 1, 2, 3, 5, 8, 11, 128, 200};
 
     public static void main(String[] args) {
-        new ArraysMitEqualsVergleichen().compareTheTwoArrays();
+        new ArraysMitEqualsVergleichenUndInhaltlichVergleichen().compareTheTwoArrays();
     }
 
     private void compareTheTwoArrays() {
