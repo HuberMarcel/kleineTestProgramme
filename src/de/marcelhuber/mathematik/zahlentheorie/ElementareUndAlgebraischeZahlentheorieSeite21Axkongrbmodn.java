@@ -13,7 +13,8 @@ public class ElementareUndAlgebraischeZahlentheorieSeite21Axkongrbmodn {
     private long b;
     private long n;
     private long d;
-
+    private long newModul;
+    private boolean loesbar;
     private long xKlassenGlobal;
     private boolean nIspositiv;
 
@@ -34,10 +35,10 @@ public class ElementareUndAlgebraischeZahlentheorieSeite21Axkongrbmodn {
         } else {
             System.out.println("Die Kongruenz\n\n    " + a + " * x kongruent " + b
                     + " (mod " + n + ")\n\n"
-                    + "hat modulo " + (n / d) + " genau die Lösung "
+                    + "hat modulo " + newModul + " genau die Lösung "
                     + "x = " + xKlassenGlobal + ".");
             System.out.println("(Eine weitere Lösung wäre also bspw. x = "
-                    + (xKlassenGlobal + (n / d)) + ").");
+                    + (xKlassenGlobal + newModul) + ").");
         }
         if (Math.abs(b) > n) {
             System.out.println("[Hinweis: ".toUpperCase()
@@ -70,6 +71,7 @@ public class ElementareUndAlgebraischeZahlentheorieSeite21Axkongrbmodn {
     }
 
     public boolean loeseDieKongruenzgleichung(long a, long b, long n) {
+        loesbar = false;
         long x;
         long ggT;
         GgT ggTDummy = new GgT();
@@ -78,15 +80,18 @@ public class ElementareUndAlgebraischeZahlentheorieSeite21Axkongrbmodn {
         ggT = ggTDummy.getGgT();            // entspricht d aus Satz 4.8
         d = ggT;
         if (b % ggT != 0) {
-            return false;
+            return loesbar;
         }
         // Satz 4.8: Falls ggT(a,n) kein Teiler von b ist,
         //           ist die Kongruenz nicht lösbar
+        // im Folgenden ist sie also lösbar
+        loesbar = true;
         long ggTX = ggTDummy.getX();        // entspricht dem y aus Satz 4.8
         long ggTY = ggTDummy.getY();        // besitzt hier eigentlich keine Bedeutung
         x = (ggTX * (b / ggT)) % (n / ggT);
+        newModul = n / d;
         xKlassenGlobal = x;
-        return true;
+        return loesbar;
     }
 
     public long getA() {
@@ -107,5 +112,13 @@ public class ElementareUndAlgebraischeZahlentheorieSeite21Axkongrbmodn {
 
     public long getxKlassenGlobal() {
         return xKlassenGlobal;
+    }
+
+    public long getNewModul() {
+        return newModul;
+    }
+
+    public boolean isLoesbar() {
+        return loesbar;
     }
 }

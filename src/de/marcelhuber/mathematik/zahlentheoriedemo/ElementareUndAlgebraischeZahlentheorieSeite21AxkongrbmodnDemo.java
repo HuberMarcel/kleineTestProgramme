@@ -44,10 +44,10 @@ public class ElementareUndAlgebraischeZahlentheorieSeite21AxkongrbmodnDemo {
             } else {
                 System.out.println("Die genannte Kongruenz"
                         + "\n\n    " + a + " * x kongruent " + b + " (mod " + n + ")\n\n"
-                        + "hat modulo " + (n / dummy.getD()) + " die Lösung x = "
+                        + "hat modulo " + dummy.getNewModul() + " die Lösung x = "
                         + dummy.getxKlassenGlobal() + ".");
                 System.out.println("(Eine weitere Lösung wäre also bspw. x = "
-                        + (dummy.getxKlassenGlobal() + (n / dummy.getD())) + ").");
+                        + (dummy.getxKlassenGlobal() + dummy.getNewModul()) + ").");
             }
             if (Math.abs(b) > n) {
                 System.out.println("[Hinweis: ".toUpperCase()
