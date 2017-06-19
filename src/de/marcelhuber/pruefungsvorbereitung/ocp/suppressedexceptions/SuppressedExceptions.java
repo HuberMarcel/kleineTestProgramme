@@ -1,7 +1,6 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.suppressedexceptions;
 
 import java.io.*;
-import java.util.logging.*;
 
 /**
  *
