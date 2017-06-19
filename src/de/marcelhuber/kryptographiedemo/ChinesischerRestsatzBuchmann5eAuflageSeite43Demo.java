@@ -131,16 +131,16 @@ public class ChinesischerRestsatzBuchmann5eAuflageSeite43Demo {
                 = new ChinesischerRestsatzBuchmann5eAuflageSeite43();
         dummy.loeseDasKongruenzSystem(aArray, module);
         if (dummy.isCheckIfOurModulsArePairwiseRelativelyPrime()) {
+            x = dummy.getX();
+            newModul = dummy.getNewModul();
             System.out.println("Lösung:\n");
             System.out.println("    "
-                    + "x kongruent " + dummy.getX() + " (mod " + dummy.getNewModul() + ").");
+                    + "x kongruent " + x + " (mod " + newModul + ").");
             System.out.println("(Mit dem kleinsten ganzzahligen positiven Repräsentanten "
                     + "lautet diese:"
                     + "\n    x kongruent "
-                    + ((dummy.getX() % dummy.getNewModul() >= 0)
-                    ? (dummy.getX() % dummy.getNewModul())
-                    : ((dummy.getX() % dummy.getNewModul()) + dummy.getNewModul()))
-                    + " (mod " + dummy.getNewModul() + ").)");
+                    + ((x % newModul >= 0) ? (x % newModul)
+                            : ((x % newModul) + newModul)) + " (mod " + newModul + ").)");
         } else {
             System.out.println("");
             if (dummy.getHinweis() != null) {
@@ -151,5 +151,13 @@ public class ChinesischerRestsatzBuchmann5eAuflageSeite43Demo {
                         + dummy.getHinweis() + "]");
             }
         }
+    }
+
+    public long getX() {
+        return x;
+    }
+
+    public long getNewModul() {
+        return newModul;
     }
 }
