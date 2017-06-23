@@ -108,7 +108,7 @@ class IntWrapperGutClonebar implements Cloneable {
     public IntWrapperGutClonebar(int intWert) {
         this.intWert = intWert;
         objektName = new StringWrapper(++counter
-                + ". IntWrapperSchlechtClonebarObjekt");
+                + ". IntWrapperGutClonebarObjekt");
     }
 
     public void addiere(int j) {
