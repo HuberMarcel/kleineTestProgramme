@@ -25,6 +25,7 @@ package de.marcelhuber.mathematik;
 
 import de.marcelhuber.systemtools.Marker;
 import de.marcelhuber.systemtools.Pause;
+import de.marcelhuber.systemtools.PressEnter;
 //import de.marcelhuber.systemtools.PressEnter;
 import de.marcelhuber.systemtools.ReadInput;
 import java.util.List;
@@ -138,7 +139,7 @@ public class SchnelleExponentiation {
         }
     }
 
-    private long calcSchnelleExponentiation(long g, long exp, long m) {
+    public long calcSchnelleExponentiation(long g, long exp, long m) {
         g = checkAndCalcZmodM(g, m);
         if (exp == 0) {
             return ergebnis = checkAndCalcZmodM(1, m);
@@ -200,7 +201,7 @@ public class SchnelleExponentiation {
         return kontrollErgebnis;
     }
 
-    private long calcSchnelleExponentiationNachPseudocode(long g, long exp, long m) {
+    public long calcSchnelleExponentiationNachPseudocode(long g, long exp, long m) {
         g = checkAndCalcZmodM(g, m);
         result = 1;
         while (exp > 0) {
@@ -219,8 +220,7 @@ public class SchnelleExponentiation {
         if (modul == 0) {
             return z;
         } else {
-            return z % m;
+            return z % modul;
         }
-
     }
 }

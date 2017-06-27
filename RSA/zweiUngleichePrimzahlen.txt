@@ -1,0 +1,6 @@
+# in der 2.Zeile stehen die Primzahlen durch $ getrennt, in der 3. die Zahl e mit abschließendem Separator $
+4637$6547
+29$
+
+# warnung: Oben ist e=29, und es kommt d=-10464571 raus.
+# Also d durch ((d%phi_n)+phi_n)%phi_n ersetzen
