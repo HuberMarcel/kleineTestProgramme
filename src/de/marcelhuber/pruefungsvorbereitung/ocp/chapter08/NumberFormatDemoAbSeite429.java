@@ -57,9 +57,13 @@ public class NumberFormatDemoAbSeite429 {
             System.out.println(nf.parse(f1AsString));
             System.out.println("???????????????????");
             System.out.println("\n");
-            System.out.println(nf.parse("53453.445f"));
-            System.out.println("Aber irgendwie funktioniert das nicht, die Ausgabe ist nicht "
-                    + ((int) f1) / 1);
+            System.out.println("Erklärung: Die Zahl ist nach der Lokalität anzugeben,"
+                    + "also mit Komma anstatt Punkt!");
+            System.out.println("Parsen wir mal 53453,445fgdfg (das Parsing hört bei der "
+                    + "ersten unsinnigen Stelle auf):");
+            System.out.println(nf.parse("53453,445fgdfg"));
+            System.out.println("Jetzt haben wir die erwartete Ausgabe "
+                    + ((int) f1) / 1 + "!");
             // ??? 
             // erwartet wäre die Ausgabe 53453
             // Konsole liefert 53453445
