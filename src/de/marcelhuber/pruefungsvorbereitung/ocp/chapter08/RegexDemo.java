@@ -1,6 +1,7 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.chapter08;
 
 import de.marcelhuber.systemtools.Marker;
+import de.marcelhuber.systemtools.Pause;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +26,54 @@ public class RegexDemo {
         Marker.marker();
         System.out.println("Zum Vergleich:");
         zeigeStringUndDarunterDieStellen(untersuchungsString);
+        // Buch Seite 435...
+        // \d: Zahlen 0...9
+        // \D: Alles ausser Zahlen 0...9
+        // \s: whitespace-character: Leerzeichen, \t, \n, \f, \r
+        // \S: Alles außer whitespace-character...
+        // \w: Ein Wort-Buchstabe: {a-z, A-Z, 0...9, _} 
+        // \W: Klar, analog zu oben
+        // \b: Wortgrenze: Anfang/Ende des Strings und Wechsel zwischen \w und \W und umgekehrt
+        // \B: Klar, analog zu oben
+        System.out.println(
+                Arrays.toString(dummy.findRegexInString("\\d", "a12c3e456f")));
+        System.out.println(
+                Arrays.toString(dummy.findRegexInString("\\D", "a12c3e456f")));
+        System.out.println(
+                Arrays.toString(dummy.findRegexInString("\\s", "a12c3e456f")));
+        System.out.println(
+                Arrays.toString(dummy.findRegexInString("\\S", "a12c3e456f")));
+        System.out.println(
+                Arrays.toString(dummy.findRegexInString("\\w", "a12c3e456f")));
+        System.out.println(
+                Arrays.toString(dummy.findRegexInString("\\W", "a12c3e456f")));
+        System.out.println(
+                Arrays.toString(dummy.findRegexInString("\\b", "a12c3e456f")));
+        System.out.println(
+                Arrays.toString(dummy.findRegexInString("\\B", "a12c3e456f")));
+        System.out.println("");
+        String beispielSatz = "Dies ist ein sehr interessanter Satz, der nun "
+                + "in seinen einzelnen Wörtern ausgegeben werden soll!";
+        String[] beispielSatzZerlegt = beispielSatz.split(" ");
+        for (String wort : beispielSatzZerlegt) {
+            System.out.print(wort);
+            Pause.breakInMillis(700);
+            System.out.print("\r");
+            // lösche/leere die Zeile in dem Bereich, wo das Wort war
+            // ACHTUNG: Auf der Netbeans-Konsole wird immer die Zeile gelöscht, 
+            //          zum Testen besser in der Windows-Konsole laufen lassen#
+            //          dort sieht man, dass alte nichtüberschriebene Stelle
+            //          "stehenbleiben"
+            clearTheLine(wort.length());
+        }
+        System.out.println("");
+    }
+
+    private static void clearTheLine(int wortLaenge) {
+        for (int k = 0; k < wortLaenge; k++) {
+            System.out.print(" ");
+        }
+        System.out.print("\r");
     }
 
     private void goRegex() {
@@ -52,10 +101,11 @@ public class RegexDemo {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(untersuchungsString);
         int matcherLength = 0;
+//        System.out.println("Anzahl der gefundenen Treffer: "
+//                + matcherLength + "!");
         while (matcher.find()) {
             ++matcherLength;
-            System.out.println("Treffer an Position: " + matcher.start());
-            System.out.println(matcherLength);
+//            System.out.println("Treffer an Position: " + matcher.start());
         }
 //        matcher = pattern.matcher(untersuchungsString);
         matcher.reset();
