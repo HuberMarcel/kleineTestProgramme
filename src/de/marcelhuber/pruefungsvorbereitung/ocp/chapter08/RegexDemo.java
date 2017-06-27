@@ -54,7 +54,10 @@ public class RegexDemo {
         System.out.println("");
         String beispielSatz = "Dies ist ein sehr interessanter Satz, der nun "
                 + "in seinen einzelnen Wörtern ausgegeben werden soll!";
-        String[] beispielSatzZerlegt = beispielSatz.split(" ");
+        String[] beispielSatzZerlegt;
+//        beispielSatzZerlegt= beispielSatz.split("[e][i][n]");
+//        beispielSatzZerlegt = beispielSatz.split("ein");
+        beispielSatzZerlegt = beispielSatz.split(" ");
         for (String wort : beispielSatzZerlegt) {
             System.out.print(wort);
             Pause.breakInMillis(700);
