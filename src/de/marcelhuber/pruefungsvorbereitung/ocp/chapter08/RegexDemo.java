@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
  */
 public class RegexDemo {
 
+    private String[] regexGroups;
+
     public static void main(String[] args) {
         RegexDemo dummy = new RegexDemo();
 //        dummy.goRegex();
@@ -27,8 +29,8 @@ public class RegexDemo {
         System.out.println("Zum Vergleich:");
         zeigeStringUndDarunterDieStellen(untersuchungsString);
         // Buch Seite 435...
-        // \d: Zahlen 0...9
-        // \D: Alles ausser Zahlen 0...9
+        // \d: Ziffern 0...9
+        // \D: Alles ausser Ziffern 0...9
         // \s: whitespace-character: Leerzeichen, \t, \n, \f, \r
         // \S: Alles außer whitespace-character...
         // \w: Ein Wort-Buchstabe: {a-z, A-Z, 0...9, _} 
@@ -113,16 +115,20 @@ public class RegexDemo {
 //        matcher = pattern.matcher(untersuchungsString);
         matcher.reset();
         result = new long[matcherLength];
+        regexGroups = new String[matcherLength];
         int counter = 0;
         while (matcher.find()) {
-            result[counter++] = matcher.start();
+            result[counter] = matcher.start();
+            regexGroups[counter] = matcher.group();
+            ++counter;
         }
         return result;
     }
 
-    private static void zeigeStringUndDarunterDieStellen(String untersuchungsString) {
-        System.out.println("Untersuchungsstring:");
+    public static void zeigeStringUndDarunterDieStellen(String untersuchungsString) {
+        System.out.print("Untersuchungsstring: ");
         System.out.println(untersuchungsString);
+        System.out.print("                     ");
         int stellenAnzahl = untersuchungsString.length();
         char zehnerZaehler = 'A';
         for (int k = 0; k < stellenAnzahl; k++) {
@@ -133,5 +139,9 @@ public class RegexDemo {
             }
         }
         System.out.println("");
+    }
+
+    public String[] getRegexGroups() {
+        return regexGroups;
     }
 }
