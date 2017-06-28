@@ -21,10 +21,10 @@ public class SiebDesEratosthenes {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new SiebDesEratosthenes().go();
+        new SiebDesEratosthenes().goShowPrimes();
     }
 
-    public void go() {
+    public void goShowPrimes() {
         System.out.printf("Geben Sie bitte die Zahl (in sinniger Weise > 1) ein, "
                 + "bis zu welcher ".toUpperCase() + "%nSie die Primzahlen [einschließlich] sehen "
                 + "möchten (unsinnige Eingaben %nwerden auf 0 gesetzt!): ");

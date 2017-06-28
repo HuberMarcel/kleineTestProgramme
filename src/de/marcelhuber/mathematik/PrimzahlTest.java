@@ -91,7 +91,7 @@ public class PrimzahlTest {
         System.out.println(Arrays.toString(primzahlArray));
         System.out.printf("%nVergleich mit der Methode des Sieb des Eratosthenes:%n");
         SiebDesEratosthenes siebEratosthenesDummy = new SiebDesEratosthenes();
-        siebEratosthenesDummy.go();
+        siebEratosthenesDummy.goShowPrimes();
         System.out.println("Beide Rechenzeiten im Vergleich:");
         System.out.println("Rechendauer [s]: " + timeHier / 1000.0);
         System.out.println("Rechenzeit [s] Sieb des Eratosthenes: "

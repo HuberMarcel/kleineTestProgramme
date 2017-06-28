@@ -10,7 +10,7 @@ import java.util.Arrays;
  *
  * @author Marcel Huber
  */
-public class RSADemo {
+public class RSAMitDateiDemo {
 
     private String message = "Hallo Welt, dies ist eine Nachricht, die ich "
             + "einmal verschlüssele,\num dann hinterher rauszufinden, ob "
@@ -34,7 +34,7 @@ public class RSADemo {
         } else {
             System.out.println("Assertions Disabled");
         }
-        new RSADemo().go();
+        new RSAMitDateiDemo().go();
     }
 
     private void go() {

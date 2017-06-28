@@ -9,10 +9,10 @@ import java.util.logging.Logger;
  *
  * @author Marcel Huber
  */
-public class VerschluesselungMitRSADemo {
+public class VerschluesselungMitRSAMitDateiDemo {
 
     public static void main(String[] args) {
-        new VerschluesselungMitRSADemo().go();
+        new VerschluesselungMitRSAMitDateiDemo().go();
     }
 
     private void go() {
