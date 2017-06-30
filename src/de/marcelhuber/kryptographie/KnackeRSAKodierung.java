@@ -1,7 +1,8 @@
 package de.marcelhuber.kryptographie;
-// Der Algorithmus ist noch sehr ineffizient... auch die Primzahlen als
-// ArrayList zu speichern, ist nicht die beste Wahl. Zudem könnte man auch
-// die Liste sukzessive Verkleinern während der Untersuchung
+// Der Algorithmus ist noch sehr ineffizient... gerade bei der ersten Methode, 
+// wo wir den public-key kennen... da brauchen wir die Primzahlen nicht als
+// ArrayList zu speichern - auch generell ist das sicher nicht die beste Wahl. 
+// Zudem könnte man auch die Liste sukzessive Verkleinern während der Untersuchung
 
 import de.marcelhuber.mathematik.GgT;
 import de.marcelhuber.mathematik.SchnelleExponentiation;
@@ -33,13 +34,68 @@ public class KnackeRSAKodierung {
     private long[] geheimeBotschaftAlsLongArray;
     private long dTest;
     private boolean showPrimesWhileCalculation;// = true;
+    private long lastPrimeNumber;
 //    private long counter;
 
     public static void main(String[] args) {
-        new KnackeRSAKodierung().goKnackeDieBotschaft();
+        KnackeRSAKodierung dummy = new KnackeRSAKodierung();
+        dummy.goKnackeDieBotschaftMitPublicKeys();
+        System.out.println("\n");
+        System.out.println("Jetzt die Methode ohne Kenntnisse der "
+                + "public keys...");
+        dummy.goKnackeDieBotschaftOhnePublicKeys();
     }
 
-    private void goKnackeDieBotschaft() {
+    private void goKnackeDieBotschaftMitPublicKeys() {
+        checkString = "wollen";
+        geheimeBotschaft = "Diese " + "ganz geheime Botschaft ".toUpperCase()
+                + "wollen wir testweise entschlüsseln!!";
+        p1 = 43;
+        p2 = 619;
+        n = p1 * p2;
+        System.out.println("(public key) n: " + n);
+        phi_n = (p1 - 1) * (p2 - 2);
+        d = 13199;
+        e = 1703;
+        System.out.println("(public key) e: " + e);
+        geheimeBotschaftAlsLongArray = kodiere(geheimeBotschaft, e, n);
+        fillTheFirstPrimeNumbersInList();
+        // Wir gehen davon aus, dass n bekannt ist... 
+        long primTeiler = -1;
+        for (int k = 0; k < primzahlen.size(); k++) {
+            if (n % primzahlen.get(k) == 0) {
+                primTeiler = primzahlen.get(k);
+                break;
+            }
+        }
+        // besser: für jede natürliche Zahl erst prüfen, ob sie prim ist, und 
+        // dann falls ja: ob sie n teilt... sonst kommt man vermutlich schnell
+        // in ein Speicherplatzproblem bei der ArrayList
+        if (primTeiler == -1) {
+            System.out.println("Kein Primteiler von " + n + " gefunden...");
+            return;
+        }
+        System.out.println("Primteiler von " + n + " gefunden: " + primTeiler);
+        p1 = primTeiler;
+        p2 = n / p1;
+        System.out.println("p1: " + p1);
+        System.out.println("p2: " + p2);
+        phi_n = (p1 - 1) * (p2 - 1);
+        System.out.println("phi_n: " + phi_n);
+        GgT ggTDummy = new GgT();
+        // auch e sollte hier ja bekannt gewesen sein...
+        ggTDummy.ggTEuclidExtended(e, phi_n);
+//        // Test, ob ggT auch 1 ist
+//        System.out.println("GgT: " + ggTDummy.getGgT());
+        d = ggTDummy.getX();
+        d = (d % phi_n < 0) ? (d % phi_n) + phi_n : d % phi_n;
+        System.out.println("d:" + d);
+        System.out.println("");
+        System.out.println("Die Botschaft lautete also:");
+        System.out.println(dekodiere(geheimeBotschaftAlsLongArray, d, n));
+    }
+
+    private void goKnackeDieBotschaftOhnePublicKeys() {
         checkString = "wollen";
         geheimeBotschaft = "Diese " + "ganz geheime Botschaft ".toUpperCase()
                 + "wollen wir testweise entschlüsseln!!";
@@ -47,13 +103,15 @@ public class KnackeRSAKodierung {
         p2 = 619;
         n = p1 * p2;
         phi_n = (p1 - 1) * (p2 - 2);
-        d = 25001;
+        d = 13199;
         e = 1703;
 //        GgT ggtDummy = new GgT();
 //        ggtDummy.ggTEuclidExtended(d, phi_n);
 //        System.out.println("ggT:" + ggtDummy.getGgT());
-        e = 10_000;
         geheimeBotschaftAlsLongArray = kodiere(geheimeBotschaft, e, n);
+        // Im folgenden gehen wir davon aus, dass weder e noch n bekannt ist
+        // einzige Annahmen: Der RSA wurde zum Verschlüsseln eingesetzt und 
+        // wir kennen ein Wort, das in der verschlüsselten Botschaft enthalten ist
         System.out.println(Arrays.toString(geheimeBotschaftAlsLongArray));
         System.out.println("(d * e) % phi_n = (103 * 87) % 160 = " + (103 * 87) % 160);
 //        Marker.marker();
@@ -66,43 +124,13 @@ public class KnackeRSAKodierung {
 //            96, 84, 76, 136, 96, 126, 76, 45, 127, 131, 76, 50, 86, 8, 50, 86,
 //            56, 76, 84, 66, 74, 157, 176, 179, 48, 142, 157, 157, 84, 48, 66,
 //            76, 48, 92, 157, 157, 84, 66, 76, 136, 155, 48, 48, 84, 66, 33, 33, 33};
-        boolean zahlIsPositiv = false;
-        long lastPrimeNumber = -1;
-        while (!zahlIsPositiv) {
-            System.out.print("Geben Sie an, bis zur wievielten Primzahl sie "
-                    + "testen wollen - also eine Zahl > 0 bitte: ");
-            // hier ist 3000 ein guter Wert für das konkrete Fallbeispiel
-            lastPrimeNumber = ReadInput.readIntWithExceptionHandling();
-            if (lastPrimeNumber > 0) {
-                zahlIsPositiv = true;
-            }
-        }
-        primzahlen.clear();
-        long counter = 0;
-        long zahl = 1;
-        while (counter < lastPrimeNumber) {
-            if (rsaDummy.checkPrimzahlStatus(zahl)) {
-                ++counter;
-                primzahlen.add(zahl);
-            }
-            ++zahl;
-        }
-        System.out.println("Hier die ersten " + lastPrimeNumber + " Primzahlen:");
-        System.out.println(primzahlen);
+        fillTheFirstPrimeNumbersInList();
         int counter01 = 0;
         int counter02;
         time = System.currentTimeMillis();
         while (counter01 < lastPrimeNumber - 1) {
             counter02 = counter01 + 1;
             p1 = primzahlen.get(counter01);
-            if (n % p1 != 0) {
-                ++counter01;
-                continue;
-            } else {
-                System.out.println("");
-                System.out.println(p1 + " teilt " + n);
-                System.out.println("");
-            }
             for (int k = counter02; k < lastPrimeNumber; ++k) {
                 p2 = primzahlen.get(k);
                 n = p1 * p2;
@@ -203,5 +231,31 @@ public class KnackeRSAKodierung {
 
     public long getN() {
         return n;
+    }
+
+    private void fillTheFirstPrimeNumbersInList() {
+        boolean zahlIsPositiv = false;
+        lastPrimeNumber = -1;
+        while (!zahlIsPositiv) {
+            System.out.print("Geben Sie an, bis zur wievielten Primzahl sie "
+                    + "testen wollen - also eine Zahl > 0 bitte: ");
+            // hier ist 3000 ein guter Wert für das konkrete Fallbeispiel
+            lastPrimeNumber = ReadInput.readIntWithExceptionHandling();
+            if (lastPrimeNumber > 0) {
+                zahlIsPositiv = true;
+            }
+        }
+        primzahlen.clear();
+        long counter = 0;
+        long zahl = 1;
+        while (counter < lastPrimeNumber) {
+            if (rsaDummy.checkPrimzahlStatus(zahl)) {
+                ++counter;
+                primzahlen.add(zahl);
+            }
+            ++zahl;
+        }
+        System.out.println("Hier die ersten " + lastPrimeNumber + " Primzahlen:");
+        System.out.println(primzahlen);
     }
 }
