@@ -24,6 +24,6 @@ public class PrintfAndFormatSeite452 {
         // schreibe die Zahlen mit mindestens 7 Stellen und benutze lokales Separationszeichen (Komma)
         System.out.printf("\"%1$,7d\"\n", i1);
         System.out.printf("\"%1$,7d\"\n", i2);
-        System.out.printf("\"%1$,7f\"\n", 365.34234);
+        System.out.printf("\"%1$,7f\"\n", 1_365.34234);
     }
 }
