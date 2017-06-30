@@ -169,7 +169,7 @@ public class RSA {
         return zweiUngleichePrimzahlen;
     }
 
-    private boolean checkPrimzahlStatus(long z) {
+    public boolean checkPrimzahlStatus(long z) {
         return checkPrimzahlStatus(z, false);
     }
 
@@ -255,9 +255,9 @@ public class RSA {
         return kodierungsIntArray;
     }
 
-    private String dekodiere(long[] geheimeBotschaftAlsIntArray, long d, long n) {
+    private String dekodiere(long[] geheimeBotschaftAlsLongArray, long d, long n) {
         StringBuffer botschaftDekodiert = new StringBuffer("");
-        for (long k : geheimeBotschaftAlsIntArray) {
+        for (long k : geheimeBotschaftAlsLongArray) {
             botschaftDekodiert.append((char) (potenzModulo(k, d, n)));
         }
         return botschaftDekodiert.toString();
