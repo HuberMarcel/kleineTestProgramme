@@ -2,7 +2,8 @@ package de.marcelhuber.kryptographie;
 // Die ineffiziente Variante bei der ersten Methode ist auskommentiert, jetzt 
 // wurde eine neue implementiert
 // Die Primzahlen als ArrayList zu speichern - auch generell ist das sicher nicht 
-// die beste Wahl. Zudem könnte man auch die Liste sukzessive Verkleinern während der Untersuchung
+// die beste Wahl. Zudem könnte man auch die Liste sukzessive Verkleinern während 
+// der Untersuchung
 
 import de.marcelhuber.mathematik.GgT;
 import de.marcelhuber.mathematik.SchnelleExponentiation;
