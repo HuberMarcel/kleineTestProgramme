@@ -1,0 +1,1 @@
+Ich bin ein Test-String, und ich schreibe mich in die Datei neuerFileZumTesten.txt
