@@ -1,0 +1,6 @@
+Ich bin ein  String für den PrintWriter, der nun einfach mal testweise in die Datei aFileForPrintWriter.txt
+geschrieben wird. Klingt komisch, ist aber so! Ich will auch mal einen Double-Wert anlegen: 3,14
+Weiter in einer neuen Zeile...
+
+ICH BIN EIN TEXT, DER AM ENDE DER DATEI ANGEHANGEN WURDE!
+HÄNGEN WIR NOCHMAL PI AUF ZWEI NACHKOMMASTELLEN GERUNDET AN: 3,14: 
