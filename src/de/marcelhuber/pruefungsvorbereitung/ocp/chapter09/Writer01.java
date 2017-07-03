@@ -63,6 +63,7 @@ public class Writer01 {
                 System.out.print((char) c);
             }
             System.out.println("");
+            fr.close();
         } catch (IOException ioEx) {
             System.err.println("Exception: " + ioEx);
             ioEx.printStackTrace();
@@ -78,6 +79,7 @@ public class Writer01 {
             while (fr.read(geleseneZeichen) != -1) {
                 System.out.println(geleseneZeichen);
             }
+            fr.close();
         } catch (IOException ioEx) {
             System.err.println("Exception: " + ioEx);
             ioEx.printStackTrace();
