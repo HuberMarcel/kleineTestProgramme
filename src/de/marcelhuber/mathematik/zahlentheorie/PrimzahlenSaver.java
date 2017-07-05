@@ -3,13 +3,10 @@ package de.marcelhuber.mathematik.zahlentheorie;
 import de.marcelhuber.systemtools.PressEnter;
 import de.marcelhuber.systemtools.ReadInput;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,14 +22,14 @@ public class PrimzahlenSaver {
     private long testzahl;
     private boolean isPrime;
     private long primzahl;
-    private long lastPrimeNumber;    // die wievielte Primzahl soll die letzte sein
+    private long lastCounterOfPrimeNumbers;    // die wievielte Primzahl soll die letzte sein
     private long rechenZeitInMillis;
     private long primeNumbersPerColumn;
     private String whereAmI;
     private Path pathForFile;
 
     {
-        lastPrimeNumber = 30;
+        lastCounterOfPrimeNumbers = 30;
         rechenZeitInMillis = 10_000;        // 10 s: solange wollen wir rechnen lassen, wenn sonst nichts gesagt wird
         filename = "Primzahlen.txt";
         file = new File(filename);
@@ -66,14 +63,14 @@ public class PrimzahlenSaver {
     }
 
     private long calculateLastPrimeNumber() {
-        lastPrimeNumber = 0;
+        lastCounterOfPrimeNumbers = 0;
         if (!file.exists()) {
             return 0;
         }
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLong()) {
-                ++lastPrimeNumber;
+                ++lastCounterOfPrimeNumbers;
                 testzahl = scanner.nextLong();
             }
             scanner.close();
@@ -81,7 +78,7 @@ public class PrimzahlenSaver {
             System.err.println(ioEx);
             ioEx.printStackTrace();
         }
-        return lastPrimeNumber;
+        return lastCounterOfPrimeNumbers;
     }
 
     private void goCalculatePrimes() {
@@ -105,9 +102,9 @@ public class PrimzahlenSaver {
                     isPrime = checkPrime(testzahl);
                     if (isPrime) {
                         ++counter;
-                        ++lastPrimeNumber;
+                        ++lastCounterOfPrimeNumbers;
                         fw = new FileWriter(file, true);
-                        if (lastPrimeNumber % primeNumbersPerColumn == 0) {
+                        if (lastCounterOfPrimeNumbers % primeNumbersPerColumn == 0) {
                             fw.write(String.format("%1$d%n", testzahl));
                         } else {
                             fw.write(String.format("%1$d ", testzahl));
@@ -125,7 +122,7 @@ public class PrimzahlenSaver {
             }
         }
         System.out.println("Die Datei " + file + " enthält nun die ersten "
-                + lastPrimeNumber + " Primzahlen!");
+                + lastCounterOfPrimeNumbers + " Primzahlen!");
     }
 
     private boolean checkPrime(long testzahl) {
