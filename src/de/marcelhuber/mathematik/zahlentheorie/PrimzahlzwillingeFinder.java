@@ -67,7 +67,7 @@ public class PrimzahlzwillingeFinder {
         return lastPrimeNumberInPrimeNumberTwins;
     }
 
-    private void goFindePrimzahlzwillinge() {
+    public void goFindePrimzahlzwillinge() {
         if (!file.exists()) {
             // falls die Primzahlendatei nicht gefunden wird / nicht existiert --> Abbruch!
             return;

@@ -60,6 +60,8 @@ public class PrimzahlenSaver {
                 + "Dann drücken Sie nun Enter!");
         PressEnter.toContinue();
         dummy.goCalculatePrimes(rechenSekunden);
+        PrimzahlzwillingeFinder pzzFinderDummy = new PrimzahlzwillingeFinder();
+        pzzFinderDummy.goFindePrimzahlzwillinge();
     }
 
     private long calculateLastPrimeNumber() {
