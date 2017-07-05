@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -27,6 +29,8 @@ public class PrimzahlenSaver {
     private long primeNumbersPerColumn;
     private String whereAmI;
     private Path pathForFile;
+    static private Date date;
+    static private DateFormat df;
 
     {
         lastCounterOfPrimeNumbers = 30;
@@ -59,9 +63,20 @@ public class PrimzahlenSaver {
                 + "Sekunden weitere (neue) Primzahlen berechnen lassen?\n"
                 + "Dann drücken Sie nun Enter!");
         PressEnter.toContinue();
+        date = new Date();
+        df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+        System.out.println(df.format(date));
         dummy.goCalculatePrimes(rechenSekunden);
+        date = new Date();
+        System.out.println("Ende der Rechenzeit für Primzahlen!");
+        df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+        System.out.println(df.format(date));
         PrimzahlzwillingeFinder pzzFinderDummy = new PrimzahlzwillingeFinder();
         pzzFinderDummy.goFindePrimzahlzwillinge();
+        date = new Date();
+        System.out.println("Ende der Rechenzeit für Primzahlzwillinge!");
+        df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+        System.out.println(df.format(date));
     }
 
     private long calculateLastPrimeNumber() {
