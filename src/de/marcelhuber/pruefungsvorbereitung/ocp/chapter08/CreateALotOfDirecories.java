@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -27,7 +25,7 @@ public class CreateALotOfDirecories {
     }
 
     private void go() {
-        path = Paths.get("TestOrdner01/TestOrdner02/");
+        path = Paths.get("TestOrdner01/TestOrdner02/", "..", "TestOrdner03");
         file = Paths.get(path.toString(), "TestTextFile.txt");
         try {
             Files.createDirectories(path);
@@ -52,7 +50,11 @@ public class CreateALotOfDirecories {
             try {
                 Files.deleteIfExists(file);
                 Files.deleteIfExists(path);
-                Files.deleteIfExists(path.getParent());
+                System.out.println(Paths.get(path.getParent().toString() + "/TestOrdner02"));
+                Files.deleteIfExists(Paths.get(path.getParent().toString() + "/TestOrdner02"));
+                System.out.println(path.getParent().getParent());
+//                PressEnter.toContinue();
+                Files.deleteIfExists(path.getParent().getParent().getParent());
             } catch (IOException ioEx) {
                 System.err.println(ioEx);
                 ioEx.printStackTrace();
