@@ -2,7 +2,7 @@ package de.marcelhuber.reflections02;
 
 import de.marcelhuber.reflections01.GeschuetzteKlasse;
 import de.marcelhuber.systemtools.Marker;
-import java.lang.Class;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -82,6 +82,28 @@ public class ReflectionFuerGeschuetzteKlasse {
             System.out.println(geschuetzteKlasse);
             Marker.marker('_');
             Marker.marker('_');
+            System.out.println("\n\n");
+            Marker.marker('_');
+            Marker.marker('_');
+            System.out.println("Jetzt greifen wir auch mal auf einen privaten "
+                    + "Konstruktor zu!");
+            // das auskommentierte geht auch!
+//            Constructor<GeschuetzteKlasse> konstruktorGeschuetzteKlasse01
+//                    = infoGeschuetzteKlasse
+//                            .getDeclaredConstructor(int.class, java.lang.String.class);
+            Constructor<GeschuetzteKlasse> konstruktorGeschuetzteKlasse
+                    = infoGeschuetzteKlasse
+                            .getDeclaredConstructor(Integer.TYPE, java.lang.String.class);
+            konstruktorGeschuetzteKlasse.setAccessible(true);
+            GeschuetzteKlasse spassObjekt = konstruktorGeschuetzteKlasse.newInstance(12, "spassObjekt wird getestet!");
+            System.out.println("Wir haben mit Zugriff auf den privaten Konstruktor "
+                    + "folgendes Objekt erzeugt:");
+            System.out.println(spassObjekt);
+            Marker.marker('_');
+            Marker.marker('_');
+            // Klasse Testobject ist nicht public und somit hier nicht sichtbar,
+            // da sie in einem anderen Package liegt!
+//            Testobject test = new Testobject();
         } catch (Exception ex) {
             Logger.getLogger(ReflectionFuerGeschuetzteKlasse.class.getName()).log(Level.SEVERE, null, ex);
         }

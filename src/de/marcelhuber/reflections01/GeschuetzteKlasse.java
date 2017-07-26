@@ -15,6 +15,11 @@ public class GeschuetzteKlasse {
         this(new Testobject(), 1, "");
     }
 
+    private GeschuetzteKlasse(int irgendeinZaehler, String irgendeinString) {
+        this.irgendeinZaehler = irgendeinZaehler;
+        this.irgendeinString = irgendeinString;
+    }
+
     private GeschuetzteKlasse(Testobject testobject, int irgendeinZaehler, String irgendeinString) {
         this.testobject = testobject;
         this.irgendeinZaehler = irgendeinZaehler;
@@ -40,9 +45,10 @@ public class GeschuetzteKlasse {
     @Override
     public String toString() {
         String returnString;
-        returnString = "testobject: " + testobject
-                + "\nirgendeinZaehler: " + irgendeinZaehler
-                + "\nirgendeinString: " + irgendeinString
+        returnString
+                = "testobject:          " + testobject
+                + "\nirgendeinZaehler:    " + irgendeinZaehler
+                + "\nirgendeinString:     " + irgendeinString
                 + "\noeffentlicherString: " + offentlicherString;
         return returnString;
     }
