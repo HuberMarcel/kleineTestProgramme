@@ -2,8 +2,12 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.chapter08;
 
 import de.marcelhuber.systemtools.Marker;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -16,6 +20,7 @@ public class CalendarAndDateAndDateFormatPart02 {
                 = new CalendarAndDateAndDateFormatPart02();
         dummyObject.go01();
         dummyObject.go02();
+        dummyObject.go03WithLocales();
     }
 
     private void go01() {
@@ -67,5 +72,39 @@ public class CalendarAndDateAndDateFormatPart02 {
         c02.add(Calendar.DAY_OF_WEEK, 8);
         System.out.println("Und von diesem Zeitpunkt an eine Stunde später?");
         System.out.println(c02.getTime());
+    }
+
+    private void go03WithLocales() {
+        Marker.marker('_');
+        Marker.marker('_');
+        Locale loc = new Locale("de", "DE");
+        Calendar cal = Calendar.getInstance(loc);
+        System.out.println("Das de_DE-Calendar-Objekt");
+        System.out.println(cal);
+        Date d = cal.getTime();
+        System.out.println("\nAls Date-Objekt:");
+        System.out.println(d + "\n");
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, loc);
+        DateFormat dfAndTime = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+                DateFormat.LONG, loc);
+        System.out.println("Das letzte Date-Objekt formatiert zu DateInstance "
+                + "mit loc:     "
+                + df.format(d));
+        df = DateFormat.getDateInstance(DateFormat.MEDIUM, loc);
+        System.out.println("Das letzte Date-Objekt formatiert zu DateInstance "
+                + "mit loc:     "
+                + df.format(d));
+        df = DateFormat.getDateInstance(DateFormat.LONG, loc);
+        System.out.println("Das letzte Date-Objekt formatiert zu DateInstance "
+                + "mit loc:     "
+                + df.format(d));
+        System.out.println("Das letzte Date-Objekt formatiert zu DateTimeInstance "
+                + "mit loc: "
+                + dfAndTime.format(d));
+        dfAndTime = DateFormat.getDateTimeInstance(DateFormat.LONG,
+                DateFormat.LONG, loc);
+        System.out.println("Das letzte Date-Objekt formatiert zu DateTimeInstance "
+                + "mit loc: "
+                + dfAndTime.format(d));
     }
 }
