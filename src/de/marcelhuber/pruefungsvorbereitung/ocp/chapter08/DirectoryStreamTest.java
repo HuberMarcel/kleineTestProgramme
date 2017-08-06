@@ -30,6 +30,7 @@ public class DirectoryStreamTest {
                     Marker.marker('_');
                     System.out.print("Ordner: ");
                     System.out.println(path);
+//                    System.out.println(path.getFileName());
                     Marker.marker('_');
                     System.out.println("");
                 } else {
