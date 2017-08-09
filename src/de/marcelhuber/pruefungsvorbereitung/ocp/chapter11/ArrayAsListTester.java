@@ -1,12 +1,13 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.chapter11;
 
-import de.marcelhuber.systemtools.PressEnter;
+import de.marcelhuber.systemtools.Marker;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  *
- * @author Marcel Huber
+ * @author Marcel Huber; letzte Änderung: 09.08.2017
  */
 public class ArrayAsListTester {
 
@@ -14,6 +15,7 @@ public class ArrayAsListTester {
         ArrayAsListTester dummyObject = new ArrayAsListTester();
         dummyObject.go01();
         dummyObject.go02();
+        dummyObject.go03();
     }
 
     private void go01() {
@@ -46,5 +48,42 @@ public class ArrayAsListTester {
     }
 
     private void go02() {
+        int[] zahlenArray = new int[8];
+        zahlenArray[0] = 1;
+        zahlenArray[1] = 1;
+        for (int k = 2; k < zahlenArray.length; k++) {
+            zahlenArray[k] = zahlenArray[k - 1] + zahlenArray[k - 2];
+        }
+        List zahlenArrayAsList = Arrays.asList(zahlenArray);
+        System.out.println(Arrays.toString(zahlenArray));
+        System.out.println(zahlenArrayAsList);
+        Marker.marker('_');
+        Marker.marker('_');
+        for (int k : (int[]) zahlenArrayAsList.get(0)) {
+            System.out.println(k);
+        }
+    }
+
+    private void go03() {
+        Integer[] test = new Integer[]{1, 34, 1, 3, 2, 5, 13, 8, 21};
+        List testAsList = Arrays.asList(test);
+//        test = new Integer[]{2, 13, 5};      // Zeile 01
+//        testAsList = Arrays.asList(test);
+        System.out.println(testAsList);
+        // wir sortieren mal von groß zu klein...
+        testAsList.sort(
+                new Comparator<Integer>() {
+            @Override
+            public int compare(Integer int01, Integer int02) {
+                return -int01.compareTo(int02);
+            }
+        });
+        System.out.println(testAsList);
+        System.out.println(Arrays.toString(test));
+        System.out.println(
+                "Fazit: Das Objekt, für welche die asList()-Methode "
+                + "aufgerufen wurde, ist \nentscheidend,  " + "nicht  ".toUpperCase()
+                + "die Referenzvariable!");
+        // Zeile 01 einkommentieren, dann sieht man das noch besser!!
     }
 }
