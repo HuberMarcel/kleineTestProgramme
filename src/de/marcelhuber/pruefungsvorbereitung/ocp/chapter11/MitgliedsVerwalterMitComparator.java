@@ -7,10 +7,11 @@ import java.util.TreeSet;
  *
  * @author Marcel Huber; letzte Änderung: 09.08.2017
  */
-public class MitgiedsVerwalter {
+public class MitgliedsVerwalterMitComparator {
 
     public static void main(String[] args) {
-        MitgiedsVerwalter dummyObject = new MitgiedsVerwalter();
+        MitgliedsVerwalterMitComparator dummyObject
+                = new MitgliedsVerwalterMitComparator();
         dummyObject.go01();
     }
 
@@ -24,7 +25,10 @@ public class MitgiedsVerwalter {
         Mitglied opa02 = new Mitglied("Huber", "Nikolaus", 1992);
         Mitglied opa03 = new Mitglied("Huber", "Nikki", 1972);
         Mitglied mamaNeu = new Mitglied("Huber", "Gisela", 1964);
-        TreeSet<Mitglied> mitglieder = new TreeSet<>();
+        Mitglied onkelHeinz = new Mitglied("Beck", "Heinz", 1964);
+        //
+        TreeSet<Mitglied> mitglieder = new TreeSet<>(new MitgliedComparator<Mitglied>());
+        //
         System.out.println("Mama:");
         System.out.println("Hinzufügen hat funktioniert? " + mitglieder.add(mama));
         System.out.println("Pascal:");
@@ -45,10 +49,12 @@ public class MitgiedsVerwalter {
         System.out.println("Hinzufügen hat funktioniert? " + mitglieder.add(opa03));
         System.out.println("MamaNeu:");
         System.out.println("Hinzufügen hat funktioniert? " + mitglieder.add(mamaNeu));
+        System.out.println("onkelHeinz:");
+        System.out.println("Hinzufügen hat funktioniert? " + mitglieder.add(onkelHeinz));
         Marker.marker('_');
         Marker.marker('_');
         System.out.println("Sie sehen nun die Ausgabe der Mitglieder in der "
-                + "Reihenfolge des Eintritts in den Club:");
+                + "umgekehrten Reihenfolge des Eintritts in den Club:");
         for (Mitglied mitglied : mitglieder) {
             System.out.println(mitglied);
         }

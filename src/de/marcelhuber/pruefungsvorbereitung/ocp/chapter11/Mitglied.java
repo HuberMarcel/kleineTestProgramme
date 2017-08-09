@@ -2,7 +2,7 @@ package de.marcelhuber.pruefungsvorbereitung.ocp.chapter11;
 
 /**
  *
- * @author Marcel Huber letzte Änderung: 09.08.2017
+ * @author Marcel Huber; letzte Änderung: 09.08.2017
  */
 public class Mitglied<T extends Mitglied> implements Comparable<T> {
 
@@ -23,7 +23,7 @@ public class Mitglied<T extends Mitglied> implements Comparable<T> {
         }
         if (this.beitrittsJahr == obj.getBeitrittsJahr()) {
             if (this.name == obj.getName()) {
-                return (this.vorname).compareToIgnoreCase(obj.getVorName());
+                return (this.vorname).compareToIgnoreCase(obj.getVorname());
             } else {
                 return (this.name).compareToIgnoreCase(obj.getName());
             }
@@ -39,11 +39,11 @@ public class Mitglied<T extends Mitglied> implements Comparable<T> {
         this.name = name;
     }
 
-    public String getVorName() {
+    public String getVorname() {
         return vorname;
     }
 
-    public void setVorName(String vorName) {
+    public void setVorname(String vorName) {
         this.vorname = vorName;
     }
 
