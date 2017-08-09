@@ -33,8 +33,7 @@ public class PriorityQueueTester {
         for (String name : namen) {
             namensListeNachPriorität.offer(name);
         }
-        System.out.println("Ausgabe der Liste, Anordnung in natürlicher "
-                + "Reihenfolge:");
+        System.out.println("Ausgabe der Liste:");
         System.out.println(namensListeNachPriorität);
         System.out.println("");
         Marker.marker('_');
@@ -49,15 +48,11 @@ public class PriorityQueueTester {
                 + "hier in natürlicher Anordnung (ohne Beachtung\nder Groß- "
                 + "bzw. Kleinschreibung):");
 //        namensListeNachPriorität.clear();
-//        for (String name = "StartName"; // Zeile 01
-        for (String name = namensListeNachPriorität.poll(); // Zeile 02
-                !namensListeNachPriorität.isEmpty();
-                name = namensListeNachPriorität.poll()) {
+        for (String name;
+                !namensListeNachPriorität.isEmpty();) {
+            name = namensListeNachPriorität.poll();
             System.out.println(name);
         }
-        // kommentiert man Zeile 01 aus und Zeile 02 ein, so wird der letzte
-        // name (Willeitner) zwar gepollt, aber nicht ausgegeben. Zudem erscheint
-        // am Anfang zusätzlich der Name "startName"
         Marker.marker('-');
         Marker.marker('-');
     }
@@ -72,8 +67,7 @@ public class PriorityQueueTester {
         for (String name : namen) {
             namensListeNachPriorität.offer(name);
         }
-        System.out.println("Ausgabe der Liste, Anordnung in umgekehrter "
-                + "natürlicher Reihenfolge (siehe den verwendeten Comparator):");
+        System.out.println("Ausgabe der Liste:");
         System.out.println(namensListeNachPriorität);
         System.out.println("");
         Marker.marker('_');
@@ -88,7 +82,8 @@ public class PriorityQueueTester {
                 + "hier in umgekehrter natürlicher Anordnung (ohne Beachtung\n"
                 + "der Groß- bzw. Kleinschreibung):");
         for (String name = namensListeNachPriorität.peek(); !namensListeNachPriorität.isEmpty();) {
-            System.out.println(name = namensListeNachPriorität.poll());
+            name = namensListeNachPriorität.poll();
+            System.out.println(name);
         }
         Marker.marker('-');
         Marker.marker('-');
