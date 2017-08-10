@@ -1,6 +1,7 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.chapter11;
 
 import de.marcelhuber.systemtools.Marker;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,6 +10,12 @@ import java.util.List;
  * @author Marcel Huber; letzte Änderung: 10.8.2017
  */
 public class ArrayAsListWithTypeCollection {
+
+    private Child pascal;
+    private Child marcel;
+    private Child sascha;
+    private Parent papa;
+    private Parent mama;
 
     // class Parent ist hier eine innere Klasse
     public class Parent {
@@ -50,16 +57,14 @@ public class ArrayAsListWithTypeCollection {
     }
 
     public static void main(String[] args) {
-        ArrayAsListWithTypeCollection dummyObject = new ArrayAsListWithTypeCollection();
+        ArrayAsListWithTypeCollection dummyObject
+                = new ArrayAsListWithTypeCollection();
+        dummyObject.createParentsAndChilds();
         dummyObject.go01();
+        dummyObject.go02();
     }
 
     private void go01() {
-        Child pascal = new Child("Huber", "Pascal", "Pasue");
-        Child marcel = new Child("Huber", "Marcel", "Maars");
-        Child sascha = new Child("Huber", "Sascha", "Saschsch");
-        Parent papa = new Parent("Huber", "Herbert");
-        Parent mama = new Parent("Huber", "Gisela");
 //        System.out.println(pascal);
 //        System.out.println(marcel);
 //        System.out.println(sascha);
@@ -93,10 +98,8 @@ public class ArrayAsListWithTypeCollection {
         }
         System.out.println("");
         System.out.println("");
-        System.out.println(("Fazit: Bei der backed-Collection kann dann doch "
-                + "auch der \"Typ\" der Liste\n"
-                + "\"durchbrochen\" werden (Liste erstellt aus Array)!")
-                .toUpperCase());
+        System.out.println(("Fazit: Das gleiche Verhalten, das man bei der "
+                + "go02()-Methode sieht!").toUpperCase());
         Marker.marker('-');
         Marker.marker('-');
         System.out.println("Nochmal Spaß mit inneren Klassen - von hier aus "
@@ -108,5 +111,31 @@ public class ArrayAsListWithTypeCollection {
                 + ((Parent) marcel).vorname);
         System.out.println("marcel.spitzname:               "
                 + marcel.spitzname);
+    }
+
+    private void go02() {
+        System.out.println("");
+        System.out.println("");
+        Marker.marker('_');
+        System.out.println("go02()-Methode!");
+        Marker.marker('_');
+        System.out.println("");
+        List<Parent> parentMenschen = new ArrayList<>();
+        parentMenschen.add(pascal);
+        parentMenschen.add(marcel);
+        parentMenschen.add(sascha);
+        parentMenschen.add(mama);
+        parentMenschen.add(papa);
+        for (Parent parent : parentMenschen) {
+            System.out.println(parent);
+        }
+    }
+
+    private void createParentsAndChilds() {
+        pascal = new Child("Huber", "Pascal", "Pasue");
+        marcel = new Child("Huber", "Marcel", "Maars");
+        sascha = new Child("Huber", "Sascha", "Saschsch");
+        papa = new Parent("Huber", "Herbert");
+        mama = new Parent("Huber", "Gisela");
     }
 }
