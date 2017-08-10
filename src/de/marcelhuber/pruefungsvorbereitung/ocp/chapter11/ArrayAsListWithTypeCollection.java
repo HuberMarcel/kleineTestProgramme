@@ -96,5 +96,16 @@ public class ArrayAsListWithTypeCollection {
                 + "auch der \"Typ\" der Liste\n"
                 + "\"durchbrochen\" werden (Liste erstellt aus Array)!")
                 .toUpperCase());
+        Marker.marker('-');
+        Marker.marker('-');
+        System.out.println("Nochmal Spaß mit inneren Klassen - von hier aus "
+                + "\nkönnen wir auch auf private Attribute dieser zugreifen!");
+        System.out.println("Beispiel anhand des Objekts marcel:");
+        System.out.println("((Parent) marcel).familienname: "
+                + ((Parent) marcel).familienname);
+        System.out.println("((Parent) marcel).vorname:      "
+                + ((Parent) marcel).vorname);
+        System.out.println("marcel.spitzname:               "
+                + marcel.spitzname);
     }
 }
