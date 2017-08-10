@@ -43,6 +43,7 @@ public class ArrayAsListWithTypeCollection {
             this.spitzname = spitzname;
         }
 
+        @Override
         public String toString() {
             return super.toString() + "; Spitzname: " + spitzname;
         }
