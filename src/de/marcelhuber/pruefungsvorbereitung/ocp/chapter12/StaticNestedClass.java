@@ -1,6 +1,8 @@
 // Buch Seite 699 ff.
 package de.marcelhuber.pruefungsvorbereitung.ocp.chapter12;
 
+import de.marcelhuber.systemtools.Marker;
+
 /**
  *
  * @author Marcel Huber; letzte Änderung: 11.08.2017
@@ -25,6 +27,14 @@ public class StaticNestedClass {
 //            // das folgende funktioniert NICHT!!
 //            System.out.println(this.getY());
         }
+
+        public static long getInnerX() {
+            return innerX;
+        }
+
+        public long getInnerY() {
+            return innerY;
+        }
     }
 
     public void testeMich() {
@@ -38,6 +48,7 @@ public class StaticNestedClass {
     public static void main(String[] args) {
         StaticNestedClass dummyObject = new StaticNestedClass();
         dummyObject.go01();
+        dummyObject.go02();
     }
 
     private void go01() {
@@ -45,6 +56,21 @@ public class StaticNestedClass {
                 = new InnerStaticNestedClass();
         objectInnerStaticNestedClass.testeMichInnerStatic();
         objectInnerStaticNestedClass.testeMichInnerStaticStatic();
+    }
+
+    private void go02() {
+        System.out.println("");
+        System.out.println("go02()-Methode");
+        Marker.marker('_');
+        Marker.marker('_');
+        InnerStaticNestedClass objectInnerStaticNestedClass
+                = new InnerStaticNestedClass();
+        System.out.println(objectInnerStaticNestedClass.getInnerY());
+        System.out.println(objectInnerStaticNestedClass.innerY);
+//        System.out.println(objectInnerStaticNestedClass.innerX);
+        System.out.println(InnerStaticNestedClass.innerX);
+//        System.out.println(objectInnerStaticNestedClass.getInnerX());
+        System.out.println(InnerStaticNestedClass.getInnerX());
     }
 
     public long getY() {
