@@ -48,6 +48,23 @@ public class AnonymousInnerClass {
         };
         System.out.println(anonymesObjektAusWeitereKlasse);
         anonymesObjektAusWeitereKlasse.testeEineAusgabe();
+        Marker.marker('_');
+        Marker.marker('_');
+        System.out.println("Objekt einer anonymen inneren Klasse mit eigener "
+                + "Methode!");
+        System.out.println(new WeitereKlasse() {
+            public String testAusgabe() {
+                return "testAusgabe()-Methode wird aufgerufen";
+            }
+        }.testAusgabe());
+        Object anonymousObject = new Object() {
+            public void testAusgabeFuerObject() {
+                System.out.println("Ich bin die Methode testAusgabeFuerObject!");
+            }
+        };
+        // keine Zugriffsmöglichkeit!
+//        anonymousObject.testAusgabeFuerObject();
+        System.out.println(anonymousObject.toString());
     }
 }
 
