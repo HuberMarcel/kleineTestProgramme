@@ -2,7 +2,6 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.chapter13;
 
 import de.marcelhuber.systemtools.Marker;
-import de.marcelhuber.systemtools.PressEnter;
 
 /**
  *
