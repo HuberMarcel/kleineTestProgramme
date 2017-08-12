@@ -17,7 +17,11 @@ public class ThreadsWithYieldTester {
         Pause.breakInMillis(100);
         t01.start();
         while (t01.isAlive()) {
-            t02.yield();
+//            t02.yield();
+            // eigentlich sinnlos, weil hier dann der main-Thread "zurücksteckt"
+            //            yield() bezieht sich immer auf den Thread, von welchem
+            //            aus diese Methode aufgerufen wird
+            Thread.yield();
         }
         Pause.breakInSeconds(2);
         System.out.println("Der Zähler wurde insgesamt erhöht auf "
