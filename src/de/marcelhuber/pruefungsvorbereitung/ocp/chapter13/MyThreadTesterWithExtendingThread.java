@@ -1,4 +1,4 @@
-// Buch Seite 717ff.
+// Buch Seite 717 ff.
 package de.marcelhuber.pruefungsvorbereitung.ocp.chapter13;
 
 /**
@@ -23,12 +23,13 @@ public class MyThreadTesterWithExtendingThread {
 class MyThreadExtended extends Thread {
 
     static private int threadID;
-    private int thisThreadID;
+    private final int thisThreadID;
 
     {
         threadID++;
         thisThreadID = threadID;
     }
+
     private int j;
 
     @Override
