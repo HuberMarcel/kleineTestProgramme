@@ -102,48 +102,46 @@ class RunnableAbheber implements Runnable {
 
     @Override
     public void run() {
-        if (abheber == null) {
-            abheber = new ArrayList<>();
+        synchronized (this) {
+            if (abheber == null) {
+                abheber = new ArrayList<>();
+            }
         }
         MyBancAccount meinKonto = MyBancAccount.INSTANCE;
         long abhebeBetrag = 10;
         long aktuellesGuthaben;
         while ((aktuellesGuthaben = meinKonto.checkGuthaben()) > 0) {
-//            // im auskommentierten Code ist folgendes möglich:
-//            // Fred prüft, dass er noch Geld abheben kann; Funktioniert
-//            // der synchronisierte Block wird ausgeführt, aber das adden 
-//            // ist ein eigener Thread - Lucy kommt rein und geht raus;
-//            // Fred prüft nochmal, muss jetzt aber raus... der adden-Thread
-//            // ist noch nicht fertig, wird nun aber beendet, weil dieser beendet
-//            // wird... daher ist abheber.size < abhebZaehler
-//            if (aktuellesGuthaben - abhebeBetrag >= 0) {
-//                synchronized (this) {
-//                    abheber.add(Thread.currentThread().getName());
-////                    Pause.breakInMillis(1);
-//                    meinKonto.hebeAb(abhebeBetrag);
-//                    abhebZaehler++;
-//                    if (abhebZaehler % 10 == 0) {
-//                        Thread.yield();
-//                    }
-//                }
-//            } else {
-//                break;
-//            }
-            // logisch gesehen haben wir hier eigentlich das gleiche Problem,
-            // nur wahrscheinlich ist die Dauer des Tests hinreichend lang genug
-            // aber: So ist das KEINE GUTE LÖSUNG!!
-            synchronized (this) {
-                if (aktuellesGuthaben - abhebeBetrag >= 0) {
+            // der alte Code war auch okay - WICHTIG: 
+            // die Initialisierung der ArrayList sollte synchronisiert sein!!
+            // alter Code - START
+            if (aktuellesGuthaben - abhebeBetrag >= 0) {
+                synchronized (this) {
                     abheber.add(Thread.currentThread().getName());
+//                    Pause.breakInMillis(1);
                     meinKonto.hebeAb(abhebeBetrag);
                     abhebZaehler++;
                     if (abhebZaehler % 10 == 0) {
                         Thread.yield();
                     }
-                } else {
-                    break;
                 }
+            } else {
+                break;
             }
+            // alter Code - ENDE
+////            // neuer Code, eigentlich unnötig: abheber = new ArrayList<>(); 
+////            //                                 muss synchronized sein!!
+//            synchronized (this) {
+//                if (aktuellesGuthaben - abhebeBetrag >= 0) {
+//                    abheber.add(Thread.currentThread().getName());
+//                    meinKonto.hebeAb(abhebeBetrag);
+//                    abhebZaehler++;
+//                    if (abhebZaehler % 10 == 0) {
+//                        Thread.yield();
+//                    }
+//                } else {
+//                    break;
+//                }
+//            }
         }
     }
 
@@ -153,6 +151,7 @@ class RunnableAbheber implements Runnable {
 
     public int getAbhebZaehler() {
         return abhebZaehler;
+
     }
 }
 
