@@ -1,6 +1,7 @@
 package de.marcelhuber.pruefungsvorbereitung.ocp.chapter13;
 
 import de.marcelhuber.systemtools.Marker;
+import de.marcelhuber.systemtools.Pause;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,12 +81,12 @@ class TwoDebitThreadsOnOneBancAccount {
     }
 
     private void gebeDieAbhebungenAus(RunnableAbheber runnable) {
-        System.out.println("Reihenfolge der Abhebungen: ");
-        int counter = 1;
         System.out.println("Anzahl der durchgeführten Abhebungen:");
         System.out.println(runnable.getAbheber().size());
         System.out.println(runnable.getAbhebZaehler());
         System.out.println("");
+        System.out.println("Reihenfolge der Abhebungen: ");
+        int counter = 1;
 //        PressEnter.toContinue();
         for (String name : runnable.getAbheber()) {
             System.out.println(counter++ + ". Abhebung durchgeführt von "
@@ -108,17 +109,40 @@ class RunnableAbheber implements Runnable {
         long abhebeBetrag = 10;
         long aktuellesGuthaben;
         while ((aktuellesGuthaben = meinKonto.checkGuthaben()) > 0) {
-            if (aktuellesGuthaben - abhebeBetrag >= 0) {
-                synchronized (this) {
+//            // im auskommentierten Code ist folgendes möglich:
+//            // Fred prüft, dass er noch Geld abheben kann; Funktioniert
+//            // der synchronisierte Block wird ausgeführt, aber das adden 
+//            // ist ein eigener Thread - Lucy kommt rein und geht raus;
+//            // Fred prüft nochmal, muss jetzt aber raus... der adden-Thread
+//            // ist noch nicht fertig, wird nun aber beendet, weil dieser beendet
+//            // wird... daher ist abheber.size < abhebZaehler
+//            if (aktuellesGuthaben - abhebeBetrag >= 0) {
+//                synchronized (this) {
+//                    abheber.add(Thread.currentThread().getName());
+////                    Pause.breakInMillis(1);
+//                    meinKonto.hebeAb(abhebeBetrag);
+//                    abhebZaehler++;
+//                    if (abhebZaehler % 10 == 0) {
+//                        Thread.yield();
+//                    }
+//                }
+//            } else {
+//                break;
+//            }
+            // logisch gesehen haben wir hier eigentlich das gleiche Problem,
+            // nur wahrscheinlich ist die Dauer des Tests hinreichend lang genug
+            // aber: So ist das KEINE GUTE LÖSUNG!!
+            synchronized (this) {
+                if (aktuellesGuthaben - abhebeBetrag >= 0) {
                     abheber.add(Thread.currentThread().getName());
                     meinKonto.hebeAb(abhebeBetrag);
                     abhebZaehler++;
                     if (abhebZaehler % 10 == 0) {
                         Thread.yield();
                     }
+                } else {
+                    break;
                 }
-            } else {
-                break;
             }
         }
     }
