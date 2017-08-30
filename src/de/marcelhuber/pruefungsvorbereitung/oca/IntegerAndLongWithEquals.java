@@ -16,5 +16,9 @@ public class IntegerAndLongWithEquals {
             System.out.println("i = " + i + " und l = " + l + " haben "
                     + "denselben Wert, sind aber wegen Typverschiedenheit ungleich!!");
         }
+        System.out.println("i == l funktioniert aber nicht!");
+//        System.out.println("i == l funktioniert aber nicht: " + (i == l));
+        System.out.println("Aber: i == (long) l liefert (Auto-Unboxing): " 
+                + (i == (long) l));
     }
 }
