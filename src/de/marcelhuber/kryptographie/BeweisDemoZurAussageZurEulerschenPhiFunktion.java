@@ -15,7 +15,6 @@ import de.marcelhuber.systemtools.Marker;
 import de.marcelhuber.systemtools.PressEnter;
 import de.marcelhuber.systemtools.ReadInput;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
