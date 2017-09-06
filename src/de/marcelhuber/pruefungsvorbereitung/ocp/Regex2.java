@@ -12,12 +12,27 @@ public class Regex2 {
 
     public static void main(String[] args) {
         String str01 = "\\d*";
-        String str02 = "ab34ef";
+//        String str02 = "ab34ef";
+        String str02 = "ab34ef234ff";
         Pattern p = Pattern.compile(str01);
         Matcher m = p.matcher(str02);
+        // m.find() prüft im str02 immer, ob das Regex aus str01 vorkommt
+        // solange str02 noch nicht abgearbeitet ist, und im obigen Falle
+        // die nächste Stelle keine Ziffer ist, geht man mit find() eine
+        // Stelle weiter - wird ein Digit-/eine Ziffernfolge getroffen, so 
+        // werden für die nächste Position alle Stellen der Zahl (eine Zahl
+        // ist ja auch nur eine endliche Ziffernfolge) "übersprungen"
+        // Hinweis: Um dies einzusehen, einfach im Folgenden alle Zeilen bis
+        //          auf die mit m.start() auskommentieren
         while (m.find()) {
-            System.out.println("start " + m.start());
-            System.out.println("group " + m.group());
+            if (!m.group().isEmpty()) {
+                System.out.println("Treffer: group " + m.group());
+            } else {
+                System.out.println("Kein Treffer!".toUpperCase());
+            }
+            System.out.print("Positionen: [");
+            System.out.print("start " + m.start() + ", ");
+            System.out.println("end " + m.end() + "]");
         }
     }
 }
