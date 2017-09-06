@@ -1,6 +1,7 @@
 // OCP: Seite 466
 package de.marcelhuber.pruefungsvorbereitung.ocp;
 
+import de.marcelhuber.systemtools.Marker;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +34,24 @@ public class Regex2 {
             System.out.print("Positionen: [");
             System.out.print("start " + m.start() + ", ");
             System.out.println("end " + m.end() + "]");
+        }
+        Marker.marker('_');
+        // Aufgabe 3, Seite 69
+        str01 = "\\B";
+        str02 = "^23 $*76 bc";
+        p = Pattern.compile(str01);
+//        m.reset();
+        m = p.matcher(str02);
+        while (m.find()) {
+            System.out.print(m.start() + " ");
+        }
+        System.out.println("".toUpperCase());
+        int counter = 0;
+        m.reset();
+        Marker.marker();
+        System.out.println("Test der find()-Methode!".toUpperCase());
+        while (m.find()) {
+            System.out.println("Anzahl Treffer: " + ++counter);
         }
     }
 }
