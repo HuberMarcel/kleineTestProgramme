@@ -33,6 +33,7 @@ public class InstanceOfTest {
 
 class Familie {
 
+    @Override
     public String toString() {
         return "Familie Huber";
     }
@@ -40,6 +41,7 @@ class Familie {
 
 class Eltern extends Familie {
 
+    @Override
     public String toString() {
         return "Eltern: Herbert und Gisela | " 
                 + super.toString().split(" ")
