@@ -17,7 +17,7 @@ public class _ {
         String $ = "";
         for (int x = 0; ++x < args.length; x++) {
             $ += args[x];
-            System.out.println($);
+            out.println($);
         }
     }
 }
