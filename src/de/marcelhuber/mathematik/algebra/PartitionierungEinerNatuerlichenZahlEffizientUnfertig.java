@@ -35,8 +35,8 @@ public class PartitionierungEinerNatuerlichenZahlEffizientUnfertig {
                 for (List<Long> list : thisList) {
                     System.out.println("list: " + list);
                     List<Long> listCopy = new ArrayList<>();
-                    for (Long entree : list) {
-                        listCopy.add(entree);
+                    for (Long entry : list) {
+                        listCopy.add(entry);
                     }
                     listCopy.set(0, listCopy.get(0) - i);
                     listCopy.add(1, (long) i);
@@ -57,8 +57,8 @@ public class PartitionierungEinerNatuerlichenZahlEffizientUnfertig {
 
 //    private boolean checkSum(long[] possiblePartition, long x) {
 //        long sum = 0;
-//        for (long entree : possiblePartition) {
-//            sum += entree;
+//        for (long entry : possiblePartition) {
+//            sum += entry;
 //        }
 //        return (sum == x);
 //    }

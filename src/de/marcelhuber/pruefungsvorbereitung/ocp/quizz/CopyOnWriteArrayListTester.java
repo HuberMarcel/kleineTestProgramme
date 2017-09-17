@@ -47,9 +47,9 @@ public class CopyOnWriteArrayListTester {
         Marker.marker('_');
         Marker.marker('_');
         System.out.println("");
-        for (int entree : copyOnWriteList) {
-            System.out.println("entree: " + entree);
-            copyOnWriteList.add(entree * entree);
+        for (int entry : copyOnWriteList) {
+            System.out.println("entry: " + entry);
+            copyOnWriteList.add(entry * entry);
         }
         System.out.println("copyOnWriteList: " + copyOnWriteList);
     }
