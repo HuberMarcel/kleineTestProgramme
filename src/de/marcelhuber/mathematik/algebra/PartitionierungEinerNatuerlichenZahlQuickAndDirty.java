@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Marcel Huber; 16.09.2017
  */
-public class PartitionierungEinerNatuerlichenZahl {
+public class PartitionierungEinerNatuerlichenZahlQuickAndDirty {
 
     {
         partitionsListe = new ArrayList<>();
@@ -21,7 +21,7 @@ public class PartitionierungEinerNatuerlichenZahl {
     private List<Long[]> partitionsListe;
 
     public static void main(String[] args) {
-        PartitionierungEinerNatuerlichenZahl dummyObject = new PartitionierungEinerNatuerlichenZahl();
+        PartitionierungEinerNatuerlichenZahlQuickAndDirty dummyObject = new PartitionierungEinerNatuerlichenZahlQuickAndDirty();
         long x = 6;
         dummyObject.createPartitionSet(x);
     }
