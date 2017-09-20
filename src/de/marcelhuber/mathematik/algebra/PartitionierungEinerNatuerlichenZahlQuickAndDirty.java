@@ -11,6 +11,7 @@ import java.util.List;
 /**
  *
  * @author Marcel Huber; 16.09.2017
+ * letzte Änderung: 20.09.2017
  */
 public class PartitionierungEinerNatuerlichenZahlQuickAndDirty {
 

@@ -10,6 +10,7 @@ import java.util.HashSet;
 /**
  *
  * @author Marcel Huber; 17.09.2017
+ * letzte Änderung: 20.09.2017
  */
 public class PartitionierungEinerNatuerlichenZahlEtwasEffizienter {
 
