@@ -19,7 +19,7 @@ public class PartitionierungEinerNatuerlichenZahlQuickAndDirty {
         partitionsListe = new ArrayList<>();
     }
 
-    private final List<Long[]> partitionsListe;
+    private List<Long[]> partitionsListe;
 
     public static void main(String[] args) {
         PartitionierungEinerNatuerlichenZahlQuickAndDirty dummyObject = new PartitionierungEinerNatuerlichenZahlQuickAndDirty();
