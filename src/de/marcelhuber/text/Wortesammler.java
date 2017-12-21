@@ -95,7 +95,7 @@ public class Wortesammler {
                 s = s.trim();
             }
             System.out.println("");
-            System.out.println("Doppeltes Wort? " + doppeltZahl);
+            System.out.println("Doppeltes Wort vorhanden? " + doppeltZahl);
             System.out.println("");
             System.out.println(s);
         } catch (IOException ioEx) {
