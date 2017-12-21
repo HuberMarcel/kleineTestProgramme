@@ -69,7 +69,7 @@ public class Wortesammler {
                             if (wortAuswahlZahl[m] == wortAuswahlZahl[k]) {
                                 doppeltZahl = true;
                                 System.out.println("");
-                                System.out.println("Doppelte Woerter an Stellen "
+                                System.out.println("Doppeltes Wort an den Stellen "
                                         + "" + (m + 1) + " und " + (k + 1) + ": "
                                         + woerterListe.get(wortAuswahlZahl[k]));
                                 System.out.println("");
