@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  *
- * @author Marcel Huber; Datum: 24.12.2017
+ * @author Marcel B. Huber; Datum: 24.12.2017
  */
 public class Wortesammler {
 
