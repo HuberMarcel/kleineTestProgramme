@@ -33,7 +33,7 @@ public class Wortesammler {
 
     public static void main(String[] args) {
         Wortesammler dummyObject = new Wortesammler();
-        wdh = 10;
+        wdh = 15;
         for (int k = 0; k < wdh; k++) {
             dummyObject.go01();
         }
@@ -57,10 +57,12 @@ public class Wortesammler {
                     woerterBuch.add(wort);
                 }
             }
+            woerterListe.clear();
             for (String wort : woerterBuch) {
                 woerterListe.add(wort);
             }
 //            System.out.println(woerterListe);
+//            System.out.println(woerterListe.size());
             int number = woerterListe.size();
             boolean doppeltZahl = false;
             while (!doppeltZahl) {
