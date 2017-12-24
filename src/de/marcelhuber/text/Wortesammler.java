@@ -9,14 +9,13 @@ import static java.lang.Math.floor;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 /**
  *
- * @author Marcel Huber; Datum: 21.12.2017
+ * @author Marcel Huber; Datum: 24.12.2017
  */
 public class Wortesammler {
 
@@ -29,16 +28,21 @@ public class Wortesammler {
     private Set<String> woerterBuch;
     private List<String> woerterListe = new ArrayList<>();
     private int[] wortAuswahlZahl = new int[13];
+    static private int wdh;
+    private boolean helpSout = false; // Schalter für Testausgaben
 
     public static void main(String[] args) {
         Wortesammler dummyObject = new Wortesammler();
-        dummyObject.go01();
+        wdh = 10;
+        for (int k = 0; k < wdh; k++) {
+            dummyObject.go01();
+        }
     }
 
     private void go01() {
         woerterBuch = new HashSet<>();
         path = Paths.get("H:/MyMonero(Marcel)/test.txt");
-        System.out.println(path);
+//        System.out.println(path);
         file = new File(path.toString());
         try {
             fr = new FileReader(file);
@@ -56,7 +60,7 @@ public class Wortesammler {
             for (String wort : woerterBuch) {
                 woerterListe.add(wort);
             }
-            System.out.println(woerterListe);
+//            System.out.println(woerterListe);
             int number = woerterListe.size();
             boolean doppeltZahl = false;
             while (!doppeltZahl) {
@@ -68,11 +72,13 @@ public class Wortesammler {
                         for (int m = 0; m < k; m++) {
                             if (wortAuswahlZahl[m] == wortAuswahlZahl[k]) {
                                 doppeltZahl = true;
-                                System.out.println("");
-                                System.out.println("Doppeltes Wort an den Stellen "
-                                        + "" + (m + 1) + " und " + (k + 1) + ": "
-                                        + woerterListe.get(wortAuswahlZahl[k]));
-                                System.out.println("");
+                                if (helpSout) {
+                                    System.out.println("");
+                                    System.out.println("Doppeltes Wort an den Stellen "
+                                            + "" + (m + 1) + " und " + (k + 1) + ": "
+                                            + woerterListe.get(wortAuswahlZahl[k]));
+//                                System.out.println("");
+                                }
                             }
                         }
                     } else {
@@ -88,16 +94,18 @@ public class Wortesammler {
                     }
                 }
             }
-            System.out.println(Arrays.toString(wortAuswahlZahl));
+//            System.out.println(Arrays.toString(wortAuswahlZahl));
             String s = "";
             for (int k = 0; k < wortAuswahlZahl.length; k++) {
                 s += " " + woerterListe.get(wortAuswahlZahl[k]);
                 s = s.trim();
             }
-            System.out.println("");
-            System.out.println("Doppeltes Wort vorhanden? " + doppeltZahl);
-            System.out.println("");
-            System.out.println(s);
+            if (helpSout) {
+//            System.out.println("");
+                System.out.println("Doppeltes Wort vorhanden? " + doppeltZahl);
+                System.out.println("");
+            }
+            System.out.println(s); // Ausgabe der Wortkette gebildet aus 13 Worten
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
         }
