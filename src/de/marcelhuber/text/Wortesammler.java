@@ -33,7 +33,7 @@ public class Wortesammler {
 
     public static void main(String[] args) {
         Wortesammler dummyObject = new Wortesammler();
-        wdh = 15;
+        wdh = 100;
         for (int k = 0; k < wdh; k++) {
             dummyObject.go01();
         }
