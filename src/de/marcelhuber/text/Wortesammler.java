@@ -1,9 +1,10 @@
 package de.marcelhuber.text;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.Math.floor;
 import java.nio.file.Path;
@@ -20,9 +21,13 @@ import java.util.Set;
 public class Wortesammler {
 
     private BufferedReader br;
+    private BufferedWriter bw;
     private FileReader fr;
+    private FileWriter fw;
     private Path path;
+    private Path pathToWrite;
     private File file;
+    private File fileToWrite;
     private String zeile;
     private String[] wortArray;
     private Set<String> woerterBuch;
@@ -42,14 +47,18 @@ public class Wortesammler {
     private void go01() {
         woerterBuch = new HashSet<>();
         path = Paths.get("H:/MyMonero(Marcel)/test.txt");
+        pathToWrite = Paths.get("H:/MyMonero(Marcel)/filledFile.txt");
 //        System.out.println(path);
         file = new File(path.toString());
+        fileToWrite = new File(pathToWrite.toString());
         try {
             fr = new FileReader(file);
-        } catch (FileNotFoundException fnfEx) {
-            fnfEx.printStackTrace();
+            fw = new FileWriter(fileToWrite, true);
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
         }
         br = new BufferedReader(fr);
+        bw = new BufferedWriter(fw);
         try {
             while ((zeile = br.readLine()) != null) {
                 wortArray = zeile.split(" ");
@@ -107,10 +116,22 @@ public class Wortesammler {
                 System.out.println("Doppeltes Wort vorhanden? " + doppeltZahl);
                 System.out.println("");
             }
-            System.out.println(s); // Ausgabe der Wortkette gebildet aus 13 Worten
+//            System.out.println(s); // Ausgabe der Wortkette gebildet aus 13 Worten
+            bw.write(s + "\n");
+            bw.flush();
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+                if (fw != null) {
+                    fw.close();
+                }
+            } catch (IOException ioEx) {
+                ioEx.printStackTrace();
+            }
         }
     }
-
 }
