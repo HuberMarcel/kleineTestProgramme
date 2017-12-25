@@ -38,7 +38,7 @@ public class Wortesammler {
 
     public static void main(String[] args) {
         Wortesammler dummyObject = new Wortesammler();
-        wdh = 100;
+        wdh = 50;
         for (int k = 0; k < wdh; k++) {
             dummyObject.go01();
         }
@@ -47,6 +47,7 @@ public class Wortesammler {
     private void go01() {
         woerterBuch = new HashSet<>();
         path = Paths.get("H:/MyMonero(Marcel)/test.txt");
+//        path = Paths.get("H:/MyMonero(Marcel)/MyMoneroAccount.txt");
         pathToWrite = Paths.get("H:/MyMonero(Marcel)/filledFile.txt");
 //        System.out.println(path);
         file = new File(path.toString());
