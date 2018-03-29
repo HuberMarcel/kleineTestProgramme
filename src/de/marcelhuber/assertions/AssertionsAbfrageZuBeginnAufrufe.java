@@ -2,7 +2,7 @@ package de.marcelhuber.assertions;
 
 /**
  *
- * @author Marcel Huber
+ * @author Marcel Huber;
  */
 public class AssertionsAbfrageZuBeginnAufrufe {
 
