@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author Marcel Huber; Datum: 16.04.2018
+ * @author: Marcel Huber; Datum: 16.04.2018
  */
 public class PrimzahlenfinderAbGewisserZahl {
 
