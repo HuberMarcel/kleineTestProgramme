@@ -3,6 +3,7 @@ package de.marcelhuber.assertions;
 /**
  *
  * @author Marcel Huber;
+ * @date 2021-06-10
  */
 public class AssertionsAbfrageZuBeginnAufrufe {
 
