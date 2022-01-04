@@ -1,6 +1,7 @@
 package de.marcelhuber.spielereien;
 
 /**
+ * 
  * @author Marcel Huber
  */
 public class ForschleifenTest {
